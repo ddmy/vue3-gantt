@@ -3,6 +3,8 @@
   "private": false,
   "version": "0.0.1",
   "description": "Vue3甘特图组件",
+  "author": "Yijio",
+  "license": "ISC",
   "main": "./index.js",
   "scripts": {
     "dev": "vite",
@@ -16,5 +18,15 @@
     "@vitejs/plugin-vue": "^2.2.0",
     "less": "^4.1.2",
     "vite": "^2.8.0"
+  },
+  "keywords": [
+    "vue3",
+    "gantt",
+    "甘特图",
+    "vue"
+  ],
+  "homepage": "https://github.com/ddmy/vue-gantt#readme",
+  "bugs": {
+    "url": "https://github.com/ddmy/vue-gantt/issues"
   }
 }
