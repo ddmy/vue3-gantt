@@ -1,5 +1,6 @@
 #### Vue3甘特图插件
 > 基于Vue3的极简甘特图组件
+![avatar](https://blog.ddamy.com/assets/img/gantt.jpeg)
 
 ### 使用方式
 ```js
