@@ -5,7 +5,7 @@
 
 ### 使用方式
 ```js
-import Gantt from 'vue-gantt'
+import Gantt from 'vue3-gantt'
 ```
 
 ### 组件接收参数
