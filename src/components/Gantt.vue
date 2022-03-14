@@ -70,7 +70,7 @@
 
 <script setup>
 import { defineEmits } from 'vue'
-import { computedDaysRange, fethDaysRange, splitDaysForMonth, todayInRange } from '@/util'
+import { computedDaysRange, fethDaysRange, splitDaysForMonth, todayInRange } from '../util/index.js'
 
 
 const props = defineProps({

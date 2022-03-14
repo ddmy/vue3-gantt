@@ -11,7 +11,7 @@
 
 <script setup>
 import Gantt from './components/Gantt.vue'
-import { fethDaysRange } from '@/util'
+import { fethDaysRange } from './util/index.js'
 
 
 
