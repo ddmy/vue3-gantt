@@ -28,7 +28,7 @@ import Gantt from 'vue-gantt'
 | name | String | 当前项目名称 |
 | schedule | Array[Object] | 项目日程 |
 
-### 项目日程配置
+### schedule 项目日程配置
 
 | 参数名 |说明 |
 | ------ | -------------------- |
