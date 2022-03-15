@@ -18,6 +18,7 @@ import Gantt from 'vue3-gantt'
 | scrollXEnd | Function | null | 横向滚动条滚动到底部的事件 |
 | itemText | String | null | 表头描述文字 |
 | dateText | String | null | 表头描述文字 |
+| activeDate | String | 今天 | 当前时间轴高亮显示的一天，（不会覆盖日程样式），'YYYY-MM-DD'格式时间字符串 |
 
 ### data配置 Array[Object]
 

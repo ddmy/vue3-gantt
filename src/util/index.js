@@ -79,23 +79,30 @@ export const fetchMonthRangeDay = (str) => {
   return new Array(count).fill().map((item, index) => String(dateList[0]).padStart(4, '0') + '-' + String(dateList[1]).padStart(2, '0') + '-' + String(index + 1).padStart(2, 0))
 }
 
+export const fetchToday = () => {
+  const now = new Date()
+  const currentYear = String(now.getFullYear()).padStart(4, '0')
+  const currentMonth = String(now.getMonth() + 1).padStart(2, '0')
+  const currentDay = String(now.getDate()).padStart(2, '0')
+  return `${currentYear}-${currentMonth}-${currentDay}`
+}
 
 export const fetchThreeDays = () => {
   const now = new Date()
   const currentYear = now.getFullYear()
   const currentMonth = now.getMonth() + 1
-  const currentDate = `${currentYear}-${currentMonth}`
+  const currentDate = `${currentYear}-${ String(currentMonth).padStart(2, '0')}`
   let prevDate = ''
   if (currentMonth === 1) {
-    prevDate = `${currentYear - 1}-12`
+    prevDate = `${String(currentYear - 1).padStart(4, '0')}-12`
   } else {
-    prevDate = `${currentYear}-${currentMonth - 1}`
+    prevDate = `${String(currentYear).padStart(4, '0')}-${String(currentMonth - 1).padStart(2, '0')}`
   }
   let nextDate = ''
   if (currentMonth === 12) {
-    nextDate = `${currentYear + 1}-1`
+    nextDate = `${String(currentYear + 1).padStart(4, '0')}-01`
   } else {
-    nextDate = `${currentYear}-${currentMonth + 1}`
+    nextDate = `${String(currentYear).padStart(4, '0')}-${String(currentMonth + 1).padStart(2, '0')}`
   }
 
   return [...fetchMonthRangeDay(prevDate), ...fetchMonthRangeDay(currentDate), ...fetchMonthRangeDay(nextDate)]

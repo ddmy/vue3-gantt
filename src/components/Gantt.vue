@@ -31,7 +31,8 @@
               :key="dayItem.day + dayItem.week"
               :class="{
                 'day-item': true,
-                'first-day-item': dayIndex === 0
+                'first-day-item': dayIndex === 0,
+                'date-active': activeDate === (dayItem.year + '-' + dayItem.month + '-' + dayItem.day)
               }"
             >
               <div class="day">{{ dayItem.day }}</div>
@@ -53,7 +54,8 @@
           :key="dateIndex"
           :class="{
             'date-item': true,
-            'date-item-work': dateItem.type === 'works'
+            'date-item-work': dateItem.type === 'works',
+            'date-active': dateItem.date === activeDate
           }"
           :style="computedStyle(item, dateItem)"
           :title="dateItem.type === `works` ? dateItem.desc : ``"
@@ -70,7 +72,7 @@
 
 <script setup>
 import { defineEmits } from 'vue'
-import { computedDaysRange, fethDaysRange, splitDaysForMonth, todayInRange } from '../util/index.js'
+import { computedDaysRange, fethDaysRange, splitDaysForMonth, todayInRange, fetchToday } from '../util/index.js'
 
 
 const props = defineProps({
@@ -91,11 +93,25 @@ const props = defineProps({
   itemText: {
     type: String,
     required: true
+  },
+  activeDate: {
+    type: String,
+    default: ''
   }
 })
 const dateText = props.dateText
 const itemText = props.itemText
 const rangeDate = splitDaysForMonth(computedDaysRange(...props.dateRangeList))
+
+console.log('rangeDate', rangeDate)
+const data = props.data.map(item => {
+  if (item.type === 'normal' && Array.isArray(item.schedule)) {
+    item.schedule = item.schedule.sort((a, b) => new Date(a.days[0]).getTime() - new Date(b.days[0]).getTime())
+    return item
+  }
+  return item
+})
+const activeDate = props.activeDate || fetchToday()
 
 
 const itemWidth = 40
@@ -316,7 +332,6 @@ const onScrollX = event => {
   }, 200)
 }
 
-const data = props.data
 </script>
 
 <style lang="less" scoped>
@@ -488,6 +503,9 @@ const data = props.data
           border-bottom: none;
         }
       }
+    }
+    .date-active {
+      background-color: #caf2ff;
     }
   }
 }
