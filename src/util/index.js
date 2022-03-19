@@ -107,3 +107,69 @@ export const fetchThreeDays = () => {
 
   return [...fetchMonthRangeDay(prevDate), ...fetchMonthRangeDay(currentDate), ...fetchMonthRangeDay(nextDate)]
 }
+
+const dateSplitForValue = (data)  =>  {
+  const start = data[0].days[0]
+  const end = data.at(-1).days.at(-1)
+  const res = {}
+  fethDaysRange(start, end).forEach(key => {
+       const current = data.map((item, index) => {
+          if (item.days.includes(key)) return index
+          return false
+      }).filter(item => item !== false)
+      if (current.length) {
+        res[key] = current
+      }
+  })
+  return res
+}
+
+export const workListSplitForRepeat = (arr, repeatMode) => {
+  return arr.map(schedule => {
+    if (schedule.type !== 'normal') return schedule
+    const obj = dateSplitForValue(schedule.schedule)
+    const values = Object.values(obj)
+    const keys = Object.keys(obj)
+    const resMap = [...new Set(values.map(item => JSON.stringify(item)))].map(item => JSON.parse(item))
+    let result = new Array(resMap.length).fill({})
+    result = result.map((item, index) => {
+        let r = {}
+        if (resMap[index].length === 1) {
+            r = {
+                ...schedule.schedule[resMap[index][0]],
+                daysSource: schedule.schedule[resMap[index][0]].days
+            }
+        } else {
+            const list = resMap[index].map(v => schedule.schedule[v])
+            let desc = ''
+            let name = ''
+            if (typeof repeatMode.desc === 'function') {
+              desc = repeatMode.desc(list)
+            } else {
+              desc = repeatMode.desc
+            }
+            console.log('#######', typeof repeatMode.name === 'function')
+            if (typeof repeatMode.name === 'function') {
+              name = repeatMode.name(list)
+            } else {
+              name = repeatMode.name
+            }
+            r = {
+                desc,
+                backgroundColor: repeatMode.backgroundColor,
+                textColor: repeatMode.textColor,
+                name,
+                list,
+            }
+        }
+        r.days = values.map((v, i) => {
+            if (JSON.stringify(v) === JSON.stringify(resMap[index])) {
+                return keys[i]
+            }
+        }).filter(v => v)
+        return r
+    })
+    schedule.schedule = result
+    return schedule
+  })
+}

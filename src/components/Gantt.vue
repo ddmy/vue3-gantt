@@ -72,7 +72,14 @@
 
 <script setup>
 import { defineEmits } from 'vue'
-import { computedDaysRange, fethDaysRange, splitDaysForMonth, todayInRange, fetchToday } from '../util/index.js'
+import {
+  computedDaysRange,
+  fethDaysRange,
+  splitDaysForMonth,
+  todayInRange,
+  fetchToday,
+  workListSplitForRepeat
+} from '../util/index.js'
 
 
 const props = defineProps({
@@ -97,20 +104,30 @@ const props = defineProps({
   activeDate: {
     type: String,
     default: ''
+  },
+  repeatMode: {
+    // extract 将重叠部分抽取，单独生成独立的日程
+    // cover 重叠部分按照征程日期排序覆盖
+    type: Object,
+    default: { mode: 'cover', backgroundColor: '#FFFFCC', textColor: '#336666', name: '重叠日程', desc: '这是多个日程' }
   }
 })
 const dateText = props.dateText
 const itemText = props.itemText
 const rangeDate = splitDaysForMonth(computedDaysRange(...props.dateRangeList))
 
-console.log('rangeDate', rangeDate)
-const data = props.data.map(item => {
+
+let data = props.data.map(item => {
   if (item.type === 'normal' && Array.isArray(item.schedule)) {
     item.schedule = item.schedule.sort((a, b) => new Date(a.days[0]).getTime() - new Date(b.days[0]).getTime())
     return item
   }
   return item
 })
+
+if (props.repeatMode.mode === 'extract') {
+  data = workListSplitForRepeat(props.data, props.repeatMode)
+}
 const activeDate = props.activeDate || fetchToday()
 
 

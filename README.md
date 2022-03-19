@@ -10,15 +10,16 @@ import Gantt from 'vue3-gantt'
 
 ### 组件接收参数
 
-| 参数名 | 取值 | 默认值 |说明 |
-| ------ | ------ | ------ | ------ |
-| data | Array[Object] | [] | 甘特图数据 |
-| dateRangeList | Array | [] | 当前图表内的日期区间，此数组长度为2，内容为起始时间, 格式为'YYYY-MM-DD' |
-| scheduleClick | Function | null | 点击日程的回调事件，接收一个日程详情参数 |
-| scrollXEnd | Function | null | 横向滚动条滚动到底部的事件 |
-| itemText | String | null | 表头描述文字 |
-| dateText | String | null | 表头描述文字 |
-| activeDate | String | 今天 | 当前时间轴高亮显示的一天，（不会覆盖日程样式），'YYYY-MM-DD'格式时间字符串 |
+| 参数名 | 类型 | 默认值 | 可选值 | 说明 |
+| ------ | ------ | -------- | -- | ------------ |
+| data | Array[Object] | [] | - | 甘特图数据 |
+| dateRangeList | Array | [] | - | 当前图表内的日期区间，此数组长度为2，内容为起始时间, 格式为'YYYY-MM-DD' |
+| scheduleClick | Function | null | - | 点击日程的回调事件，接收一个日程详情参数 |
+| scrollXEnd | Function | null | - | 横向滚动条滚动到底部的事件 |
+| itemText | String | null | - | 表头描述文字 |
+| dateText | String | null | - | 表头描述文字 |
+| activeDate | String | 今天 | - | 当前时间轴高亮显示的一天，（不会覆盖日程样式），'YYYY-MM-DD'格式时间字符串 |
+| repeatMode | Object | 见下方 | - | 重叠日程展示模式配置 |
 
 ### data配置 Array[Object]
 
@@ -41,3 +42,13 @@ import Gantt from 'vue3-gantt'
 | backgroundColor | 日程背景色 |
 | textColor | 日程名称展示文字颜色 |
 | days | 日程日期列表`Array`, 数组内容为合法的连续的日期，日期格式为 `YYYY-MM-DD` |
+
+### repeatMode配置 Object
+
+| 参数名 | 可选值 | 默认值 | 说明 |
+| ------ | ------ | -------- | ---------- |
+| mode | 'cover'\|\|'extract' | 'cover' | 重叠日程的处理方式，正常覆盖或者单独提取重复日程再组合 |
+| backgroundColor | css颜色格式 | '#FFFFCC' | extract模式下的背景色 |
+| textColor | css颜色格式 | '#336666' | extract模式下的文字颜色 |
+| name | `String`\|\|`Function` | '重叠日程' | 重叠日程的展示文字，Function接收一个list参数，参数为重叠日程Array |
+| desc | `String`\|\|`Function` | '这是多个日程' | 重叠日程的描述文字，Function接收一个list参数，参数为重叠日程Array |

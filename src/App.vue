@@ -6,6 +6,7 @@
     dateText="日期"
     :activeDate="'2022-02-15'"
     :dateRangeList="dateRangeList"
+    :repeatMode="repeatConfig"
     @scheduleClick="onScheduleClick"
   />
 </template>
@@ -18,6 +19,18 @@ import { fethDaysRange, fetchThreeDays } from './util/index.js'
 const dateRangeList = ref([])
 const currentRange = fetchThreeDays()
 dateRangeList.value = [currentRange[0], currentRange.at(-1)]
+
+const repeatConfig = {
+  mode: 'extract',
+  backgroundColor: '#009999',
+  textColor: '#CCFFFF',
+  name: list => {
+    return list.map(item => item.name).join('+')
+  },
+  desc: list => {
+    return list.map(item => item.desc).join('@@@')
+  }
+}
 
 
 /**
