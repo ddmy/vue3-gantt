@@ -110,7 +110,9 @@ export const fetchThreeDays = () => {
 
 const dateSplitForValue = (data)  =>  {
   const start = data[0].days[0]
-  const end = data.at(-1).days.at(-1)
+  const endTime = data.map(item => new Date(item.days.at(-1)).getTime()).sort((a, b) => a - b).at(-1)
+  const endDate = fetchDayDetail(new Date(endTime))
+  const end = `${endDate.year}-${endDate.month}-${endDate.day}`
   const res = {}
   fethDaysRange(start, end).forEach(key => {
        const current = data.map((item, index) => {
@@ -148,7 +150,6 @@ export const workListSplitForRepeat = (arr, repeatMode) => {
             } else {
               desc = repeatMode.desc
             }
-            console.log('#######', typeof repeatMode.name === 'function')
             if (typeof repeatMode.name === 'function') {
               name = repeatMode.name(list)
             } else {
