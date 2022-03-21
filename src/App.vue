@@ -1,10 +1,13 @@
 <template>
   <h1>甘特图</h1>
+  <button @click="exportImg">下载图片</button>
   <Gantt
+    ref="gantt"
     :data="data"
     itemText="游戏/项目"
     dateText="日期"
     :activeDate="'2022-02-15'"
+    :itemWidth="60"
     :dateRangeList="dateRangeList"
     :repeatMode="repeatConfig"
     @scheduleClick="onScheduleClick"
@@ -40,7 +43,7 @@ const data = [
   {
     type: 'alike', // 代表
     color: 'rgb(255,222,215)',
-    name: '长线游戏版本节点'
+    name: '年度考核'
   },
   {
     type: 'normal', // 代表
@@ -173,6 +176,11 @@ const onScheduleClick = item => {
   console.log('点击', item)
 }
 
+const gantt = ref(null)
+
+const exportImg = () => {
+  gantt.value.exportImg()
+}
 
 
 

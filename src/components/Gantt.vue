@@ -1,5 +1,5 @@
 <template>
-  <div class="gantt">
+  <div class="gantt" id="Vue3Gantt">
     <div class="guide">
       <div class="desc">
         <span class="date">{{ dateText }}</span>
@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-import { defineEmits } from 'vue'
+import { defineEmits, defineExpose } from 'vue'
 import {
   computedDaysRange,
   fethDaysRange,
@@ -80,6 +80,7 @@ import {
   fetchToday,
   workListSplitForRepeat
 } from '../util/index.js'
+import '../util/dom2img.min.js'
 
 
 const props = defineProps({
@@ -110,6 +111,11 @@ const props = defineProps({
     // cover 重叠部分按照征程日期排序覆盖
     type: Object,
     default: { mode: 'cover', backgroundColor: '#FFFFCC', textColor: '#336666', name: '重叠日程', desc: '这是多个日程' }
+  },
+  // 每个日程格子的宽度
+  itemWidth: {
+    type: Number,
+    default: 40
   }
 })
 const dateText = props.dateText
@@ -125,13 +131,14 @@ let data = props.data.map(item => {
   return item
 })
 
+
 if (props.repeatMode.mode === 'extract') {
   data = workListSplitForRepeat(props.data, props.repeatMode)
 }
 const activeDate = props.activeDate || fetchToday()
 
 
-const itemWidth = 40
+const itemWidth = props.itemWidth
 
 // 计算当前盒子样式
 const computedStyle = (parent, item) => {
@@ -349,7 +356,38 @@ const onScrollX = event => {
   }, 200)
 }
 
+const exportImg = async () => {
+  return new Promise((resolve, reject) => {
+    const inner = document.querySelector('#Vue3Gantt .inner')
+    const box = document.querySelector('#Vue3Gantt')
+    const guide = document.querySelector('.guide')
+    inner.scrollLeft = inner.scrollWidth
+    box.style.width = inner.scrollWidth + guide.clientWidth + 'px'
+    dom2img('#Vue3Gantt',{
+      ondone: function() {
+        console.log('Done')
+        box.style.width = '100%'
+        const a = document.createElement('a')
+        a.href = document.querySelector('.dom2img-result').src
+        a.setAttribute('download', '日程图')
+        a.click()
+        resolve(a.href)
+      }
+    })
+  })
+}
+
+defineExpose({
+  exportImg
+})
+
 </script>
+
+<style>
+.dom2img-result {
+  display: none;
+}
+</style>
 
 <style lang="less" scoped>
 .gantt {
@@ -358,7 +396,7 @@ const onScrollX = event => {
   --border: 1px solid #eee;
   --fontSize: 14px;
   --fontColor: #333;
-  --itemWidth: 40px;
+  --itemWidth: v-bind(itemWidth + 'px');
   --itemHeight: 40px;
 }
 * {

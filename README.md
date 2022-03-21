@@ -1,5 +1,5 @@
 #### Vue3甘特图插件
-> 基于Vue3的极简甘特图组件
+> 基于Vue3的甘特图组件
 
 ![avatar](https://blog.ddamy.com/assets/img/gantt.jpeg)
 
@@ -20,6 +20,7 @@ import Gantt from 'vue3-gantt'
 | dateText | String | null | - | 表头描述文字 |
 | activeDate | String | 今天 | - | 当前时间轴高亮显示的一天，（不会覆盖日程样式），'YYYY-MM-DD'格式时间字符串 |
 | repeatMode | Object | 见下方 | - | 重叠日程展示模式配置 |
+| itemWidth | Number | 40 | - | 日期格子的宽度 |
 
 ### data配置 Array[Object]
 
@@ -52,3 +53,23 @@ import Gantt from 'vue3-gantt'
 | textColor | css颜色格式 | '#336666' | extract模式下的文字颜色 |
 | name | `String`\|\|`Function` | '重叠日程' | 重叠日程的展示文字，Function接收一个list参数，参数为重叠日程Array |
 | desc | `String`\|\|`Function` | '这是多个日程' | 重叠日程的描述文字，Function接收一个list参数，参数为重叠日程Array |
+
+
+### 组件实例对外暴露的方法
+
+#### 导出当前甘特图的完整快照图片
+
+```html
+<Gantt
+    ref="gantt"
+    ...
+/>
+<button @click="exportImg">下载图片</button>
+```
+```js
+const gantt = ref(null)
+
+const exportImg = () => {
+  gantt.value.exportImg()
+}
+```
