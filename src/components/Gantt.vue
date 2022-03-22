@@ -79,7 +79,7 @@ import {
   fetchToday,
   workListSplitForRepeat
 } from '../util/index.js'
-import '../util/dom2img.min.js'
+import html2canvas from 'html2canvas'
 
 
 const props = defineProps({
@@ -379,16 +379,16 @@ const exportImg = async () => {
     const guide = document.querySelector('.guide')
     inner.scrollLeft = inner.scrollWidth
     box.style.width = inner.scrollWidth + guide.clientWidth + 'px'
-    dom2img('#Vue3Gantt',{
-      ondone: function() {
-        console.log('Done')
-        box.style.width = '100%'
-        const a = document.createElement('a')
-        a.href = document.querySelector('.dom2img-result').src
-        a.setAttribute('download', '日程图')
-        a.click()
-        resolve(a.href)
-      }
+    html2canvas(box, {
+      removeContainer: true,
+    }).then(function(canvas) {
+      console.log(canvas.toDataURL())
+      box.style.width = '100%'
+      const a = document.createElement('a')
+      a.href = canvas.toDataURL()
+      a.setAttribute('download', '日程图')
+      a.click()
+      resolve(a.href)
     })
   })
 }

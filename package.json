@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "html2canvas": "^1.4.1",
     "vue": "^3.2.25"
   },
   "devDependencies": {
