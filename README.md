@@ -14,8 +14,6 @@ import Gantt from 'vue3-gantt'
 | ------ | ------ | -------- | -- | ------------ |
 | data | Array[Object] | [] | - | 甘特图数据 |
 | dateRangeList | Array | [] | - | 当前图表内的日期区间，此数组长度为2，内容为起始时间, 格式为'YYYY-MM-DD' |
-| scheduleClick | Function | null | - | 点击日程的回调事件，接收一个日程详情参数 |
-| scrollXEnd | Function | null | - | 横向滚动条滚动到底部的事件 |
 | itemText | String | null | - | 表头描述文字 |
 | dateText | String | null | - | 表头描述文字 |
 | activeDate | String | 今天 | - | 当前时间轴高亮显示的一天，（不会覆盖日程样式），'YYYY-MM-DD'格式时间字符串 |
@@ -23,6 +21,13 @@ import Gantt from 'vue3-gantt'
 | itemWidth | Number | 40 | - | 日期格子的宽度，最小40 |
 | itemHeight | Number | 40 | - | 日期格子的高度度，最小40 |
 | scheduleTitle | Function | null | - | 日程上面展示的文本，function接收日程信息为参数，最终使用该方法返回值渲染 |
+
+### 组件事件
+
+| 参数名 | 类型 | 默认值 | 可选值 | 说明 |
+| ------ | ------ | -------- | -- | ------------ |
+| scheduleClick | Function | null | - | 点击日程的回调事件，接收一个日程详情参数 |
+| scrollXEnd | Function | null | - | 横向滚动条滚动到底部的事件 |
 
 ### data配置 Array[Object]
 
