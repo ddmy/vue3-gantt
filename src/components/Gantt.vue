@@ -63,7 +63,7 @@
           @mouseout="event => dateItemMoveOut(dateItem.type, event)"
           @click="scheduleClick(dateItem)"
         >
-          <span v-if="dateItem.type === 'works'" class="work-desc">{{ dateItem.name }}</span>
+          <span v-if="dateItem.type === 'works'" class="work-desc">{{ scheduleTitle ? scheduleTitle(dateItem) : dateItem.name }}</span>
         </div>
       </div>
     </div>
@@ -71,7 +71,6 @@
 </template>
 
 <script setup>
-import { defineEmits, defineExpose } from 'vue'
 import {
   computedDaysRange,
   fethDaysRange,
@@ -115,13 +114,27 @@ const props = defineProps({
   // 每个日程格子的宽度
   itemWidth: {
     type: Number,
-    default: 40
+    default: 40,
+    validator(value) {
+      return value >= 40
+    }
+  },
+  itemHeight: {
+    type: Number,
+    default: 40,
+    validator(value) {
+      return value >= 40
+    }
+  },
+  scheduleTitle: {
+    type: Function,
+    default: null
   }
 })
 const dateText = props.dateText
 const itemText = props.itemText
 const rangeDate = splitDaysForMonth(computedDaysRange(...props.dateRangeList))
-
+const scheduleTitle = props.scheduleTitle
 
 let data = props.data.map(item => {
   if (item.type === 'normal' && Array.isArray(item.schedule)) {
@@ -139,6 +152,7 @@ const activeDate = props.activeDate || fetchToday()
 
 
 const itemWidth = props.itemWidth
+const itemHeight = props.itemHeight
 
 // 计算当前盒子样式
 const computedStyle = (parent, item) => {
@@ -316,6 +330,7 @@ const renderWorks = (game) => {
 }
 
 const dateItemMove = (type, event) => {
+  if (props.repeatMode.repeatMode === 'extract') return
   if (type !== 'works') return
   if (event.target.tagName === 'SPAN') {
     event.target.parentElement.style.zIndex = 2
@@ -326,6 +341,7 @@ const dateItemMove = (type, event) => {
   }
 }
 const dateItemMoveOut = (type, event) => {
+  if (props.repeatMode.repeatMode === 'extract') return
   if (type !== 'works') return
   if (event.target.tagName === 'SPAN') {
     event.target.parentElement.style.zIndex = 1
@@ -397,7 +413,7 @@ defineExpose({
   --fontSize: 14px;
   --fontColor: #333;
   --itemWidth: v-bind(itemWidth + 'px');
-  --itemHeight: 40px;
+  --itemHeight: v-bind(itemHeight + 'px');
 }
 * {
   box-sizing: border-box;
@@ -485,7 +501,7 @@ defineExpose({
             width: var(--itemWidth);
             .day {
               width: var(--itemWidth);
-              height: var(--itemHeight);
+              height: 50%;
               border-left: var(--border);
               display: flex;
               align-items: center;
@@ -493,7 +509,7 @@ defineExpose({
             }
             .week {
               width: var(--itemWidth);
-              height: var(--itemHeight);
+              height: 50%;
               border-left: var(--border);
               border-top: var(--border);
               display: flex;
@@ -533,16 +549,21 @@ defineExpose({
         border-left: var(--border);
         border-bottom: var(--border);
         display: flex;
+        flex-direction: column;
+        justify-content: center;
         align-items: center;
         padding: 0 10px;
         .work-desc {
           width: 100%;
+          height: 100%;
+          line-height: calc(var(--itemHeight) / 2);
           text-align: center;
           font-size: 12px;
-          display: block;
-          white-space: nowrap;
-          text-overflow: ellipsis;
           overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
         }
         &.date-item-work {
           cursor: pointer;

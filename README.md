@@ -20,7 +20,9 @@ import Gantt from 'vue3-gantt'
 | dateText | String | null | - | 表头描述文字 |
 | activeDate | String | 今天 | - | 当前时间轴高亮显示的一天，（不会覆盖日程样式），'YYYY-MM-DD'格式时间字符串 |
 | repeatMode | Object | 见下方 | - | 重叠日程展示模式配置 |
-| itemWidth | Number | 40 | - | 日期格子的宽度 |
+| itemWidth | Number | 40 | - | 日期格子的宽度，最小40 |
+| itemHeight | Number | 40 | - | 日期格子的高度度，最小40 |
+| scheduleTitle | Function | null | - | 日程上面展示的文本，function接收日程信息为参数，最终使用该方法返回值渲染 |
 
 ### data配置 Array[Object]
 

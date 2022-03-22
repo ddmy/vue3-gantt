@@ -7,7 +7,9 @@
     itemText="游戏/项目"
     dateText="日期"
     :activeDate="'2022-02-15'"
-    :itemWidth="60"
+    :itemWidth="120"
+    :itemHeight="40"
+    :scheduleTitle="scheduleTitle"
     :dateRangeList="dateRangeList"
     :repeatMode="repeatConfig"
     @scheduleClick="onScheduleClick"
@@ -33,6 +35,10 @@ const repeatConfig = {
   desc: list => {
     return list.map(item => item.desc).join('@@@')
   }
+}
+
+const scheduleTitle = item => {
+  return item.name + 'function'
 }
 
 
@@ -195,4 +201,7 @@ const exportImg = () => {
   color: #2c3e50;
   margin-top: 60px;
 }
+</style>
+
+<style scoped>
 </style>
