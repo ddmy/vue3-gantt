@@ -2,8 +2,8 @@
   <div class="gantt" id="Vue3Gantt">
     <div class="guide">
       <div class="desc">
-        <span class="date">{{ dateText }}</span>
-        <span class="item">{{ itemText }}</span>
+        <span class="date">{{ props.dateText }}</span>
+        <span class="item">{{ props.itemText }}</span>
       </div>
       <div
         v-for="(item, index) in data"
@@ -32,7 +32,7 @@
               :class="{
                 'day-item': true,
                 'first-day-item': dayIndex === 0,
-                'date-active': activeDate === (dayItem.year + '-' + dayItem.month + '-' + dayItem.day)
+                'date-active': props.activeDate === (dayItem.year + '-' + dayItem.month + '-' + dayItem.day)
               }"
             >
               <div class="day">{{ dayItem.day }}</div>
@@ -55,7 +55,7 @@
           :class="{
             'date-item': true,
             'date-item-work': dateItem.type === 'works',
-            'date-active': dateItem.date === activeDate
+            'date-active': dateItem.date === props.activeDate
           }"
           :style="computedStyle(item, dateItem)"
           :title="dateItem.type === `works` ? dateItem.desc : ``"
@@ -63,7 +63,7 @@
           @mouseout="event => dateItemMoveOut(dateItem.type, event)"
           @click="scheduleClick(dateItem)"
         >
-          <span v-if="dateItem.type === 'works'" class="work-desc">{{ scheduleTitle ? scheduleTitle(dateItem) : dateItem.name }}</span>
+          <span v-if="dateItem.type === 'works'" class="work-desc">{{ props.scheduleTitle ? props.scheduleTitle(dateItem) : dateItem.name }}</span>
         </div>
       </div>
     </div>
@@ -71,6 +71,7 @@
 </template>
 
 <script setup>
+import { watchEffect, ref } from 'vue'
 import {
   computedDaysRange,
   fethDaysRange,
@@ -91,7 +92,10 @@ const props = defineProps({
   dateRangeList: {
     type: Array,
     required: true,
-    default: []
+    default: [],
+    validator(value) {
+      return value[0] && value.at(-1)
+    }
   },
   dateText: {
     type: String,
@@ -103,13 +107,13 @@ const props = defineProps({
   },
   activeDate: {
     type: String,
-    default: ''
+    default: () => fetchToday()
   },
   repeatMode: {
     // extract 将重叠部分抽取，单独生成独立的日程
     // cover 重叠部分按照征程日期排序覆盖
     type: Object,
-    default: { mode: 'cover', backgroundColor: '#FFFFCC', textColor: '#336666', name: '重叠日程', desc: '这是多个日程' }
+    default: () => ({ mode: 'cover', backgroundColor: '#FFFFCC', textColor: '#336666', name: '重叠日程', desc: '这是多个日程' })
   },
   // 每个日程格子的宽度
   itemWidth: {
@@ -131,28 +135,37 @@ const props = defineProps({
     default: null
   }
 })
-const dateText = props.dateText
-const itemText = props.itemText
-const rangeDate = splitDaysForMonth(computedDaysRange(...props.dateRangeList))
-const scheduleTitle = props.scheduleTitle
 
-let data = props.data.map(item => {
-  if (item.type === 'normal' && Array.isArray(item.schedule)) {
-    item.schedule = item.schedule.sort((a, b) => new Date(a.days[0]).getTime() - new Date(b.days[0]).getTime())
-    return item
-  }
-  return item
+let rangeDate = ref([])
+watchEffect(() => {
+  rangeDate.value = splitDaysForMonth(computedDaysRange(...props.dateRangeList))
+  console.log('rangeDate.value', rangeDate.value)
 })
 
 
-if (props.repeatMode.mode === 'extract') {
-  data = workListSplitForRepeat(props.data, props.repeatMode)
+const sortFilterData = () => {
+   data.value = props.data.map(item => {
+    if (item.type === 'normal' && Array.isArray(item.schedule)) {
+      item.schedule = item.schedule.sort((a, b) => new Date(a.days[0]).getTime() - new Date(b.days[0]).getTime()).filter(v => {
+        const check = rangeDate.value[0][0]
+        const checkTime = `${check.year}-${check.month}-${check.day}`
+        return new Date(v.days.at(-1)).getTime() >= new Date(checkTime).getTime()
+      })
+      return item
+    }
+    return item
+  }) 
 }
-const activeDate = props.activeDate || fetchToday()
 
-
-const itemWidth = props.itemWidth
-const itemHeight = props.itemHeight
+let data = ref([])
+watchEffect(() => {
+  sortFilterData()
+  if (props.repeatMode.mode === 'extract') {
+    data.value = workListSplitForRepeat(data.value, props.repeatMode)
+    sortFilterData()
+  }
+  console.log('最新data', data.value)
+})
 
 // 计算当前盒子样式
 const computedStyle = (parent, item) => {
@@ -180,13 +193,13 @@ const computedStyle = (parent, item) => {
 const computeWordwidth = (schedule, days) => { 
   const hasFirst = todayInRange(schedule[0], [days[0].date, days[days.length - 1].date])
   const hasLast = todayInRange(schedule[schedule.length - 1], [days[0].date, days[days.length - 1].date])
-  if (hasFirst && hasLast) return schedule.length * itemWidth
+  if (hasFirst && hasLast) return schedule.length * props.itemWidth
   if (!hasFirst && hasLast) {
     // 无头有尾
-    return fethDaysRange(days[0].date, schedule[schedule.length - 1]).length * itemWidth
+    return fethDaysRange(days[0].date, schedule[schedule.length - 1]).length * props.itemWidth
   } else if (hasFirst && !hasLast) {
     // 有头无尾
-    return fethDaysRange(schedule[0], days[days.length - 1].date).length * itemWidth
+    return fethDaysRange(schedule[0], days[days.length - 1].date).length * props.itemWidth
   }
   return 0
 }
@@ -241,7 +254,7 @@ const _updateScheduleItem = (scheduleItem, result) => {
       type: 'works',
       date: scheduleItem.days[0],
       width: computeWordwidth(scheduleItem.days, result),
-      left: repeatList.length * itemWidth,
+      left: repeatList.length * props.itemWidth,
       ...scheduleItem
     }
   } else {
@@ -265,7 +278,7 @@ const _updateScheduleItem = (scheduleItem, result) => {
 
 // 生成当前游戏项目在当前日期范围的日程列表
 const renderWorks = (game) => {
-  const dateRange = _flatDateRange(rangeDate)
+  const dateRange = _flatDateRange(rangeDate.value)
   // 如果当前游戏项目没有日程安排，直接返回默认的数据
   if (!game.schedule) return dateRange
   let res = []
@@ -412,8 +425,8 @@ defineExpose({
   --border: 1px solid #eee;
   --fontSize: 14px;
   --fontColor: #333;
-  --itemWidth: v-bind(itemWidth + 'px');
-  --itemHeight: v-bind(itemHeight + 'px');
+  --itemWidth: v-bind(props.itemWidth + 'px');
+  --itemHeight: v-bind(props.itemHeight + 'px');
 }
 * {
   box-sizing: border-box;

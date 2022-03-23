@@ -127,19 +127,54 @@ const dateSplitForValue = (data)  =>  {
 }
 
 export const workListSplitForRepeat = (arr, repeatMode) => {
-  return arr.map(schedule => {
+  const resArr = arr.map(schedule => {
     if (schedule.type !== 'normal') return schedule
     const obj = dateSplitForValue(schedule.schedule)
     const values = Object.values(obj)
     const keys = Object.keys(obj)
-    const resMap = [...new Set(values.map(item => JSON.stringify(item)))].map(item => JSON.parse(item))
+    // const resMap = [...new Set(values.map(item => JSON.stringify(item)))].map(item => JSON.parse(item))
+    const resMap = []
+    for (let i = 0; i < values.length; i++) {
+      if (JSON.stringify(resMap.at(-1)) !== JSON.stringify(values[i])) {
+          resMap.push(values[i])
+          resMap.at(-1).days = [ keys[i] ]
+      } else {
+          if (resMap.at(-1)) {
+              if (resMap.at(-1).days) {
+                  resMap.at(-1).days.push(keys[i])
+              } else {
+                  resMap.at(-1).days = [ keys[i] ]
+              }
+          }
+      }
+  }
     let result = new Array(resMap.length).fill({})
     result = result.map((item, index) => {
         let r = {}
         if (resMap[index].length === 1) {
             r = {
                 ...schedule.schedule[resMap[index][0]],
+                days: resMap[index].days,
                 daysSource: schedule.schedule[resMap[index][0]].days
+            }
+            if (r.list) {
+              // 这是第n次，循环，重叠数据已经处理过
+              let desc = ''
+              let name = ''
+              if (typeof repeatMode.desc === 'function') {
+                desc = repeatMode.desc(r.list)
+              } else {
+                desc = repeatMode.desc
+              }
+              if (typeof repeatMode.name === 'function') {
+                name = repeatMode.name(r.list)
+              } else {
+                name = repeatMode.name
+              }
+              r = {
+                ...r,
+                desc, name, backgroundColor: repeatMode.backgroundColor, textColor: repeatMode.textColor
+              }
             }
         } else {
             const list = resMap[index].map(v => schedule.schedule[v])
@@ -161,16 +196,19 @@ export const workListSplitForRepeat = (arr, repeatMode) => {
                 textColor: repeatMode.textColor,
                 name,
                 list,
+                days: resMap[index].days,
             }
         }
-        r.days = values.map((v, i) => {
-            if (JSON.stringify(v) === JSON.stringify(resMap[index])) {
-                return keys[i]
-            }
-        }).filter(v => v)
+        // r.days = values.map((v, i) => {
+        //     if (JSON.stringify(v) === JSON.stringify(resMap[index])) {
+        //         return keys[i]
+        //     }
+        // }).filter(v => v)
+        // console.log('*********', r)
         return r
     })
     schedule.schedule = result
     return schedule
   })
+  return resArr
 }

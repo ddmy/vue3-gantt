@@ -1,14 +1,15 @@
 <template>
   <h1>甘特图</h1>
   <button @click="exportImg">下载图片</button>
+  <button @click="toggle">更换高亮</button>
   <Gantt
     ref="gantt"
     :data="data"
     itemText="游戏/项目"
     dateText="日期"
-    :activeDate="'2022-02-15'"
-    :itemWidth="120"
-    :itemHeight="40"
+    :activeDate="activeDate"
+    :itemWidth="width"
+    :itemHeight="height"
     :scheduleTitle="scheduleTitle"
     :dateRangeList="dateRangeList"
     :repeatMode="repeatConfig"
@@ -17,15 +18,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import Gantt from './components/Gantt.vue'
 import { fethDaysRange, fetchThreeDays } from './util/index.js'
 
 const dateRangeList = ref([])
+const activeDate = ref('2022-02-14')
 const currentRange = fetchThreeDays()
 dateRangeList.value = [currentRange[0], currentRange.at(-1)]
+// dateRangeList.value = ['2022-03-01', '2022-05-05']
 
-const repeatConfig = {
+const repeatConfig = reactive({
   mode: 'extract',
   backgroundColor: '#009999',
   textColor: '#CCFFFF',
@@ -35,17 +38,21 @@ const repeatConfig = {
   desc: list => {
     return list.map(item => item.desc).join('@@@')
   }
-}
+})
 
 const scheduleTitle = item => {
   return item.name + 'function'
 }
 
+const width = ref(40)
+const height = ref(40)
+
+
 
 /**
  * alike: 全部一样
  */
-const data = [
+const data = ref([
   {
     type: 'alike', // 代表
     color: 'rgb(255,222,215)',
@@ -65,20 +72,20 @@ const data = [
         days: fethDaysRange('2022-01-15', '2022-02-05')
       },
       {
-        id: 222220,
-        name: '春节活动',
-        desc: '这个活动很重要，6666666营收数百万，跨部门合作的一个大项目，BOSS亲自下场坐镇指挥，大家一定要团结一心!',
-        backgroundColor: '#768',
-        textColor: '#fff',
-        days: fethDaysRange('2022-02-28', '2022-03-03')
-      },
-      {
         id: 555550,
         name: '正月不剃头-重叠一个',
         desc: '这个活动很重要，6666666营收数百万，跨部门合作的一个大项目，BOSS亲自下场坐镇指挥，大家一定要团结一心!',
         backgroundColor: '#28f',
         textColor: '#fff',
-        days: fethDaysRange('2022-02-03', '2022-02-10')
+        days: fethDaysRange('2022-02-27', '2022-03-15')
+      },
+      {
+        id: 222220,
+        name: '春节活动',
+        desc: '这个活动很重要，6666666营收数百万，跨部门合作的一个大项目，BOSS亲自下场坐镇指挥，大家一定要团结一心!',
+        backgroundColor: '#768',
+        textColor: '#fff',
+        days: fethDaysRange('2022-02-28', '2022-03-02')
       },
       {
         id: 111110,
@@ -86,7 +93,7 @@ const data = [
         desc: '这个活动很重要，营收数百万，跨部门合作的一个大项目，BOSS亲自下场坐镇指挥，大家一定要团结一心!',
         backgroundColor: '#369',
         textColor: '#fff',
-        days: fethDaysRange('2022-03-12', '2022-03-23')
+        days: fethDaysRange('2022-03-2', '2022-03-8')
       },
       {
         id: 44440,
@@ -176,7 +183,7 @@ const data = [
       },
     ],
   },
-]
+])
 
 const onScheduleClick = item => {
   console.log('点击', item)
@@ -185,7 +192,18 @@ const onScheduleClick = item => {
 const gantt = ref(null)
 
 const exportImg = () => {
+  console.log('gantt', gantt)
   gantt.value.exportImg()
+}
+
+const toggle = () => {
+  activeDate.value = '2022-04-01'
+  width.value = 60
+  height.value = 60
+  dateRangeList.value = ['2022-03-01', '2022-05-01']
+  repeatConfig.backgroundColor = '#99CC33'
+  repeatConfig.textColo = '#3399CC'
+  data.value.pop()
 }
 
 
