@@ -14,7 +14,7 @@
   />
 ```
 ```js
-<script steup>
+<script setup>
 import { ref } from 'vue'
 import Gantt from 'vue3-gantt'
 const dateRangeList = ref(['2022-01-01', '2022-03-05'])
