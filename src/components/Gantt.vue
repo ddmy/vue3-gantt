@@ -178,27 +178,38 @@ const checkValidator = () => {
 
 const data = ref([])
 
-const sortFilterData = () => {
-  checkValidator()
-   data.value = cloneDeep(props.data).map(item => {
-    if (item.type === 'normal' && Array.isArray(item.schedule)) {
-      item.schedule = item.schedule.sort((a, b) => new Date(a.days[0]).getTime() - new Date(b.days[0]).getTime()).filter(v => {
+const splitSchedule = data => {
+  return data.map(item => {
+    if (item.type === 'normal' && Array.isArray(item.schedule) && item.schedule.length) {
+      item.schedule = item.schedule.filter(v => {
         const check = rangeDate.value[0][0]
         const checkTime = `${check.year}-${check.month}-${check.day}`
         return new Date(v.days.at(-1)).getTime() >= new Date(checkTime).getTime()
       })
+    }
+    return item
+  })
+}
+
+const sortFilterData = () => {
+  checkValidator()
+  data.value = cloneDeep(props.data).map(item => {
+    if (item.type === 'normal' && Array.isArray(item.schedule)) {
+      item.schedule = item.schedule.sort((a, b) => new Date(a.days[0]).getTime() - new Date(b.days[0]).getTime())
       return item
     }
     return item
-  }) 
+  })
+  data.value = splitSchedule(data.value)
 }
 
 watchEffect(() => {
   sortFilterData()
   if (props.repeatMode.mode === 'extract') {
     data.value = workListSplitForRepeat(data.value, props.repeatMode)
-    sortFilterData()
+    data.value = splitSchedule(data.value)
   }
+  console.log('最新data', data.value)
 })
 
 // 计算当前盒子样式
