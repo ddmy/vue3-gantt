@@ -87,8 +87,7 @@ export const fetchToday = () => {
   return `${currentYear}-${currentMonth}-${currentDay}`
 }
 
-export const fetchThreeDays = () => {
-  const now = new Date()
+export const fetchThreeDays = (now = new Date()) => {
   const currentYear = now.getFullYear()
   const currentMonth = now.getMonth() + 1
   const currentDate = `${currentYear}-${ String(currentMonth).padStart(2, '0')}`
