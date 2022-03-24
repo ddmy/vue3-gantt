@@ -104,10 +104,18 @@ export const fetchThreeDays = (now = new Date()) => {
     nextDate = `${String(currentYear).padStart(4, '0')}-${String(currentMonth + 1).padStart(2, '0')}`
   }
 
-  return [...fetchMonthRangeDay(prevDate), ...fetchMonthRangeDay(currentDate), ...fetchMonthRangeDay(nextDate)]
+  const prev = fetchMonthRangeDay(prevDate)
+  const current = fetchMonthRangeDay(currentDate)
+  const next = fetchMonthRangeDay(nextDate)
+  let result = [...prev, ...current, ...next]
+  result.prev = prev
+  result.current = current
+  result.next = next
+  return result
 }
 
 const dateSplitForValue = (data)  =>  {
+  if (!data.length) return {}
   const start = data[0].days[0]
   const endTime = data.map(item => new Date(item.days.at(-1)).getTime()).sort((a, b) => a - b).at(-1)
   const endDate = fetchDayDetail(new Date(endTime))
@@ -131,6 +139,7 @@ export const workListSplitForRepeat = (arr, repeatMode) => {
     const obj = dateSplitForValue(schedule.schedule)
     const values = Object.values(obj)
     const keys = Object.keys(obj)
+    if (!keys.length) return schedule
     // const resMap = [...new Set(values.map(item => JSON.stringify(item)))].map(item => JSON.parse(item))
     const resMap = []
     for (let i = 0; i < values.length; i++) {
@@ -146,7 +155,7 @@ export const workListSplitForRepeat = (arr, repeatMode) => {
               }
           }
       }
-  }
+    }
     let result = new Array(resMap.length).fill({})
     result = result.map((item, index) => {
         let r = {}
@@ -210,4 +219,16 @@ export const workListSplitForRepeat = (arr, repeatMode) => {
     return schedule
   })
   return resArr
+}
+
+export const fetchNextMonthRange = (date = new Date()) => {
+  return fetchThreeDays(date).next
+}
+
+export const fetchPrevMonthRange = (date = new Date()) => {
+  return fetchThreeDays(date).prev
+}
+
+export const fetchTodayMonthRange = (date = new Date()) => {
+  return fetchThreeDays(date).current
 }

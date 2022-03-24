@@ -2,6 +2,9 @@
   <h1>甘特图</h1>
   <button @click="exportImg">下载图片</button>
   <button @click="toggle">更换高亮</button>
+  <button @click="prev">上一月</button>
+  <button @click="next">下一月</button>
+  <button @click="today">今天</button>
   <Gantt
     ref="gantt"
     :data="data"
@@ -13,6 +16,7 @@
     :scheduleTitle="scheduleTitle"
     :dateRangeList="dateRangeList"
     :repeatMode="repeatConfig"
+    :alikeName="alikeName"
     @scheduleClick="onScheduleClick"
   />
 </template>
@@ -20,13 +24,13 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import Gantt from './components/Gantt.vue'
-import { fethDaysRange, fetchThreeDays } from './util/index.js'
+import { fethDaysRange, fetchThreeDays, fetchTodayMonthRange, fetchPrevMonthRange, fetchNextMonthRange } from './util/index.js'
 
 const dateRangeList = ref([])
 const activeDate = ref('2022-02-14')
 const currentRange = fetchThreeDays()
 dateRangeList.value = [currentRange[0], currentRange.at(-1)]
-// dateRangeList.value = ['2022-03-01', '2022-05-05']
+// dateRangeList.value = ['2022-05-01', '2022-06-30']
 
 const repeatConfig = reactive({
   mode: 'extract',
@@ -44,7 +48,7 @@ const scheduleTitle = item => {
   return item.name + 'function'
 }
 
-const width = ref(40)
+const width = ref(80)
 const height = ref(40)
 
 /**
@@ -194,14 +198,31 @@ const exportImg = () => {
   gantt.value.exportImg()
 }
 
+const alikeName = item => {
+  return '▶️'+item.name
+}
+
 const toggle = () => {
   activeDate.value = '2022-04-01'
-  width.value = 60
+  width.value = 100
   height.value = 60
   dateRangeList.value = ['2022-03-01', '2022-05-01']
   repeatConfig.backgroundColor = '#99CC33'
   repeatConfig.textColo = '#3399CC'
   data.value.pop()
+}
+
+const prev = () => {
+  const arr = fetchPrevMonthRange(new Date(dateRangeList.value[0]))
+  dateRangeList.value = [arr[0], arr.at(-1)]
+}
+const next = () => {
+  const arr = fetchNextMonthRange(new Date(dateRangeList.value.at(-1)))
+  dateRangeList.value = [arr[0], arr.at(-1)]
+}
+const today = () => {
+  const arr = fetchTodayMonthRange(new Date())
+  dateRangeList.value = [arr[0], arr.at(-1)]
 }
 
 

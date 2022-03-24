@@ -14,7 +14,7 @@
         }"
         :style="item.type === 'alike' && computedStyle(item)"
       >
-        {{ item.name}}
+        {{ (typeof props.alikeName === 'function' && item.type === 'alike') ? props.alikeName(item) : item.name}}
       </div>
     </div>
     <div class="inner" @scroll="onScrollX($event)">
@@ -71,6 +71,7 @@
 </template>
 
 <script setup>
+import cloneDeep from 'lodash/cloneDeep'
 import { watchEffect, ref } from 'vue'
 import {
   computedDaysRange,
@@ -137,8 +138,14 @@ const props = defineProps({
   borderColor: {
     type: String,
     default: '#eee'
+  },
+  alikeName: {
+    type: Function,
+    default: null
   }
 })
+
+const emit = defineEmits(['scheduleClick', 'scrollXEnd'])
 
 let rangeDate = ref([])
 watchEffect(() => {
@@ -169,10 +176,11 @@ const checkValidator = () => {
   })
 }
 
+const data = ref([])
 
 const sortFilterData = () => {
   checkValidator()
-   data.value = props.data.map(item => {
+   data.value = cloneDeep(props.data).map(item => {
     if (item.type === 'normal' && Array.isArray(item.schedule)) {
       item.schedule = item.schedule.sort((a, b) => new Date(a.days[0]).getTime() - new Date(b.days[0]).getTime()).filter(v => {
         const check = rangeDate.value[0][0]
@@ -185,14 +193,12 @@ const sortFilterData = () => {
   }) 
 }
 
-let data = ref([])
 watchEffect(() => {
   sortFilterData()
   if (props.repeatMode.mode === 'extract') {
     data.value = workListSplitForRepeat(data.value, props.repeatMode)
     sortFilterData()
   }
-  console.log('最新data', data.value)
 })
 
 // 计算当前盒子样式
@@ -308,7 +314,7 @@ const _updateScheduleItem = (scheduleItem, result) => {
 const renderWorks = (game) => {
   const dateRange = _flatDateRange(rangeDate.value)
   // 如果当前游戏项目没有日程安排，直接返回默认的数据
-  if (!game.schedule) return dateRange
+  if (!game.schedule || !game.schedule.length) return dateRange
   let res = []
   game.schedule.forEach(scheduleItem => {
     dateRange.forEach(dayItem => {
@@ -390,8 +396,6 @@ const dateItemMoveOut = (type, event) => {
     event.target.style.boxShadow = 'none'
   }
 }
-
-const emit = defineEmits(['scheduleClick', 'scrollXEnd'])
 
 const scheduleClick = item => {
   emit('scheduleClick', item)
@@ -606,6 +610,11 @@ defineExpose({
         }
         &:first-child {
           border-left: none;
+        }
+      }
+      &.alike {
+        .date-item {
+          border-left: transparent;
         }
       }
       &:last-child {

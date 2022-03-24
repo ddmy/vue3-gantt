@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "html2canvas": "^1.4.1",
+    "lodash": "^4.17.21",
     "vue": "^3.2.25"
   },
   "devDependencies": {
