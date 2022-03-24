@@ -72,6 +72,7 @@ const data = ref([
 | itemWidth | Number | 40 | - | 日期格子的宽度，最小40 |
 | itemHeight | Number | 40 | - | 日期格子的高度度，最小40 |
 | scheduleTitle | Function | null | - | 日程上面展示的文本，function接收日程信息为参数，最终使用该方法返回值渲染 |
+| borderColor | String | '#eee' | - | 表格边框颜色 |
 
 ### 组件事件
 

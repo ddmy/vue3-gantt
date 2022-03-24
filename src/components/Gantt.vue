@@ -133,6 +133,10 @@ const props = defineProps({
   scheduleTitle: {
     type: Function,
     default: null
+  },
+  borderColor: {
+    type: String,
+    default: '#eee'
   }
 })
 
@@ -142,8 +146,32 @@ watchEffect(() => {
   console.log('rangeDate.value', rangeDate.value)
 })
 
+const checkValidator = () => {
+  const keys = ['type', 'name', 'schedule']
+  const scheduleKeys = ['id', 'name', 'desc', 'backgroundColor', 'textColor', 'days']
+  props.data.forEach(item => {
+    if (item.type === 'normal') {
+      const arr = Object.keys(item)
+      const res = keys.find(v => !arr.includes(v))
+      if (res) {
+        throw new Error(`项目缺少${res}项`)
+      }
+      item.schedule.forEach(v => {
+        if (!v.list) {
+          const arrs = Object.keys(v)
+          const ress = scheduleKeys.find(val => !arrs.includes(val))
+          if (ress) {
+            throw new Error(`日程缺少${ress}项`)
+          }
+        }
+      })
+    }
+  })
+}
+
 
 const sortFilterData = () => {
+  checkValidator()
    data.value = props.data.map(item => {
     if (item.type === 'normal' && Array.isArray(item.schedule)) {
       item.schedule = item.schedule.sort((a, b) => new Date(a.days[0]).getTime() - new Date(b.days[0]).getTime()).filter(v => {
@@ -343,7 +371,6 @@ const renderWorks = (game) => {
 }
 
 const dateItemMove = (type, event) => {
-  if (props.repeatMode.repeatMode === 'extract') return
   if (type !== 'works') return
   if (event.target.tagName === 'SPAN') {
     event.target.parentElement.style.zIndex = 2
@@ -354,7 +381,6 @@ const dateItemMove = (type, event) => {
   }
 }
 const dateItemMoveOut = (type, event) => {
-  if (props.repeatMode.repeatMode === 'extract') return
   if (type !== 'works') return
   if (event.target.tagName === 'SPAN') {
     event.target.parentElement.style.zIndex = 1
@@ -412,17 +438,12 @@ defineExpose({
 
 </script>
 
-<style>
-.dom2img-result {
-  display: none;
-}
-</style>
 
 <style lang="less" scoped>
 .gantt {
   --borderWidth: 1px;
-  --borderColor: #eee;
-  --border: 1px solid #eee;
+  --borderColor: v-bind(props.borderColor);
+  --border: 1px solid var(--borderColor);
   --fontSize: 14px;
   --fontColor: #333;
   --itemWidth: v-bind(props.itemWidth + 'px');
