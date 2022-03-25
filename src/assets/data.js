@@ -141,36 +141,36 @@ export default {
     //   color: '#f6f6f6',
     //   type: 'alike'
     // },
-    // {
-    //   name: '和平精英',
-    //   type: 'normal',
-    //   schedule: [
-    //     {
-    //       id: 1111,
-    //       name: '元旦玩法+S级商业化',
-    //       desc: '活跃提升20%，收入提升50%',
-    //       backgroundColor: '#ffdebc',
-    //       textColor: '#ff5d35',
-    //       days: ['2022-01-30', '2022-01-31', '2022-02-01', '2022-02-02', '2022-02-03', '2022-02-04']
-    //     },
-    //     {
-    //       id: 1112,
-    //       name: 'S26新赛季，战令更新',
-    //       desc: '活跃提升20%，收入提升30%',
-    //       backgroundColor: '#ffdebc',
-    //       textColor: '#ff5d35',
-    //       days: ['2022-02-06', '2022-02-07', '2022-02-08', '2022-02-09', '2022-02-10', '2022-02-11', '2022-02-12', '2022-02-13', '2022-02-14']
-    //     },
-    //     {
-    //       id: 1113,
-    //       name: '新皮肤活动',
-    //       desc: '活跃提升20%，收入提升30%',
-    //       backgroundColor: '#ffdebc',
-    //       textColor: '#ff5d35',
-    //       days: ['2022-02-18', '2022-02-19', '2022-02-20', '2022-02-21', '2022-02-22', '2022-02-23', '2022-02-24']
-    //     },
-    //   ]
-    // },
+    {
+      name: '和平精英',
+      type: 'normal',
+      schedule: [
+        {
+          id: 1111,
+          name: '元旦玩法+S级商业化',
+          desc: '活跃提升20%，收入提升50%',
+          backgroundColor: '#ffdebc',
+          textColor: '#ff5d35',
+          days: ['2022-01-30', '2022-01-31', '2022-02-01', '2022-02-02', '2022-02-03', '2022-02-04']
+        },
+        {
+          id: 1112,
+          name: 'S26新赛季，战令更新',
+          desc: '活跃提升20%，收入提升30%',
+          backgroundColor: '#ffdebc',
+          textColor: '#ff5d35',
+          days: ['2022-02-06', '2022-02-07', '2022-02-08', '2022-02-09', '2022-02-10', '2022-02-11', '2022-02-12', '2022-02-13', '2022-02-14']
+        },
+        {
+          id: 1113,
+          name: '新皮肤活动',
+          desc: '活跃提升20%，收入提升30%',
+          backgroundColor: '#ffdebc',
+          textColor: '#ff5d35',
+          days: ['2022-02-18', '2022-02-19', '2022-02-20', '2022-02-21', '2022-02-22', '2022-02-23', '2022-02-24']
+        },
+      ]
+    },
     {
       name: '金铲铲之战',
       type: 'normal',
@@ -200,6 +200,71 @@ export default {
           days: ['2022-02-16', '2022-02-17','2022-02-18', '2022-02-19']
         },
       ]
-    }
+    },
+    {
+      name: '西游记',
+      type: 'normal',
+      schedule: []
+    },
+    {
+      name: '水浒传',
+      type: 'normal',
+      schedule: []
+    },
+    {
+      name: '三国演义',
+      type: 'normal',
+      schedule: []
+    },
+    {
+      name: '平凡的世界',
+      type: 'normal',
+      schedule: []
+    },
+    {
+      name: '白鹿原',
+      type: 'normal',
+      schedule: []
+    },
+    {
+      name: '小兵张嘎',
+      type: 'normal',
+      schedule: []
+    },
+    {
+      name: '冲冲冲',
+      type: 'normal',
+      schedule: []
+    },
+    {
+      name: '冲冲冲1',
+      type: 'normal',
+      schedule: []
+    },
+    {
+      name: '冲冲冲2',
+      type: 'normal',
+      schedule: []
+    },
+    {
+      name: '冲冲冲3',
+      type: 'normal',
+      schedule: []
+    },
+    {
+      name: '冲冲冲4',
+      type: 'normal',
+      schedule: []
+    },
+    {
+      name: '冲冲冲5',
+      type: 'normal',
+      schedule: []
+    },
+    {
+      name: '冲冲冲6',
+      type: 'normal',
+      schedule: []
+    },
   ]
 }

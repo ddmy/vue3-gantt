@@ -18,6 +18,7 @@
     :repeatMode="repeatConfig"
     :alikeName="alikeName"
     @scheduleClick="onScheduleClick"
+    @scrollYEnd="onScrollYEnd"
   />
 </template>
 
@@ -69,6 +70,10 @@ const exportImg = () => {
 
 const alikeName = item => {
   return '▶️'+item.name
+}
+
+const onScrollYEnd = e => {
+  console.log('|到底了')
 }
 
 const toggle = () => {

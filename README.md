@@ -82,6 +82,7 @@ const data = ref([
 | ------ | ------ | -------- | -- | ------------ |
 | scheduleClick | Function | null | - | 点击日程的回调事件，接收一个日程详情参数 |
 | scrollXEnd | Function | null | - | 横向滚动条滚动到底部的事件 |
+| scrollYEnd | Function | null | - | 竖向滚动条滚动到底部的事件 |
 
 ### data配置 Array[Object]
 

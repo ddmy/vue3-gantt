@@ -5,16 +5,18 @@
         <span class="date">{{ props.dateText }}</span>
         <span class="item">{{ props.itemText }}</span>
       </div>
-      <div
-        v-for="(item, index) in data"
-        :key="index"
-        :class="{
-          'guide-name': true,
-          'last-guide-name': index === data.length - 1
-        }"
-        :style="item.type === 'alike' && computedStyle(item)"
-      >
-        {{ (typeof props.alikeName === 'function' && item.type === 'alike') ? props.alikeName(item) : item.name}}
+      <div class="item-name-list">
+        <div
+          v-for="(item, index) in data"
+          :key="index"
+          :class="{
+            'guide-name': true,
+            'last-guide-name': index === data.length - 1
+          }"
+          :style="item.type === 'alike' && computedStyle(item)"
+        >
+          {{ (typeof props.alikeName === 'function' && item.type === 'alike') ? props.alikeName(item) : item.name}}
+        </div>
       </div>
     </div>
     <div class="inner" @scroll="onScrollX($event)">
@@ -41,29 +43,31 @@
           </div>
         </div>
       </div>
-      <div
-        v-for="(item, index) in data"
-        :key="index"
-        :class="{
-          'date-box': true,
-          'alike': item.type === 'alike'
-        }"
-      >
+      <div class="schedule-box">
         <div
-          v-for="(dateItem, dateIndex) in renderWorks(item)"
-          :key="dateIndex"
+          v-for="(item, index) in data"
+          :key="index"
           :class="{
-            'date-item': true,
-            'date-item-work': dateItem.type === 'works',
-            'date-active': dateItem.date === props.activeDate
+            'date-box': true,
+            'alike': item.type === 'alike'
           }"
-          :style="computedStyle(item, dateItem)"
-          :title="dateItem.type === `works` ? dateItem.desc : ``"
-          @mousemove="event => dateItemMove(dateItem.type, event)"
-          @mouseout="event => dateItemMoveOut(dateItem.type, event)"
-          @click="scheduleClick(dateItem)"
         >
-          <span v-if="dateItem.type === 'works'" class="work-desc">{{ props.scheduleTitle ? props.scheduleTitle(dateItem) : dateItem.name }}</span>
+          <div
+            v-for="(dateItem, dateIndex) in renderWorks(item)"
+            :key="dateIndex"
+            :class="{
+              'date-item': true,
+              'date-item-work': dateItem.type === 'works',
+              'date-active': dateItem.date === props.activeDate
+            }"
+            :style="computedStyle(item, dateItem)"
+            :title="dateItem.type === `works` ? dateItem.desc : ``"
+            @mousemove="event => dateItemMove(dateItem.type, event)"
+            @mouseout="event => dateItemMoveOut(dateItem.type, event)"
+            @click="scheduleClick(dateItem)"
+          >
+            <span v-if="dateItem.type === 'works'" class="work-desc">{{ props.scheduleTitle ? props.scheduleTitle(dateItem) : dateItem.name }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -72,7 +76,7 @@
 
 <script setup>
 import cloneDeep from 'lodash/cloneDeep'
-import { watchEffect, ref } from 'vue'
+import { watchEffect, ref, onMounted } from 'vue'
 import {
   computedDaysRange,
   fethDaysRange,
@@ -145,7 +149,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['scheduleClick', 'scrollXEnd'])
+const emit = defineEmits(['scheduleClick', 'scrollXEnd', 'scrollYEnd'])
 
 let rangeDate = ref([])
 watchEffect(() => {
@@ -408,11 +412,43 @@ const dateItemMoveOut = (type, event) => {
   }
 }
 
+let timer = null
+
+const contentScroll = event => {
+  
+  const target = event.target
+  const targetClassName = target.className
+  let flag = 'item-name-list'
+  if (targetClassName === 'item-name-list') {
+    flag = 'schedule-box'
+  }
+  const flagBox = document.querySelector(`#Vue3Gantt .${flag}`)
+  if (flagBox) {
+    flagBox.scrollTop = target.scrollTop
+  }
+  if (timer) {
+    clearTimeout(timer)
+  }
+  timer = setTimeout(() => {
+    const height = Math.ceil(Math.max(target.clientHeight, target.scrollHeight))
+    if ((target.scrollTop + target.clientHeight) >= height) {
+      emit('scrollYEnd', event)
+    }
+  })
+}
+
+onMounted(() => {
+  const itemBox = document.querySelector('#Vue3Gantt .item-name-list')
+  const innerBox = document.querySelector('#Vue3Gantt .schedule-box')
+  itemBox.addEventListener('scroll', contentScroll)
+  innerBox.addEventListener('scroll', contentScroll)
+})
+
+
 const scheduleClick = item => {
   emit('scheduleClick', item)
 }
 
-let timer = null
 const onScrollX = event => {
   if (timer) {
     clearTimeout(timer)
@@ -463,6 +499,7 @@ defineExpose({
   --fontColor: #333;
   --itemWidth: v-bind(props.itemWidth + 'px');
   --itemHeight: v-bind(props.itemHeight + 'px');
+  --innerHeight: 400px;
 }
 * {
   box-sizing: border-box;
@@ -476,6 +513,23 @@ defineExpose({
   font-size: var(--fontSize);
   color: var(--fontColor);
   display: flex;
+  *::-webkit-scrollbar {
+    /*滚动条整体样式*/
+    width : 2px;  /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+  }
+  *::-webkit-scrollbar-thumb {
+    /*滚动条里面小方块*/
+    border-radius: 2px;
+    box-shadow: inset 0 0 2px rgba(10, 10, 10, 0.2);
+    background:  #818181;
+  }
+  *::-webkit-scrollbar-track {
+    /*滚动条里面轨道*/
+    box-shadow: inset 0 0 2px rgba(10, 10, 10, 0.2);
+    border-radius: 2px;
+    background: #ededed;
+  }
   .guide {
     flex-shrink: 0;
     width: 120px;
@@ -508,6 +562,11 @@ defineExpose({
         bottom: 20px;
       }
     }
+    .item-name-list {
+      width: 100%;
+      height: var(--innerHeight);
+      overflow-y: auto;
+    }
     .guide-name {
       width: 100%;
       height: var(--itemHeight);
@@ -524,6 +583,7 @@ defineExpose({
   .inner {
     width: 100%;
     overflow-x: auto;
+    position: relative;
     .date-list {
       width: 100%;
       height: 120px;
@@ -587,6 +647,13 @@ defineExpose({
       &.first-date-list{
         border-left: none;
       }
+    }
+    .schedule-box {
+      height: var(--innerHeight);
+      overflow-y: auto;
+      position: absolute;
+      left: 0;
+      bottom: 0;
     }
     .date-box {
       height: var(--itemHeight);
