@@ -564,7 +564,7 @@ defineExpose({
     }
     .item-name-list {
       width: 100%;
-      height: var(--innerHeight);
+      max-height: var(--innerHeight);
       overflow-y: auto;
     }
     .guide-name {
@@ -649,11 +649,16 @@ defineExpose({
       }
     }
     .schedule-box {
-      height: var(--innerHeight);
+      max-height: var(--innerHeight);
       overflow-y: auto;
       position: absolute;
       left: 0;
       bottom: 0;
+    }
+    .schedule-box::-webkit-scrollbar {
+      /*滚动条整体样式*/
+      width : 0;  /*高宽分别对应横竖滚动条的尺寸*/
+      height: 0;
     }
     .date-box {
       height: var(--itemHeight);
