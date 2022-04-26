@@ -55,7 +55,7 @@ const width = ref(80)
 const height = ref(40)
 
 
-const data = ref(DATA.data2)
+const data = ref(DATA.data1)
 
 const onScheduleClick = item => {
   console.log('点击', item)

@@ -19,7 +19,7 @@
         </div>
       </div>
     </div>
-    <div class="inner" @scroll="onScrollX($event)">
+    <div class="inner" @scroll="onScrollX($event)" ref="innerRef">
       <div class="date-list first-date-list">
         <div
           v-for="monthItem in rangeDate"
@@ -206,15 +206,6 @@ const sortFilterData = () => {
   })
   data.value = splitSchedule(data.value)
 }
-
-watchEffect(() => {
-  sortFilterData()
-  if (props.repeatMode.mode === 'extract') {
-    data.value = workListSplitForRepeat(data.value, props.repeatMode)
-    data.value = splitSchedule(data.value)
-  }
-  console.log('最新data', data.value)
-})
 
 // 计算当前盒子样式
 const computedStyle = (parent, item) => {
@@ -414,9 +405,11 @@ const dateItemMoveOut = (type, event) => {
 
 let timer = null
 
+const innerRef = ref(null)
+
 const contentScroll = event => {
-  
-  const target = event.target
+  const target = event ? event.target : innerRef.value
+  if (!target) return
   const targetClassName = target.className
   let flag = 'item-name-list'
   if (targetClassName === 'item-name-list') {
@@ -442,6 +435,17 @@ onMounted(() => {
   const innerBox = document.querySelector('#Vue3Gantt .schedule-box')
   itemBox.addEventListener('scroll', contentScroll)
   innerBox.addEventListener('scroll', contentScroll)
+  contentScroll()
+})
+
+watchEffect(() => {
+  sortFilterData()
+  if (props.repeatMode.mode === 'extract') {
+    data.value = workListSplitForRepeat(data.value, props.repeatMode)
+    data.value = splitSchedule(data.value)
+  }
+  console.log('最新data', data.value)
+  contentScroll()
 })
 
 
@@ -462,7 +466,7 @@ const onScrollX = event => {
   }, 200)
 }
 
-const exportImg = async () => {
+const exportImg = async (download = true) => {
   return new Promise((resolve, reject) => {
     const inner = document.querySelector('#Vue3Gantt .inner')
     const box = document.querySelector('#Vue3Gantt')
@@ -474,10 +478,12 @@ const exportImg = async () => {
     }).then(function(canvas) {
       console.log(canvas.toDataURL())
       box.style.width = '100%'
-      const a = document.createElement('a')
-      a.href = canvas.toDataURL()
-      a.setAttribute('download', '日程图')
-      a.click()
+      if (download) {
+        const a = document.createElement('a')
+        a.href = canvas.toDataURL()
+        a.setAttribute('download', '日程图')
+        a.click()
+      }
       resolve(a.href)
     })
   })

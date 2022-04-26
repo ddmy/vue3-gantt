@@ -2,7 +2,7 @@
 
 > 基于Vue3的甘特图组件
 
-![avatar](https://blog.ddamy.com/assets/img/gantt.jpeg)
+![gantt](https://blog.ddamy.com/assets/img/gantt.jpeg)
 
 ### 使用方式
 ```html
@@ -110,7 +110,7 @@ const data = ref([
 
 | 参数名 | 可选值 | 默认值 | 说明 |
 | ------ | ------ | -------- | ---------- |
-| mode | 'cover'\|\|'extract' | 'cover' | 重叠日程的处理方式，正常覆盖或者单独提取重复日程再组合 |
+| mode | 'cover'\|\|'extract' | 'cover' | 重叠日程的处理方式，正常覆盖或者单独提取重复日程再组合, cover会忽略repeatMode其余选项 |
 | backgroundColor | css颜色格式 | '#FFFFCC' | extract模式下的背景色 |
 | textColor | css颜色格式 | '#336666' | extract模式下的文字颜色 |
 | name | `String`\|\|`Function` | '重叠日程' | 重叠日程的展示文字，Function接收一个list参数，参数为重叠日程Array |
@@ -135,3 +135,4 @@ const exportImg = () => {
   gantt.value.exportImg()
 }
 ```
+> `exportImg` 方法接收一个布尔值, 如果为`false`, 则不会自动下载图片. `exportImg` 返回一个`Promise`, 成功状态会接收到图片的base64值
