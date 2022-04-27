@@ -76,7 +76,7 @@
 
 <script setup>
 import cloneDeep from 'lodash/cloneDeep'
-import { watchEffect, ref, onMounted } from 'vue'
+import { watchEffect, ref, onMounted, nextTick } from 'vue'
 import {
   computedDaysRange,
   fethDaysRange,
@@ -427,7 +427,7 @@ const contentScroll = event => {
     if ((target.scrollTop + target.clientHeight) >= height) {
       emit('scrollYEnd', event)
     }
-  })
+  }, 200)
 }
 
 onMounted(() => {
@@ -435,7 +435,6 @@ onMounted(() => {
   const innerBox = document.querySelector('#Vue3Gantt .schedule-box')
   itemBox.addEventListener('scroll', contentScroll)
   innerBox.addEventListener('scroll', contentScroll)
-  contentScroll()
 })
 
 watchEffect(() => {
@@ -445,7 +444,9 @@ watchEffect(() => {
     data.value = splitSchedule(data.value)
   }
   console.log('最新data', data.value)
-  contentScroll()
+  nextTick(() => {
+    contentScroll()
+  })
 })
 
 
