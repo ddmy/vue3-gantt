@@ -154,7 +154,7 @@ const emit = defineEmits(['scheduleClick', 'scrollXEnd', 'scrollYEnd'])
 let rangeDate = ref([])
 watchEffect(() => {
   rangeDate.value = splitDaysForMonth(computedDaysRange(...props.dateRangeList))
-  console.log('rangeDate.value', rangeDate.value)
+  // console.log('rangeDate.value', rangeDate.value)
 })
 
 const checkValidator = () => {
@@ -200,6 +200,13 @@ const sortFilterData = () => {
   data.value = cloneDeep(props.data).map(item => {
     if (item.type === 'normal' && Array.isArray(item.schedule)) {
       item.schedule = item.schedule.sort((a, b) => new Date(a.days[0]).getTime() - new Date(b.days[0]).getTime())
+      item.schedule = item.schedule.map(schedule => {
+        if (schedule.days.length === 2) {
+          schedule.days = fethDaysRange(...schedule.days)
+        }
+        return schedule
+      })
+      console.log('@@@@@@@@', JSON.parse(JSON.stringify(item)))
       return item
     }
     return item
@@ -443,7 +450,7 @@ watchEffect(() => {
     data.value = workListSplitForRepeat(data.value, props.repeatMode)
     data.value = splitSchedule(data.value)
   }
-  console.log('最新data', data.value)
+  // console.log('最新data', data.value)
   nextTick(() => {
     contentScroll()
   })

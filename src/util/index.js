@@ -213,7 +213,7 @@ export const workListSplitForRepeat = (arr, repeatMode) => {
     schedule.schedule = result
     return schedule
   })
-  console.log('resArr--->', resArr)
+  // console.log('resArr--->', resArr)
   return resArr
 }
 

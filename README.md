@@ -104,7 +104,7 @@ const data = ref([
 | desc | 日程描述 |
 | backgroundColor | 日程背景色 |
 | textColor | 日程名称展示文字颜色 |
-| days | 日程日期列表`Array`, 数组内容为合法的连续的日期，日期格式为 `YYYY-MM-DD` |
+| days | 日程日期列表`Array`, 数组内容为合法的连续的日期，日期格式为 `YYYY-MM-DD`,也可以简写为长度为2的数组，数组内容分别为起始日期 |
 
 ### repeatMode配置 Object
 
