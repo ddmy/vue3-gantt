@@ -477,15 +477,15 @@ const exportImg = async (download = true) => {
     html2canvas(box, {
       removeContainer: true,
     }).then(function(canvas) {
-      console.log(canvas.toDataURL())
+      const href = canvas.toDataURL()
       box.style.width = '100%'
       if (download) {
         const a = document.createElement('a')
-        a.href = canvas.toDataURL()
+        a.href = href
         a.setAttribute('download', '日程图')
         a.click()
       }
-      resolve(a.href)
+      resolve(href)
     })
   })
 }

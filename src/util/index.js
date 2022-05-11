@@ -69,14 +69,9 @@ export const todayInRange = (today, range) => {
 // 获取指定月份日期列表
 export const fetchMonthRangeDay = (str) => {
   const dateList = String(str).replace('/', '-').split('-')
-  if (dateList.length === 1) {
-    dateList.unshift(new Date().getFullYear())
-  }
-  if (dateList[1] > 12) {
-    throw new Error('月份错误!')
-  }
-  const count = new Date(...dateList, 0).getDate()
-  return new Array(count).fill().map((item, index) => String(dateList[0]).padStart(4, '0') + '-' + String(dateList[1]).padStart(2, '0') + '-' + String(index + 1).padStart(2, 0))
+  return fethDays(str).map(item => {
+    return String(dateList[0]).padStart(4, '0') + '-' + String(dateList[1]).padStart(2, '0') + '-' + String(item).padStart(2, '0')
+  })
 }
 
 export const fetchToday = () => {

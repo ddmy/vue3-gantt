@@ -55,7 +55,7 @@ const width = ref(80)
 const height = ref(40)
 
 
-const data = ref(DATA.data1)
+const data = ref(DATA.data2)
 
 const onScheduleClick = item => {
   console.log('点击', item)
@@ -95,7 +95,9 @@ const next = () => {
   dateRangeList.value = [arr[0], arr.at(-1)]
 }
 const today = () => {
-  const arr = fetchTodayMonthRange(new Date())
+  const now = new Date()
+  const arr = fetchTodayMonthRange()
+  activeDate.value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
   dateRangeList.value = [arr[0], arr.at(-1)]
 }
 
