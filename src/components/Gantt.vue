@@ -206,7 +206,7 @@ const sortFilterData = () => {
         }
         return schedule
       })
-      console.log('@@@@@@@@', JSON.parse(JSON.stringify(item)))
+      // console.log('@@@@@@@@', JSON.parse(JSON.stringify(item)))
       return item
     }
     return item
@@ -520,6 +520,8 @@ defineExpose({
 }
 .gantt {
   width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
   height: auto;
   user-select: none;
   box-sizing: border-box;
@@ -527,23 +529,23 @@ defineExpose({
   font-size: var(--fontSize);
   color: var(--fontColor);
   display: flex;
-  // *::-webkit-scrollbar {
-  //   /*滚动条整体样式*/
-  //   width : 1px;  /*高宽分别对应横竖滚动条的尺寸*/
-  //   height: 1px;
-  // }
-  // *::-webkit-scrollbar-thumb {
-  //   /*滚动条里面小方块*/
-  //   border-radius: 2px;
-  //   box-shadow: inset 0 0 2px rgba(10, 10, 10, 0.2);
-  //   background:  #818181;
-  // }
-  // *::-webkit-scrollbar-track {
-  //   /*滚动条里面轨道*/
-  //   box-shadow: inset 0 0 2px rgba(10, 10, 10, 0.2);
-  //   border-radius: 2px;
-  //   background: #ededed;
-  // }
+  *::-webkit-scrollbar {
+    /*滚动条整体样式*/
+    width : 5px;  /*高宽分别对应横竖滚动条的尺寸*/
+    height: 5px;
+  }
+  *::-webkit-scrollbar-thumb {
+    /*滚动条里面小方块*/
+    border-radius: 2px;
+    box-shadow: inset 0 0 2px rgba(10, 10, 10, 0.2);
+    background:  #818181;
+  }
+  *::-webkit-scrollbar-track {
+    /*滚动条里面轨道*/
+    box-shadow: inset 0 0 2px rgba(10, 10, 10, 0.2);
+    border-radius: 2px;
+    background: #ededed;
+  }
   .guide {
     flex-shrink: 0;
     width: 120px;
@@ -597,13 +599,13 @@ defineExpose({
   .inner {
     width: 100%;
     overflow-x: auto;
-    // overflow-x: overlay;
+    overflow-x: overlay;
     position: relative;
-    // &::-webkit-scrollbar {
-    //   /*滚动条整体样式*/
-    //   width : 10px;  /*高宽分别对应横竖滚动条的尺寸*/
-    //   height: 10px;
-    // }
+    &::-webkit-scrollbar {
+      /*滚动条整体样式*/
+      width : 5px;  /*高宽分别对应横竖滚动条的尺寸*/
+      height: 5px;
+    }
     .date-list {
       width: 100%;
       height: 120px;
