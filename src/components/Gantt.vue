@@ -474,25 +474,34 @@ const onScrollX = event => {
   }, 200)
 }
 
+const guideInnerMaxHeight = ref('400px')
+
 const exportImg = async (download = true) => {
   return new Promise((resolve, reject) => {
+    const gantt = document.querySelector('#Vue3Gantt')
     const inner = document.querySelector('#Vue3Gantt .inner')
     const box = document.querySelector('#Vue3Gantt')
     const guide = document.querySelector('.guide')
+    guideInnerMaxHeight.value = 'unset'
+    gantt.style.maxWidth = 'unset'
     inner.scrollLeft = inner.scrollWidth
     box.style.width = inner.scrollWidth + guide.clientWidth + 'px'
-    html2canvas(box, {
-      removeContainer: true,
-    }).then(function(canvas) {
-      const href = canvas.toDataURL()
-      box.style.width = '100%'
-      if (download) {
-        const a = document.createElement('a')
-        a.href = href
-        a.setAttribute('download', '日程图')
-        a.click()
-      }
-      resolve(href)
+    nextTick(() => {
+      html2canvas(box, {
+        removeContainer: true,
+      }).then(function(canvas) {
+        const href = canvas.toDataURL()
+        gantt.style.maxWidth = '2000px'
+        guideInnerMaxHeight.value = '400px'
+        box.style.width = '100%'
+        if (download) {
+          const a = document.createElement('a')
+          a.href = href
+          a.setAttribute('download', '日程图')
+          a.click()
+        }
+        resolve(href)
+      })
     })
   })
 }
@@ -513,7 +522,7 @@ defineExpose({
   --fontColor: #333;
   --itemWidth: v-bind(props.itemWidth + 'px');
   --itemHeight: v-bind(props.itemHeight + 'px');
-  --innerHeight: 400px;
+  --innerHeight: v-bind(guideInnerMaxHeight);
 }
 * {
   box-sizing: border-box;
