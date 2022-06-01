@@ -205,12 +205,62 @@ export default {
     {
       name: '西游记',
       type: 'normal',
-      schedule: []
+      schedule: [
+        {
+          id: 2221,
+          name: '元旦玩法+S级商业化',
+          desc: '活跃提升20%，收入提升50%',
+          backgroundColor: '#003333',
+          textColor: '#999999',
+          days: ['2022-04-28','2022-05-01']
+        },
+        {
+          id: 2222,
+          name: 'S26新赛季，战令更新',
+          desc: '活跃提升20%，收入提升30%',
+          backgroundColor: '#99CCCC',
+          textColor: '#336699',
+          days: ['2022-03-20', '2022-04-05']
+        },
+        {
+          id: 2223,
+          name: '五星级活动',
+          desc: '活跃提升20%，收入提升30%',
+          backgroundColor: '#006633',
+          textColor: '#CCCC66',
+          days: ['2022-02-16', '2022-02-19']
+        },
+      ]
     },
     {
       name: '水浒传',
       type: 'normal',
-      schedule: []
+      schedule: [
+        {
+          id: 2221,
+          name: '元旦玩法+S级商业化',
+          desc: '活跃提升20%，收入提升50%',
+          backgroundColor: '#003333',
+          textColor: '#999999',
+          days: ['2022-02-12','2022-02-21']
+        },
+        {
+          id: 2222,
+          name: 'S26新赛季，战令更新',
+          desc: '活跃提升20%，收入提升30%',
+          backgroundColor: '#99CCCC',
+          textColor: '#336699',
+          days: ['2022-02-23', '2022-03-05']
+        },
+        {
+          id: 2223,
+          name: '五星级活动',
+          desc: '活跃提升20%，收入提升30%',
+          backgroundColor: '#006633',
+          textColor: '#CCCC66',
+          days: ['2022-02-16', '2022-02-19']
+        },
+      ]
     },
     {
       name: '三国演义',

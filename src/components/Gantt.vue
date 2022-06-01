@@ -152,9 +152,29 @@ const props = defineProps({
 const emit = defineEmits(['scheduleClick', 'scrollXEnd', 'scrollYEnd'])
 
 let rangeDate = ref([])
+const ganttMaxWidth = ref('2000px')
+const ganttInnerHeight = ref('0px')
+
+let computeTimer = null
+// 计算当前图表内容区域高度
+const computedGanntInnerHeight = () => {
+  clearTimeout(computeTimer)
+  computeTimer = setTimeout(() => {
+    const gantt = document.querySelector('#Vue3Gantt')
+    if (!gantt) return
+    ganttInnerHeight.value = 0
+    nextTick(() => {
+      const parent = gantt.parentElement || document.body
+      const ganttHead = document.querySelector('#Vue3Gantt .desc')
+      ganttInnerHeight.value = parent.clientHeight - ganttHead.clientHeight - (ganttHead.offsetTop - parent.offsetTop) - 2 + 'px'
+    })
+  }, 200)
+}
+
 watchEffect(() => {
   rangeDate.value = splitDaysForMonth(computedDaysRange(...props.dateRangeList))
-  // console.log('rangeDate.value', rangeDate.value)
+  console.log('rangeDate.value', rangeDate.value)
+  ganttMaxWidth.value = props.itemWidth * (rangeDate.value.flat(1).length) + 122 + 'px'
 })
 
 const checkValidator = () => {
@@ -442,6 +462,8 @@ onMounted(() => {
   const innerBox = document.querySelector('#Vue3Gantt .schedule-box')
   itemBox.addEventListener('scroll', contentScroll)
   innerBox.addEventListener('scroll', contentScroll)
+  window.addEventListener('resize', computedGanntInnerHeight)
+  computedGanntInnerHeight()
 })
 
 watchEffect(() => {
@@ -474,26 +496,23 @@ const onScrollX = event => {
   }, 200)
 }
 
-const guideInnerMaxHeight = ref('400px')
-
 const exportImg = async (download = true) => {
   return new Promise((resolve, reject) => {
     const gantt = document.querySelector('#Vue3Gantt')
     const inner = document.querySelector('#Vue3Gantt .inner')
-    const box = document.querySelector('#Vue3Gantt')
     const guide = document.querySelector('.guide')
-    guideInnerMaxHeight.value = 'unset'
+    ganttInnerHeight.value = 'unset'
     gantt.style.maxWidth = 'unset'
     inner.scrollLeft = inner.scrollWidth
-    box.style.width = inner.scrollWidth + guide.clientWidth + 'px'
+    gantt.style.width = inner.scrollWidth + guide.clientWidth + 'px'
     nextTick(() => {
-      html2canvas(box, {
+      html2canvas(gantt, {
         removeContainer: true,
       }).then(function(canvas) {
         const href = canvas.toDataURL()
-        gantt.style.maxWidth = '2000px'
-        guideInnerMaxHeight.value = '400px'
-        box.style.width = '100%'
+        gantt.style.maxWidth = ganttMaxWidth.value
+        computedGanntInnerHeight()
+        gantt.style.width = '100%'
         if (download) {
           const a = document.createElement('a')
           a.href = href
@@ -522,14 +541,13 @@ defineExpose({
   --fontColor: #333;
   --itemWidth: v-bind(props.itemWidth + 'px');
   --itemHeight: v-bind(props.itemHeight + 'px');
-  --innerHeight: v-bind(guideInnerMaxHeight);
 }
 * {
   box-sizing: border-box;
 }
 .gantt {
   width: 100%;
-  max-width: 2000px;
+  max-width: v-bind(ganttMaxWidth);
   margin: 0 auto;
   height: auto;
   user-select: none;
@@ -589,7 +607,7 @@ defineExpose({
     }
     .item-name-list {
       width: 100%;
-      max-height: var(--innerHeight);
+      max-height: v-bind(ganttInnerHeight);
       overflow-y: auto;
     }
     .guide-name {
@@ -680,7 +698,7 @@ defineExpose({
       }
     }
     .schedule-box {
-      max-height: var(--innerHeight);
+      max-height: v-bind(ganttInnerHeight);
       overflow-y: auto;
       position: absolute;
       left: 0;

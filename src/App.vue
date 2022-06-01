@@ -1,25 +1,32 @@
 <template>
-  <h1>甘特图</h1>
-  <button @click="exportImg">下载图片</button>
-  <button @click="toggle">更换高亮</button>
-  <button @click="prev">上一月</button>
-  <button @click="next">下一月</button>
-  <button @click="today">今天</button>
-  <Gantt
-    ref="gantt"
-    :data="data"
-    itemText="游戏/项目"
-    dateText="日期"
-    :activeDate="activeDate"
-    :itemWidth="width"
-    :itemHeight="height"
-    :scheduleTitle="scheduleTitle"
-    :dateRangeList="dateRangeList"
-    :repeatMode="repeatConfig"
-    :alikeName="alikeName"
-    @scheduleClick="onScheduleClick"
-    @scrollYEnd="onScrollYEnd"
-  />
+  <div class="content">
+    <div class="head">
+      <h1>甘特图</h1>
+      <button @click="exportImg">下载图片</button>
+      <button @click="toggle">更换高亮</button>
+      <button @click="prev">上一月</button>
+      <button @click="next">下一月</button>
+      <button @click="today">今天</button>
+    </div>
+    <div class="box">
+      <div>SSSSS<br>efwef</div>
+      <Gantt
+        ref="gantt"
+        :data="data"
+        itemText="游戏/项目"
+        dateText="日期"
+        :activeDate="activeDate"
+        :itemWidth="width"
+        :itemHeight="height"
+        :scheduleTitle="scheduleTitle"
+        :dateRangeList="dateRangeList"
+        :repeatMode="repeatConfig"
+        :alikeName="alikeName"
+        @scheduleClick="onScheduleClick"
+        @scrollYEnd="onScrollYEnd"
+      />
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -33,7 +40,7 @@ const dateRangeList = ref([])
 const activeDate = ref('2022-02-14')
 const currentRange = fetchThreeDays()
 // dateRangeList.value = [currentRange[0], currentRange.at(-1)]
-dateRangeList.value = ['2022-02-01', '2022-02-28']
+dateRangeList.value = ['2022-02-01', '2022-03-28']
 
 const repeatConfig = reactive({
   mode: 'extract',
@@ -106,15 +113,31 @@ const today = () => {
 </script>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
 
 <style scoped>
+.content {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.head {
+  margin: 20px 0;
+}
+.box {
+  flex: 1;
+}
 </style>
