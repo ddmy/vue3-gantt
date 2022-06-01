@@ -4,6 +4,8 @@
 
 ![gantt](https://blog.ddamy.com/assets/img/gantt.jpeg)
 
+[Demo在线预览](https://blog.ddamy.com/assets/demo/gantt/)
+
 ### 使用方式
 ```html
   <Gantt
