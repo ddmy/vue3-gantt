@@ -267,7 +267,11 @@ const computeWordwidth = (schedule, days) => {
   } else if (hasFirst && !hasLast) {
     // 有头无尾
     return fethDaysRange(schedule[0], days[days.length - 1].date).length * props.itemWidth
+  } else if (!hasFirst && !hasLast) {
+    // 无头无尾 当前日程垮度直接覆盖当前展示日程范围
+    return fethDaysRange(days[0].date, days.at(-1).date).length * props.itemWidth
   }
+  throw new Error('computeWordwidth 宽度计算异常！')
   return 0
 }
 // 检查当前日期是否是指定项目的日程

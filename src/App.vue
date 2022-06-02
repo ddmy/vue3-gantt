@@ -9,7 +9,7 @@
       <button @click="today">今天</button>
     </div>
     <div class="box">
-      <div>SSSSS<br>efwef</div>
+      <div>展示数据</div>
       <Gantt
         ref="gantt"
         :data="data"
@@ -40,7 +40,7 @@ const dateRangeList = ref([])
 const activeDate = ref('2022-02-14')
 const currentRange = fetchThreeDays()
 // dateRangeList.value = [currentRange[0], currentRange.at(-1)]
-dateRangeList.value = ['2022-02-01', '2022-03-28']
+dateRangeList.value = ['2022-06-01', '2022-07-02']
 
 const repeatConfig = reactive({
   mode: 'extract',
@@ -62,7 +62,7 @@ const width = ref(80)
 const height = ref(40)
 
 
-const data = ref(DATA.data2)
+const data = ref(DATA.data3)
 
 const onScheduleClick = item => {
   console.log('点击', item)
