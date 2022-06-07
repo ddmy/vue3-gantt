@@ -130,6 +130,7 @@ const data = ref([
 />
 <button @click="exportImg">下载图片</button>
 ```
+
 ```js
 const gantt = ref(null)
 
@@ -138,3 +139,20 @@ const exportImg = () => {
 }
 ```
 > `exportImg` 方法接收一个布尔值, 如果为`false`, 则不会自动下载图片. `exportImg` 返回一个`Promise`, 成功状态会接收到图片的base64值
+
+#### 导出当前甘特图Excel
+
+```html
+<Gantt
+    ref="gantt"
+    ...
+/>
+<button @click="exportGanttExcel">导出Excel</button>
+```
+```js
+const gantt = ref(null)
+
+const exportImg = () => {
+  gantt.value.exportGanttExcel()
+}
+```
