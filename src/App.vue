@@ -10,7 +10,7 @@
       <button @click="today">今天</button>
     </div>
     <div class="box">
-      <div>展示数据</div>
+      <div><a href="https://github.com/ddmy/vue-gantt">github</a></div>
       <Gantt
         ref="gantt"
         :data="data"
@@ -63,7 +63,7 @@ const width = ref(80)
 const height = ref(40)
 
 
-const data = ref(DATA.data1)
+const data = ref(DATA.data2)
 
 const onScheduleClick = item => {
   console.log('点击', item)
@@ -110,7 +110,7 @@ const today = () => {
 }
 
 const exportGanttExcel = () => {
-    gantt.value.exportGanttExcel()
+    gantt.value.exportGanttExcel('模拟列表')
 }
 
 

@@ -41,7 +41,7 @@ const hexValue = val => {
   throw new Error(`转换色值格式错误:${val}`)
 }
 
-export function exportExcel (rangeDate, list, dateText = '', itemText = '') {
+export function exportExcel (fileName = '数据', rangeDate, list, dateText = '', itemText = '') {
   console.log('导出excel', rangeDate, list)
   // 前三行日期范围
   let data = []
@@ -173,7 +173,7 @@ export function exportExcel (rangeDate, list, dateText = '', itemText = '') {
 
   console.log(resultData)
   // return
-  LAY_EXCEL.exportExcel({ sheet1: resultData },`测试.xlsx`, 'xlsx', {
+  LAY_EXCEL.exportExcel({ sheet1: resultData },`信息列表.xlsx`, 'xlsx', {
     extend: {
       '!cols': colConf,
       '!rows': rowConf,
