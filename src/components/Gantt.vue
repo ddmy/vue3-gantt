@@ -530,7 +530,7 @@ const exportImg = async (download = true) => {
   })
 }
 
-const exportGanttExcel = (fileName) => {
+const exportGanttExcel = (file) => {
   const excelData = cloneDeep(data.value).map(item => {
     item.renderWorks = renderWorks(item)
     if (props.scheduleTitle) {
@@ -540,7 +540,7 @@ const exportGanttExcel = (fileName) => {
     }
     return item
   })
-  exportExcel(fileName, rangeDate.value, excelData, props.dateText, props.itemText)
+  exportExcel(file, rangeDate.value, excelData, props.dateText, props.itemText)
 }
 
 defineExpose({

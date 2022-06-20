@@ -41,7 +41,8 @@ const hexValue = val => {
   throw new Error(`转换色值格式错误:${val}`)
 }
 
-export function exportExcel (fileName = '数据', rangeDate, list, dateText = '', itemText = '') {
+export function exportExcel (file, rangeDate, list, dateText = '', itemText = '') {
+  const { fileName = '数据' } = file
   console.log('导出excel', rangeDate, list)
   // 前三行日期范围
   let data = []
@@ -133,8 +134,8 @@ export function exportExcel (fileName = '数据', rangeDate, list, dateText = ''
 
 
   const merageConfig = [ ['A1', 'A3'], ...monthMerageConfig, ...dataMergeConfig ]
-  console.log('merageConfig--->', merageConfig, dataMergeConfig)
-  console.log('data--->', data)
+  // console.log('merageConfig--->', merageConfig, dataMergeConfig)
+  // console.log('data--->', data)
   const resultData = LAY_EXCEL.filterExportData(data, headKeys)
   const mergeConf = LAY_EXCEL.makeMergeConfig(merageConfig)
   const colConf = LAY_EXCEL.makeColConfig({ A: 120, ZZZZ: 60 }, 60)
@@ -171,9 +172,9 @@ export function exportExcel (fileName = '数据', rangeDate, list, dateText = ''
     }
   })
 
-  console.log(resultData)
+  // console.log(resultData)
   // return
-  LAY_EXCEL.exportExcel({ sheet1: resultData },`信息列表.xlsx`, 'xlsx', {
+  LAY_EXCEL.exportExcel({ sheet1: resultData },`${fileName}.xlsx`, 'xlsx', {
     extend: {
       '!cols': colConf,
       '!rows': rowConf,

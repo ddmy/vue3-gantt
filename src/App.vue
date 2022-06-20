@@ -110,7 +110,7 @@ const today = () => {
 }
 
 const exportGanttExcel = () => {
-    gantt.value.exportGanttExcel('模拟列表')
+    gantt.value.exportGanttExcel({ fileName: '测试信息' })
 }
 
 

@@ -156,7 +156,10 @@ const exportImg = () => {
 const gantt = ref(null)
 
 const exportGanttExcel = () => {
-  gantt.value.exportGanttExcel('列表')
+  gantt.value.exportGanttExcel({ fileName: '测试列表' })
 }
 ```
-> `exportGanttExcel`接收一个字符串，为导出文件的名字
+> `exportGanttExcel`接收一个对象`file`，配置导出文件的信息
+> | 参数名 | 可选值 | 默认值 | 说明 |
+> | ------ | ------ | -------- | ---------- |
+> | fileName | - | '数据' | 导出文件名称 |
