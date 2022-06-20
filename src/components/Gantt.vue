@@ -86,6 +86,7 @@ import {
   workListSplitForRepeat
 } from '../util/index.js'
 import html2canvas from 'html2canvas'
+import { exportExcel } from './excel.js'
 
 
 const props = defineProps({
@@ -529,8 +530,22 @@ const exportImg = async (download = true) => {
   })
 }
 
+const exportGanttExcel = (file) => {
+  const excelData = cloneDeep(data.value).map(item => {
+    item.renderWorks = renderWorks(item)
+    if (props.scheduleTitle) {
+      item.renderWorks.forEach(renderItem => {
+        renderItem.name = props.scheduleTitle(renderItem)
+      })
+    }
+    return item
+  })
+  exportExcel(file, rangeDate.value, excelData, props.dateText, props.itemText)
+}
+
 defineExpose({
-  exportImg
+  exportImg,
+  exportGanttExcel
 })
 
 </script>

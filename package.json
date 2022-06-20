@@ -14,6 +14,7 @@
   "dependencies": {
     "core-js": "^3.21.1",
     "html2canvas": "^1.4.1",
+    "lay-excel": "^1.7.6",
     "lodash": "^4.17.21",
     "vue": "^3.2.25"
   },

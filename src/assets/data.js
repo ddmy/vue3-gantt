@@ -188,7 +188,7 @@ export default {
           id: 2222,
           name: 'S26新赛季，战令更新',
           desc: '活跃提升20%，收入提升30%',
-          backgroundColor: '#99CCCC',
+          backgroundColor: '#99AACC',
           textColor: '#336699',
           days: ['2022-01-30', '2022-01-31', '2022-02-01', '2022-02-02', '2022-02-03', '2022-02-04', '2022-02-05']
         },
@@ -198,7 +198,7 @@ export default {
           desc: '活跃提升20%，收入提升30%',
           backgroundColor: '#006633',
           textColor: '#CCCC66',
-          days: ['2022-02-16', '2022-02-17','2022-02-18', '2022-02-19']
+          days: ['2022-02-10', '2022-02-16']
         },
       ]
     },
@@ -224,11 +224,11 @@ export default {
         },
         {
           id: 2223,
-          name: '五星级活动',
+          name: 'FGDG级活动',
           desc: '活跃提升20%，收入提升30%',
-          backgroundColor: '#006633',
+          backgroundColor: '#CC6633',
           textColor: '#CCCC66',
-          days: ['2022-02-16', '2022-02-19']
+          days: ['2022-02-26', '2022-03-11']
         },
       ]
     },
@@ -254,7 +254,7 @@ export default {
         },
         {
           id: 2223,
-          name: '五星级活动',
+          name: 'RRRRR星级活动',
           desc: '活跃提升20%，收入提升30%',
           backgroundColor: '#006633',
           textColor: '#CCCC66',
@@ -270,7 +270,16 @@ export default {
     {
       name: '平凡的世界',
       type: 'normal',
-      schedule: []
+      schedule: [
+        {
+          id: 2223233,
+          name: '无敌大马路',
+          desc: 'scsscscsc，收入提升30%',
+          backgroundColor: '#369',
+          textColor: '#fff',
+          days: ['2022-01-15', '2022-03-02']
+        },
+      ]
     },
     {
       name: '白鹿原',

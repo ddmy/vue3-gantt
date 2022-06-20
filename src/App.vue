@@ -3,13 +3,14 @@
     <div class="head">
       <h1>甘特图</h1>
       <button @click="exportImg">下载图片</button>
+      <button @click="exportGanttExcel">导出Excel</button>
       <button @click="toggle">更换高亮</button>
       <button @click="prev">上一月</button>
       <button @click="next">下一月</button>
       <button @click="today">今天</button>
     </div>
     <div class="box">
-      <div>展示数据</div>
+      <div><a href="https://github.com/ddmy/vue-gantt">github</a></div>
       <Gantt
         ref="gantt"
         :data="data"
@@ -40,7 +41,7 @@ const dateRangeList = ref([])
 const activeDate = ref('2022-02-14')
 const currentRange = fetchThreeDays()
 // dateRangeList.value = [currentRange[0], currentRange.at(-1)]
-dateRangeList.value = ['2022-06-01', '2022-07-02']
+dateRangeList.value = ['2022-02-11', '2022-04-05']
 
 const repeatConfig = reactive({
   mode: 'extract',
@@ -62,7 +63,7 @@ const width = ref(80)
 const height = ref(40)
 
 
-const data = ref(DATA.data3)
+const data = ref(DATA.data2)
 
 const onScheduleClick = item => {
   console.log('点击', item)
@@ -108,6 +109,10 @@ const today = () => {
   dateRangeList.value = [arr[0], arr.at(-1)]
 }
 
+const exportGanttExcel = () => {
+    gantt.value.exportGanttExcel({ fileName: '测试信息' })
+}
+
 
 
 </script>
@@ -136,6 +141,11 @@ const today = () => {
 }
 .head {
   margin: 20px 0;
+}
+.head button {
+  margin: 0 10px;
+  width: 80px;
+  height: 40px;
 }
 .box {
   flex: 1;

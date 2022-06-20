@@ -1,8 +1,11 @@
-#### Vue3甘特图插件
-
-> 基于Vue3的甘特图组件
+### Vue3甘特图插件
 
 ![gantt](https://blog.ddamy.com/assets/img/gantt.jpeg)
+
+### 简介
+基于`vue3.x`开发的精简版甘特图，支持重叠日程展示，支持导出`gantt img`和`gantt Excel`文件。
+
+> 如果您在使用过程中遇到任何相关问题，欢迎您提 issues, 希望能与各位共同进步！😊
 
 [Demo在线预览](https://blog.ddamy.com/assets/demo/gantt/)
 
@@ -130,11 +133,33 @@ const data = ref([
 />
 <button @click="exportImg">下载图片</button>
 ```
+
 ```js
 const gantt = ref(null)
 
 const exportImg = () => {
-  gantt.value.exportImg()
+  gantt.value.exportImg(true)
 }
 ```
 > `exportImg` 方法接收一个布尔值, 如果为`false`, 则不会自动下载图片. `exportImg` 返回一个`Promise`, 成功状态会接收到图片的base64值
+
+#### 导出当前甘特图Excel
+
+```html
+<Gantt
+    ref="gantt"
+    ...
+/>
+<button @click="exportGanttExcel">导出Excel</button>
+```
+```js
+const gantt = ref(null)
+
+const exportGanttExcel = () => {
+  gantt.value.exportGanttExcel({ fileName: '测试列表' })
+}
+```
+> `exportGanttExcel`接收一个对象`file`，配置导出文件的信息
+> | 参数名 | 可选值 | 默认值 | 说明 |
+> | ------ | ------ | -------- | ---------- |
+> | fileName | - | '数据' | 导出文件名称 |
