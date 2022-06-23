@@ -519,7 +519,7 @@ const exportImg = async (config = {}) => {
   if (typeof config === 'boolean' || typeof config !== 'object') {
     throw new Error('exportImg传参方式已更改，请通过Object方式设置导出配置')
   }
-  let { download = true, waterType = 'txt', waterValue = '水印专用' } = config
+  let { download = true, waterType = 'txt', waterValue = '' } = config
   return new Promise((resolve, reject) => {
     const gantt = document.querySelector('#Vue3Gantt')
     const inner = document.querySelector('#Vue3Gantt .inner')
