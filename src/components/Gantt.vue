@@ -501,7 +501,25 @@ const onScrollX = event => {
   }, 200)
 }
 
-const exportImg = async (download = true) => {
+const waterMark = txt => {
+  let length = txt.length * 20 // 根据内容生成画布大小，20代表比例
+  let canvas = document.createElement('canvas')
+  canvas.width = canvas.height = length
+  let context = canvas.getContext('2d')
+  context.font = '14px "PingFangSC", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif'
+  context.fillStyle = 'rgba(0,0,0,0.1)'
+  context.rotate(-25 * Math.PI / 180) // 画布里面文字的旋转角度
+  context.fillText(txt, length / 20, length / 2) // 文字的位置
+  const waterImg = canvas.toDataURL('image/png')
+  canvas = context = null
+  return waterImg
+}
+
+const exportImg = async (config = {}) => {
+  if (typeof config === 'boolean' || typeof config !== 'object') {
+    throw new Error('exportImg传参方式已更改，请通过Object方式设置导出配置')
+  }
+  let { download = true, waterType = 'txt', waterValue = '水印专用' } = config
   return new Promise((resolve, reject) => {
     const gantt = document.querySelector('#Vue3Gantt')
     const inner = document.querySelector('#Vue3Gantt .inner')
@@ -511,10 +529,25 @@ const exportImg = async (download = true) => {
     inner.scrollLeft = inner.scrollWidth
     gantt.style.width = inner.scrollWidth + guide.clientWidth + 'px'
     nextTick(() => {
+      waterValue = waterValue.trim()
+      let mark = null
+      if (waterValue) {
+        const waterImg = waterMark(waterValue)
+        mark = document.createElement('div')
+        mark.style.position = 'absolute'
+        mark.style.zIndex = '9999'
+        mark.style.top = mark.style.left = '0'
+        mark.style.width = mark.style.height = '100%'
+        mark.style.backgroundImage = `url(${waterImg})`
+        gantt.appendChild(mark)
+      }
       html2canvas(gantt, {
         removeContainer: true,
       }).then(function(canvas) {
         const href = canvas.toDataURL()
+        if (mark) {
+          mark.parentNode.removeChild(mark)
+        }
         gantt.style.maxWidth = ganttMaxWidth.value
         computedGanntInnerHeight()
         gantt.style.width = '100%'
@@ -575,6 +608,7 @@ defineExpose({
   font-size: var(--fontSize);
   color: var(--fontColor);
   display: flex;
+  position: relative;
   *::-webkit-scrollbar {
     /*滚动条整体样式*/
     width : 5px;  /*高宽分别对应横竖滚动条的尺寸*/

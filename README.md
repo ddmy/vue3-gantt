@@ -141,7 +141,12 @@ const exportImg = () => {
   gantt.value.exportImg(true)
 }
 ```
-> `exportImg` 方法接收一个布尔值, 如果为`false`, 则不会自动下载图片. `exportImg` 返回一个`Promise`, 成功状态会接收到图片的base64值
+> `exportImg` 方法接收一个`Object`, 配置图片的导出行为, `exportImg` 返回一个`Promise`, 成功状态会接收到图片的base64值
+> | 参数名 | 可选值 | 默认值 | 说明 |
+> | ------ | ------ | -------- | ---------- |
+> | download | `Boolean` | true | 是否自动下载图片 |
+> | waterValue | `String` | '水印专用' | 图片水印文字, 为空就不添加水印,暂不支持自定义文字样式 |
+
 
 #### 导出当前甘特图Excel
 

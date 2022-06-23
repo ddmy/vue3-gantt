@@ -73,7 +73,10 @@ const gantt = ref(null)
 
 const exportImg = () => {
   console.log('gantt', gantt)
-  gantt.value.exportImg()
+  gantt.value.exportImg({
+    download: true,
+    waterValue: '测试水印效果'
+  })
 }
 
 const alikeName = item => {
