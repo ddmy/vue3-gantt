@@ -507,7 +507,7 @@ const waterMark = txt => {
   canvas.width = canvas.height = length
   let context = canvas.getContext('2d')
   context.font = '14px "PingFangSC", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif'
-  context.fillStyle = 'rgba(0,0,0,0.1)'
+  context.fillStyle = 'rgba(0,0,0,0.5)'
   context.rotate(-25 * Math.PI / 180) // 画布里面文字的旋转角度
   context.fillText(txt, length / 20, length / 2) // 文字的位置
   const waterImg = canvas.toDataURL('image/png')
@@ -536,6 +536,7 @@ const exportImg = async (config = {}) => {
         mark = document.createElement('div')
         mark.style.position = 'absolute'
         mark.style.zIndex = '9999'
+        mark.style.opacity = '0.1'
         mark.style.top = mark.style.left = '0'
         mark.style.width = mark.style.height = '100%'
         mark.style.backgroundImage = `url(${waterImg})`
