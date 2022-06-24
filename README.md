@@ -138,7 +138,7 @@ const data = ref([
 const gantt = ref(null)
 
 const exportImg = () => {
-  gantt.value.exportImg(true)
+  gantt.value.exportImg({ download: true, waterValue: 'YiJio制作' })
 }
 ```
 > `exportImg` 方法接收一个`Object`, 配置图片的导出行为, `exportImg` 返回一个`Promise`, 成功状态会接收到图片的base64值
