@@ -567,7 +567,10 @@ const exportImg = async (config = {}) => {
 const exportGanttExcel = (file) => {
   const excelData = cloneDeep(data.value).map(item => {
     item.renderWorks = renderWorks(item)
-    if (props.scheduleTitle) {
+    if (item.type === 'alike' && props.alikeName) {
+      item.name = props.alikeName(item)
+    }
+    if (item.type === 'normal' && props.scheduleTitle) {
       item.renderWorks.forEach(renderItem => {
         renderItem.name = props.scheduleTitle(renderItem)
       })
