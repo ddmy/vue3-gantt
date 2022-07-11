@@ -2,7 +2,7 @@
   <div class="content">
     <div class="head">
       <h1>甘特图</h1>
-      <button @click="exportImg">下载图片</button>
+      <button @click="exportImg">下载带水印图片</button>
       <button @click="exportGanttExcel">导出Excel</button>
       <button @click="toggle">更换高亮</button>
       <button @click="prev">上一月</button>
@@ -147,7 +147,7 @@ const exportGanttExcel = () => {
 }
 .head button {
   margin: 0 10px;
-  width: 80px;
+  padding: 0 20px;
   height: 40px;
 }
 .box {

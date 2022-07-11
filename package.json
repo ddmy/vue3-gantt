@@ -27,7 +27,8 @@
     "vue3",
     "gantt",
     "甘特图",
-    "vue"
+    "vue",
+    "Excel"
   ],
   "homepage": "https://github.com/ddmy/vue-gantt#readme",
   "bugs": {

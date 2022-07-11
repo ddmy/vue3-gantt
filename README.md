@@ -24,7 +24,7 @@ import Gantt from 'vue3-gantt'
 const dateRangeList = ref(['2022-01-01', '2022-03-05'])
 const data = ref([
   {
-    type: 'normal', // 代表
+    type: 'normal',
     color: '',
     name: '项目1',
     schedule: [
@@ -47,7 +47,7 @@ const data = ref([
     ],
   },
   {
-    type: 'normal', // 代表
+    type: 'normal',
     color: '',
     name: '流星蝴蝶剑',
     schedule: [
@@ -93,7 +93,7 @@ const data = ref([
 
 | 参数名 | 取值  |说明 |
 | ------ | ------ | ------ |
-| type | 'alike'\|\|'normal' | 项目类型 |
+| type | 'alike'\|\|'normal' | 项目类型(展示风格) |
 | color | css颜色格式 | 当前项目背景色, type为'alike'时生效 |
 | name | String | 当前项目名称 |
 | schedule | Array[Object] | 项目日程 |
