@@ -5,7 +5,15 @@
   "description": "Vue3甘特图组件",
   "author": "Yijio",
   "license": "ISC",
-  "main": "./index.js",
+  "files": ["dist"],
+  "main": "./dist/gantt.umd.js",
+	"module": "./dist/gantt.es.js",
+  "exports": {
+		".": {
+			"import": "./dist/gantt.es.js",
+			"require": "./dist/gantt.umd.js"
+		}
+	},
   "scripts": {
     "dev": "vite",
     "build": "vite build",
