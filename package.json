@@ -10,12 +10,6 @@
   ],
   "main": "./dist/gantt.umd.js",
   "module": "./dist/gantt.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/gantt.es.js",
-      "require": "./dist/gantt.umd.js"
-    }
-  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
