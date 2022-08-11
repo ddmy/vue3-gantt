@@ -1,19 +1,21 @@
 {
   "name": "vue3-gantt",
   "private": false,
-  "version": "0.0.30",
+  "version": "0.0.31",
   "description": "Vue3甘特图组件",
   "author": "Yijio",
   "license": "ISC",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/gantt.umd.js",
-	"module": "./dist/gantt.es.js",
+  "module": "./dist/gantt.es.js",
   "exports": {
-		".": {
-			"import": "./dist/gantt.es.js",
-			"require": "./dist/gantt.umd.js"
-		}
-	},
+    ".": {
+      "import": "./dist/gantt.es.js",
+      "require": "./dist/gantt.umd.js"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
