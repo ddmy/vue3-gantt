@@ -21,6 +21,7 @@
 ```js
 import { ref } from 'vue'
 import Gantt from 'vue3-gantt'
+import 'vue3-gantt/dist/style.css'
 const dateRangeList = ref(['2022-01-01', '2022-03-05'])
 const data = ref([
   {
