@@ -46,15 +46,15 @@ var assocIndexOf$3 = _assocIndexOf;
 var arrayProto = Array.prototype;
 var splice = arrayProto.splice;
 function listCacheDelete$1(key) {
-  var data = this.__data__, index2 = assocIndexOf$3(data, key);
-  if (index2 < 0) {
+  var data = this.__data__, index = assocIndexOf$3(data, key);
+  if (index < 0) {
     return false;
   }
   var lastIndex = data.length - 1;
-  if (index2 == lastIndex) {
+  if (index == lastIndex) {
     data.pop();
   } else {
-    splice.call(data, index2, 1);
+    splice.call(data, index, 1);
   }
   --this.size;
   return true;
@@ -62,8 +62,8 @@ function listCacheDelete$1(key) {
 var _listCacheDelete = listCacheDelete$1;
 var assocIndexOf$2 = _assocIndexOf;
 function listCacheGet$1(key) {
-  var data = this.__data__, index2 = assocIndexOf$2(data, key);
-  return index2 < 0 ? void 0 : data[index2][1];
+  var data = this.__data__, index = assocIndexOf$2(data, key);
+  return index < 0 ? void 0 : data[index][1];
 }
 var _listCacheGet = listCacheGet$1;
 var assocIndexOf$1 = _assocIndexOf;
@@ -73,22 +73,22 @@ function listCacheHas$1(key) {
 var _listCacheHas = listCacheHas$1;
 var assocIndexOf = _assocIndexOf;
 function listCacheSet$1(key, value) {
-  var data = this.__data__, index2 = assocIndexOf(data, key);
-  if (index2 < 0) {
+  var data = this.__data__, index = assocIndexOf(data, key);
+  if (index < 0) {
     ++this.size;
     data.push([key, value]);
   } else {
-    data[index2][1] = value;
+    data[index][1] = value;
   }
   return this;
 }
 var _listCacheSet = listCacheSet$1;
 var listCacheClear = _listCacheClear, listCacheDelete = _listCacheDelete, listCacheGet = _listCacheGet, listCacheHas = _listCacheHas, listCacheSet = _listCacheSet;
 function ListCache$4(entries) {
-  var index2 = -1, length = entries == null ? 0 : entries.length;
+  var index = -1, length = entries == null ? 0 : entries.length;
   this.clear();
-  while (++index2 < length) {
-    var entry = entries[index2];
+  while (++index < length) {
+    var entry = entries[index];
     this.set(entry[0], entry[1]);
   }
 }
@@ -284,10 +284,10 @@ function hashSet$1(key, value) {
 var _hashSet = hashSet$1;
 var hashClear = _hashClear, hashDelete = _hashDelete, hashGet = _hashGet, hashHas = _hashHas, hashSet = _hashSet;
 function Hash$1(entries) {
-  var index2 = -1, length = entries == null ? 0 : entries.length;
+  var index = -1, length = entries == null ? 0 : entries.length;
   this.clear();
-  while (++index2 < length) {
-    var entry = entries[index2];
+  while (++index < length) {
+    var entry = entries[index];
     this.set(entry[0], entry[1]);
   }
 }
@@ -345,10 +345,10 @@ function mapCacheSet$1(key, value) {
 var _mapCacheSet = mapCacheSet$1;
 var mapCacheClear = _mapCacheClear, mapCacheDelete = _mapCacheDelete, mapCacheGet = _mapCacheGet, mapCacheHas = _mapCacheHas, mapCacheSet = _mapCacheSet;
 function MapCache$1(entries) {
-  var index2 = -1, length = entries == null ? 0 : entries.length;
+  var index = -1, length = entries == null ? 0 : entries.length;
   this.clear();
-  while (++index2 < length) {
-    var entry = entries[index2];
+  while (++index < length) {
+    var entry = entries[index];
     this.set(entry[0], entry[1]);
   }
 }
@@ -388,9 +388,9 @@ Stack$1.prototype.has = stackHas;
 Stack$1.prototype.set = stackSet;
 var _Stack = Stack$1;
 function arrayEach$1(array, iteratee) {
-  var index2 = -1, length = array == null ? 0 : array.length;
-  while (++index2 < length) {
-    if (iteratee(array[index2], index2, array) === false) {
+  var index = -1, length = array == null ? 0 : array.length;
+  while (++index < length) {
+    if (iteratee(array[index], index, array) === false) {
       break;
     }
   }
@@ -435,9 +435,9 @@ var assignValue$1 = _assignValue, baseAssignValue = _baseAssignValue;
 function copyObject$4(source, props, object, customizer) {
   var isNew = !object;
   object || (object = {});
-  var index2 = -1, length = props.length;
-  while (++index2 < length) {
-    var key = props[index2];
+  var index = -1, length = props.length;
+  while (++index < length) {
+    var key = props[index];
     var newValue = customizer ? customizer(object[key], source[key], key, object, source) : void 0;
     if (newValue === void 0) {
       newValue = source[key];
@@ -452,9 +452,9 @@ function copyObject$4(source, props, object, customizer) {
 }
 var _copyObject = copyObject$4;
 function baseTimes$1(n, iteratee) {
-  var index2 = -1, result = Array(n);
-  while (++index2 < n) {
-    result[index2] = iteratee(index2);
+  var index = -1, result = Array(n);
+  while (++index < n) {
+    result[index] = iteratee(index);
   }
   return result;
 }
@@ -661,19 +661,19 @@ var _cloneBuffer = { exports: {} };
   module2.exports = cloneBuffer2;
 })(_cloneBuffer, _cloneBuffer.exports);
 function copyArray$1(source, array) {
-  var index2 = -1, length = source.length;
+  var index = -1, length = source.length;
   array || (array = Array(length));
-  while (++index2 < length) {
-    array[index2] = source[index2];
+  while (++index < length) {
+    array[index] = source[index];
   }
   return array;
 }
 var _copyArray = copyArray$1;
 function arrayFilter$1(array, predicate) {
-  var index2 = -1, length = array == null ? 0 : array.length, resIndex = 0, result = [];
-  while (++index2 < length) {
-    var value = array[index2];
-    if (predicate(value, index2, array)) {
+  var index = -1, length = array == null ? 0 : array.length, resIndex = 0, result = [];
+  while (++index < length) {
+    var value = array[index];
+    if (predicate(value, index, array)) {
       result[resIndex++] = value;
     }
   }
@@ -704,9 +704,9 @@ function copySymbols$1(source, object) {
 }
 var _copySymbols = copySymbols$1;
 function arrayPush$2(array, values) {
-  var index2 = -1, length = values.length, offset = array.length;
-  while (++index2 < length) {
-    array[offset + index2] = values[index2];
+  var index = -1, length = values.length, offset = array.length;
+  while (++index < length) {
+    array[offset + index] = values[index];
   }
   return array;
 }
@@ -1013,7 +1013,7 @@ const fethDays = (str) => {
   if (monthArr.length !== 2)
     throw new Error("\u83B7\u53D6\u6708\u4EFD\u65E5\u671F\u53C2\u6570\u9519\u8BEF:", str);
   const count = new Date(...monthArr, 0).getDate();
-  return new Array(count).fill().map((item, index2) => index2 + 1);
+  return new Array(count).fill().map((item, index) => index + 1);
 };
 const fethDaysRange = (start, stop) => {
   const current = new Date(start.replace(/\//g, "-"));
@@ -1088,9 +1088,9 @@ const dateSplitForValue = (data) => {
   const end = `${endDate.year}-${endDate.month}-${endDate.day}`;
   const res = {};
   fethDaysRange(start, end).forEach((key) => {
-    const current = data.map((item, index2) => {
+    const current = data.map((item, index) => {
       if (item.days.includes(key))
-        return index2;
+        return index;
       return false;
     }).filter((item) => item !== false);
     if (current.length) {
@@ -1124,12 +1124,12 @@ const workListSplitForRepeat = (arr, repeatMode) => {
       }
     }
     let result = new Array(resMap.length).fill({});
-    result = result.map((item, index2) => {
+    result = result.map((item, index) => {
       let r = {};
-      if (resMap[index2].length === 1) {
-        r = __spreadProps(__spreadValues({}, schedule.schedule[resMap[index2][0]]), {
-          days: resMap[index2].days,
-          daysSource: schedule.schedule[resMap[index2][0]].days
+      if (resMap[index].length === 1) {
+        r = __spreadProps(__spreadValues({}, schedule.schedule[resMap[index][0]]), {
+          days: resMap[index].days,
+          daysSource: schedule.schedule[resMap[index][0]].days
         });
         if (r.list) {
           let desc = "";
@@ -1152,7 +1152,7 @@ const workListSplitForRepeat = (arr, repeatMode) => {
           });
         }
       } else {
-        const list = resMap[index2].map((v) => schedule.schedule[v]);
+        const list = resMap[index].map((v) => schedule.schedule[v]);
         let desc = "";
         let name = "";
         if (typeof repeatMode.desc === "function") {
@@ -1171,7 +1171,7 @@ const workListSplitForRepeat = (arr, repeatMode) => {
           textColor: repeatMode.textColor,
           name,
           list,
-          days: resMap[index2].days
+          days: resMap[index].days
         };
       }
       return r;
@@ -1190,7 +1190,7 @@ const fetchPrevMonthRange = (date = new Date()) => {
 const fetchTodayMonthRange = (date = new Date()) => {
   return fetchThreeDays(date).current;
 };
-var index$1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+var Util = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   computedDaysRange,
   fetchDayDetail,
@@ -1438,17 +1438,17 @@ var fromCodePoint$1 = function() {
     return "";
   }
   var codeUnits = [];
-  var index2 = -1;
+  var index = -1;
   var result = "";
-  while (++index2 < length) {
-    var codePoint = codePoints[index2];
+  while (++index < length) {
+    var codePoint = codePoints[index];
     if (codePoint <= 65535) {
       codeUnits.push(codePoint);
     } else {
       codePoint -= 65536;
       codeUnits.push((codePoint >> 10) + 55296, codePoint % 1024 + 56320);
     }
-    if (index2 + 1 === length || codeUnits.length > 16384) {
+    if (index + 1 === length || codeUnits.length > 16384) {
       result += String.fromCharCode.apply(String, codeUnits);
       codeUnits.length = 0;
     }
@@ -1534,17 +1534,17 @@ var createTrieFromBase64$1 = function(base642, _byteLength) {
   var view32 = Array.isArray(buffer) ? polyUint32Array$1(buffer) : new Uint32Array(buffer);
   var view16 = Array.isArray(buffer) ? polyUint16Array$1(buffer) : new Uint16Array(buffer);
   var headerLength = 24;
-  var index2 = slice16$1(view16, headerLength / 2, view32[4] / 2);
+  var index = slice16$1(view16, headerLength / 2, view32[4] / 2);
   var data = view32[5] === 2 ? slice16$1(view16, (headerLength + view32[4]) / 2) : slice32$1(view32, Math.ceil((headerLength + view32[4]) / 4));
-  return new Trie$1(view32[0], view32[1], view32[2], view32[3], index2, data);
+  return new Trie$1(view32[0], view32[1], view32[2], view32[3], index, data);
 };
 var Trie$1 = function() {
-  function Trie2(initialValue, errorValue, highStart, highValueIndex, index2, data) {
+  function Trie2(initialValue, errorValue, highStart, highValueIndex, index, data) {
     this.initialValue = initialValue;
     this.errorValue = errorValue;
     this.highStart = highStart;
     this.highValueIndex = highValueIndex;
-    this.index = index2;
+    this.index = index;
     this.data = data;
   }
   Trie2.prototype.get = function(codePoint) {
@@ -1644,7 +1644,7 @@ var codePointsToCharacterClasses = function(codePoints, lineBreak2) {
   var types = [];
   var indices = [];
   var categories = [];
-  codePoints.forEach(function(codePoint, index2) {
+  codePoints.forEach(function(codePoint, index) {
     var classType = UnicodeTrie$1.get(codePoint);
     if (classType > LETTER_NUMBER_MODIFIER) {
       categories.push(true);
@@ -1654,24 +1654,24 @@ var codePointsToCharacterClasses = function(codePoints, lineBreak2) {
     }
     if (["normal", "auto", "loose"].indexOf(lineBreak2) !== -1) {
       if ([8208, 8211, 12316, 12448].indexOf(codePoint) !== -1) {
-        indices.push(index2);
+        indices.push(index);
         return types.push(CB);
       }
     }
     if (classType === CM || classType === ZWJ$1) {
-      if (index2 === 0) {
-        indices.push(index2);
+      if (index === 0) {
+        indices.push(index);
         return types.push(AL);
       }
-      var prev = types[index2 - 1];
+      var prev = types[index - 1];
       if (LINE_BREAKS.indexOf(prev) === -1) {
-        indices.push(indices[index2 - 1]);
+        indices.push(indices[index - 1]);
         return types.push(prev);
       }
-      indices.push(index2);
+      indices.push(index);
       return types.push(AL);
     }
-    indices.push(index2);
+    indices.push(index);
     if (classType === CJ) {
       return types.push(lineBreak2 === "strict" ? NS : ID);
     }
@@ -1744,11 +1744,11 @@ var previousNonSpaceClassType = function(currentIndex, classTypes) {
   }
   return 0;
 };
-var _lineBreakAtIndex = function(codePoints, classTypes, indicies, index2, forbiddenBreaks) {
-  if (indicies[index2] === 0) {
+var _lineBreakAtIndex = function(codePoints, classTypes, indicies, index, forbiddenBreaks) {
+  if (indicies[index] === 0) {
     return BREAK_NOT_ALLOWED$1;
   }
-  var currentIndex = index2 - 1;
+  var currentIndex = index - 1;
   if (Array.isArray(forbiddenBreaks) && forbiddenBreaks[currentIndex] === true) {
     return BREAK_NOT_ALLOWED$1;
   }
@@ -4924,17 +4924,17 @@ var createTrieFromBase64 = function(base642, _byteLength) {
   var view32 = Array.isArray(buffer) ? polyUint32Array(buffer) : new Uint32Array(buffer);
   var view16 = Array.isArray(buffer) ? polyUint16Array(buffer) : new Uint16Array(buffer);
   var headerLength = 24;
-  var index2 = slice16(view16, headerLength / 2, view32[4] / 2);
+  var index = slice16(view16, headerLength / 2, view32[4] / 2);
   var data = view32[5] === 2 ? slice16(view16, (headerLength + view32[4]) / 2) : slice32(view32, Math.ceil((headerLength + view32[4]) / 4));
-  return new Trie(view32[0], view32[1], view32[2], view32[3], index2, data);
+  return new Trie(view32[0], view32[1], view32[2], view32[3], index, data);
 };
 var Trie = function() {
-  function Trie2(initialValue, errorValue, highStart, highValueIndex, index2, data) {
+  function Trie2(initialValue, errorValue, highStart, highValueIndex, index, data) {
     this.initialValue = initialValue;
     this.errorValue = errorValue;
     this.highStart = highStart;
     this.highValueIndex = highValueIndex;
-    this.index = index2;
+    this.index = index;
     this.data = data;
   }
   Trie2.prototype.get = function(codePoint) {
@@ -5018,17 +5018,17 @@ var fromCodePoint = function() {
     return "";
   }
   var codeUnits = [];
-  var index2 = -1;
+  var index = -1;
   var result = "";
-  while (++index2 < length) {
-    var codePoint = codePoints[index2];
+  while (++index < length) {
+    var codePoint = codePoints[index];
     if (codePoint <= 65535) {
       codeUnits.push(codePoint);
     } else {
       codePoint -= 65536;
       codeUnits.push((codePoint >> 10) + 55296, codePoint % 1024 + 56320);
     }
-    if (index2 + 1 === length || codeUnits.length > 16384) {
+    if (index + 1 === length || codeUnits.length > 16384) {
       result += String.fromCharCode.apply(String, codeUnits);
       codeUnits.length = 0;
     }
@@ -5041,11 +5041,11 @@ var BREAK_ALLOWED = "\xF7";
 var codePointToClass = function(codePoint) {
   return UnicodeTrie.get(codePoint);
 };
-var _graphemeBreakAtIndex = function(_codePoints, classTypes, index2) {
-  var prevIndex = index2 - 2;
+var _graphemeBreakAtIndex = function(_codePoints, classTypes, index) {
+  var prevIndex = index - 2;
   var prev = classTypes[prevIndex];
-  var current = classTypes[index2 - 1];
-  var next = classTypes[index2];
+  var current = classTypes[index - 1];
+  var next = classTypes[index];
   if (current === CR && next === LF) {
     return BREAK_NOT_ALLOWED;
   }
@@ -5096,20 +5096,20 @@ var _graphemeBreakAtIndex = function(_codePoints, classTypes, index2) {
 var GraphemeBreaker = function(str) {
   var codePoints = toCodePoints(str);
   var length = codePoints.length;
-  var index2 = 0;
+  var index = 0;
   var lastEnd = 0;
   var classTypes = codePoints.map(codePointToClass);
   return {
     next: function() {
-      if (index2 >= length) {
+      if (index >= length) {
         return { done: true, value: null };
       }
       var graphemeBreak = BREAK_NOT_ALLOWED;
-      while (index2 < length && (graphemeBreak = _graphemeBreakAtIndex(codePoints, classTypes, ++index2)) === BREAK_NOT_ALLOWED) {
+      while (index < length && (graphemeBreak = _graphemeBreakAtIndex(codePoints, classTypes, ++index)) === BREAK_NOT_ALLOWED) {
       }
-      if (graphemeBreak !== BREAK_NOT_ALLOWED || index2 === length) {
-        var value = fromCodePoint.apply(null, codePoints.slice(lastEnd, index2));
-        lastEnd = index2;
+      if (graphemeBreak !== BREAK_NOT_ALLOWED || index === length) {
+        var value = fromCodePoint.apply(null, codePoints.slice(lastEnd, index));
+        lastEnd = index;
         return { value, done: false };
       }
       return { done: true, value: null };
@@ -6042,10 +6042,10 @@ var createAdditiveCounter = function(value, min, max, symbols, fallback, suffix)
   if (value < min || value > max) {
     return createCounterText(value, fallback, suffix.length > 0);
   }
-  return symbols.integers.reduce(function(string, integer, index2) {
+  return symbols.integers.reduce(function(string, integer, index) {
     while (value >= integer) {
       value -= integer;
-      string += symbols.values[index2];
+      string += symbols.values[index];
     }
     return string;
   }, "") + suffix;
@@ -7020,8 +7020,8 @@ var equalPath = function(a2, b) {
   return false;
 };
 var transformPath = function(path, deltaX, deltaY, deltaW, deltaH) {
-  return path.map(function(point, index2) {
-    switch (index2) {
+  return path.map(function(point, index) {
+    switch (index) {
       case 0:
         return point.add(deltaX, deltaY);
       case 1:
@@ -7306,13 +7306,13 @@ var calculateBackgroundPaintingArea = function(backgroundClip2, element) {
   }
   return paddingBox(element);
 };
-var calculateBackgroundRendering = function(container, index2, intrinsicSize) {
-  var backgroundPositioningArea = calculateBackgroundPositioningArea(getBackgroundValueForIndex(container.styles.backgroundOrigin, index2), container);
-  var backgroundPaintingArea = calculateBackgroundPaintingArea(getBackgroundValueForIndex(container.styles.backgroundClip, index2), container);
-  var backgroundImageSize = calculateBackgroundSize(getBackgroundValueForIndex(container.styles.backgroundSize, index2), intrinsicSize, backgroundPositioningArea);
+var calculateBackgroundRendering = function(container, index, intrinsicSize) {
+  var backgroundPositioningArea = calculateBackgroundPositioningArea(getBackgroundValueForIndex(container.styles.backgroundOrigin, index), container);
+  var backgroundPaintingArea = calculateBackgroundPaintingArea(getBackgroundValueForIndex(container.styles.backgroundClip, index), container);
+  var backgroundImageSize = calculateBackgroundSize(getBackgroundValueForIndex(container.styles.backgroundSize, index), intrinsicSize, backgroundPositioningArea);
   var sizeWidth = backgroundImageSize[0], sizeHeight = backgroundImageSize[1];
-  var position2 = getAbsoluteValueForTuple(getBackgroundValueForIndex(container.styles.backgroundPosition, index2), backgroundPositioningArea.width - sizeWidth, backgroundPositioningArea.height - sizeHeight);
-  var path = calculateBackgroundRepeatPath(getBackgroundValueForIndex(container.styles.backgroundRepeat, index2), position2, backgroundImageSize, backgroundPositioningArea, backgroundPaintingArea);
+  var position2 = getAbsoluteValueForTuple(getBackgroundValueForIndex(container.styles.backgroundPosition, index), backgroundPositioningArea.width - sizeWidth, backgroundPositioningArea.height - sizeHeight);
+  var path = calculateBackgroundRepeatPath(getBackgroundValueForIndex(container.styles.backgroundRepeat, index), position2, backgroundImageSize, backgroundPositioningArea, backgroundPaintingArea);
   var offsetX = Math.round(backgroundPositioningArea.left + position2[0]);
   var offsetY = Math.round(backgroundPositioningArea.top + position2[1]);
   return [path, offsetX, offsetY, sizeWidth, sizeHeight];
@@ -7392,8 +7392,8 @@ var calculateBackgroundSize = function(size, _a, bounds) {
   }
   throw new Error("Unable to calculate background-size for element");
 };
-var getBackgroundValueForIndex = function(values, index2) {
-  var value = values[index2];
+var getBackgroundValueForIndex = function(values, index) {
+  var value = values[index];
   if (typeof value === "undefined") {
     return values[0];
   }
@@ -7997,9 +7997,9 @@ var CanvasRenderer = function(_super) {
   };
   CanvasRenderer2.prototype.formatPath = function(paths) {
     var _this = this;
-    paths.forEach(function(point, index2) {
+    paths.forEach(function(point, index) {
       var start = isBezierCurve(point) ? point.start : point;
-      if (index2 === 0) {
+      if (index === 0) {
         _this.ctx.moveTo(start.x, start.y);
       } else {
         _this.ctx.lineTo(start.x, start.y);
@@ -8031,11 +8031,11 @@ var CanvasRenderer = function(_super) {
   };
   CanvasRenderer2.prototype.renderBackgroundImage = function(container) {
     return __awaiter(this, void 0, void 0, function() {
-      var index2, _loop_1, this_1, _i, _a, backgroundImage2;
+      var index, _loop_1, this_1, _i, _a, backgroundImage2;
       return __generator(this, function(_b) {
         switch (_b.label) {
           case 0:
-            index2 = container.styles.backgroundImage.length - 1;
+            index = container.styles.backgroundImage.length - 1;
             _loop_1 = function(backgroundImage3) {
               var image2, url, _c, path, x, y, width, height, pattern, _d, path, x, y, width, height, _e, lineLength, x0, x1, y0, y1, canvas, ctx, gradient_1, pattern, _f, path, left, top_1, width, height, position2, x, y, _g, rx, ry, radialGradient_1, midX, midY, f2, invF;
               return __generator(this, function(_h) {
@@ -8058,7 +8058,7 @@ var CanvasRenderer = function(_super) {
                     return [3, 4];
                   case 4:
                     if (image2) {
-                      _c = calculateBackgroundRendering(container, index2, [
+                      _c = calculateBackgroundRendering(container, index, [
                         image2.width,
                         image2.height,
                         image2.width / image2.height
@@ -8069,7 +8069,7 @@ var CanvasRenderer = function(_super) {
                     return [3, 6];
                   case 5:
                     if (isLinearGradient(backgroundImage3)) {
-                      _d = calculateBackgroundRendering(container, index2, [null, null, null]), path = _d[0], x = _d[1], y = _d[2], width = _d[3], height = _d[4];
+                      _d = calculateBackgroundRendering(container, index, [null, null, null]), path = _d[0], x = _d[1], y = _d[2], width = _d[3], height = _d[4];
                       _e = calculateGradientDirection(backgroundImage3.angle, width, height), lineLength = _e[0], x0 = _e[1], x1 = _e[2], y0 = _e[3], y1 = _e[4];
                       canvas = document.createElement("canvas");
                       canvas.width = width;
@@ -8086,7 +8086,7 @@ var CanvasRenderer = function(_super) {
                         this_1.renderRepeat(path, pattern, x, y);
                       }
                     } else if (isRadialGradient(backgroundImage3)) {
-                      _f = calculateBackgroundRendering(container, index2, [
+                      _f = calculateBackgroundRendering(container, index, [
                         null,
                         null,
                         null
@@ -8120,7 +8120,7 @@ var CanvasRenderer = function(_super) {
                     }
                     _h.label = 6;
                   case 6:
-                    index2--;
+                    index--;
                     return [2];
                 }
               });
@@ -10297,8 +10297,8 @@ var jszip = { exports: {} };
           this.centralDirSize = this.reader.readInt(8);
           this.centralDirOffset = this.reader.readInt(8);
           this.zip64ExtensibleData = {};
-          var extraDataSize = this.zip64EndOfCentralSize - 44, index2 = 0, extraFieldId, extraFieldLength, extraFieldValue;
-          while (index2 < extraDataSize) {
+          var extraDataSize = this.zip64EndOfCentralSize - 44, index = 0, extraFieldId, extraFieldLength, extraFieldValue;
+          while (index < extraDataSize) {
             extraFieldId = this.reader.readInt(2);
             extraFieldLength = this.reader.readInt(4);
             extraFieldValue = this.reader.readString(extraFieldLength);
@@ -19304,7 +19304,7 @@ function make_xlsx_lib(XLSX2) {
     var out = {};
     var d = data.read_shift(1);
     var xColorType = d >>> 1;
-    var index2 = data.read_shift(1);
+    var index = data.read_shift(1);
     var nTS = data.read_shift(2, "i");
     var bR = data.read_shift(1);
     var bG = data.read_shift(1);
@@ -19315,8 +19315,8 @@ function make_xlsx_lib(XLSX2) {
         out.auto = 1;
         break;
       case 1:
-        out.index = index2;
-        var icv = XLSIcv[index2];
+        out.index = index;
+        var icv = XLSIcv[index];
         if (icv)
           out.rgb = rgb2Hex(icv);
         break;
@@ -19324,7 +19324,7 @@ function make_xlsx_lib(XLSX2) {
         out.rgb = rgb2Hex([bR, bG, bB]);
         break;
       case 3:
-        out.theme = index2;
+        out.theme = index;
         break;
     }
     if (nTS != 0)
@@ -38710,14 +38710,14 @@ function make_xlsx_lib(XLSX2) {
       },
       addStyle: function(attributes) {
         var hashKey = JSON.stringify(attributes);
-        var index2 = _hashIndex[hashKey];
-        if (index2 == void 0) {
-          index2 = this._addXf(attributes);
-          _hashIndex[hashKey] = index2;
+        var index = _hashIndex[hashKey];
+        if (index == void 0) {
+          index = this._addXf(attributes);
+          _hashIndex[hashKey] = index;
         } else {
-          index2 = _hashIndex[hashKey];
+          index = _hashIndex[hashKey];
         }
-        return index2;
+        return index;
       },
       addStyles: function(styles) {
         var self2 = this;
@@ -38939,8 +38939,8 @@ function make_lay_excel(global2) {
           throw new TypeError("Cannot convert undefined or null to object");
         }
         target = Object(target);
-        for (var index2 = 1; index2 < arguments.length; index2++) {
-          var source = arguments[index2];
+        for (var index = 1; index < arguments.length; index++) {
+          var source = arguments[index];
           if (source != null) {
             for (var key in source) {
               if (Object.prototype.hasOwnProperty.call(source, key)) {
@@ -39151,13 +39151,13 @@ function make_lay_excel(global2) {
       }
       var len = title.length;
       var total = 0;
-      for (var index2 in title) {
-        if (!title.hasOwnProperty(index2)) {
+      for (var index in title) {
+        if (!title.hasOwnProperty(index)) {
           continue;
         }
-        var char = title[index2];
+        var char = title[index];
         var code = char.charCodeAt() - 64;
-        total += code * Math.pow(26, len - index2 - 1);
+        total += code * Math.pow(26, len - index - 1);
       }
       this.numsTitleCache[total] = title;
       this.titleNumsCache[title] = total;
@@ -39292,10 +39292,10 @@ function make_lay_excel(global2) {
     },
     makeMergeConfig: function(origin) {
       var merge = [];
-      for (var index2 = 0; index2 < origin.length; index2++) {
+      for (var index = 0; index < origin.length; index++) {
         merge.push({
-          s: this.splitPosition(origin[index2][0]),
-          e: this.splitPosition(origin[index2][1])
+          s: this.splitPosition(origin[index][0]),
+          e: this.splitPosition(origin[index][1])
         });
       }
       return merge;
@@ -39304,13 +39304,13 @@ function make_lay_excel(global2) {
       defaultNum = defaultNum > 0 ? defaultNum : 50;
       var change = [];
       var startIndex = 0;
-      for (var index2 in data) {
-        if (!data.hasOwnProperty(index2)) {
+      for (var index in data) {
+        if (!data.hasOwnProperty(index)) {
           continue;
         }
-        var item = data[index2];
-        if (index2.match && index2.match(/[A-Z]*/)) {
-          var currentIndex = this.titleToNum(index2) - 1;
+        var item = data[index];
+        if (index.match && index.match(/[A-Z]*/)) {
+          var currentIndex = this.titleToNum(index) - 1;
           while (startIndex < currentIndex) {
             change.push({ wpx: defaultNum });
             startIndex++;
@@ -39325,13 +39325,13 @@ function make_lay_excel(global2) {
       defaultNum = defaultNum > 0 ? defaultNum : 10;
       var change = [];
       var startIndex = 0;
-      for (var index2 in data) {
-        if (!data.hasOwnProperty(index2)) {
+      for (var index in data) {
+        if (!data.hasOwnProperty(index)) {
           continue;
         }
-        var item = data[index2];
-        if (index2.match && index2.match(/[0-9]*/)) {
-          var currentIndex = parseInt(index2) - 1;
+        var item = data[index];
+        if (index.match && index.match(/[0-9]*/)) {
+          var currentIndex = parseInt(index) - 1;
           while (startIndex < currentIndex) {
             change.push({ hpx: defaultNum });
             startIndex++;
@@ -39362,7 +39362,7 @@ function make_lay_excel(global2) {
     },
     filterDataToAoaData: function(filterData) {
       var aoaData = [];
-      this.each(filterData, function(index2, item) {
+      this.each(filterData, function(index, item) {
         var itemData = [];
         for (var i in item) {
           if (!item.hasOwnProperty(i)) {
@@ -39443,7 +39443,7 @@ function make_lay_excel(global2) {
         ""
       ];
       if (option.checkMime) {
-        this.each(files, function(index2, item) {
+        this.each(files, function(index, item) {
           if (supportReadMime.indexOf(item.type) === -1) {
             throw { code: 999, message: item.name + "\uFF08" + item.type + "\uFF09\u4E3A\u4E0D\u652F\u6301\u7684\u6587\u4EF6\u7C7B\u578B" };
           }
@@ -39452,7 +39452,7 @@ function make_lay_excel(global2) {
       delete option.checkMime;
       var data = {};
       var book = {};
-      this.each(files, function(index2, item) {
+      this.each(files, function(index, item) {
         var reader = new FileReader();
         if (!reader) {
           throw { code: 999, message: "\u4E0D\u652F\u6301FileReader\uFF0C\u8BF7\u66F4\u6362\u66F4\u65B0\u7684\u6D4F\u89C8\u5668" };
@@ -39477,9 +39477,9 @@ function make_lay_excel(global2) {
               }
             }
           });
-          data[index2] = excelData;
-          book[index2] = wb;
-          if (parseInt(index2) === files.length - 1) {
+          data[index] = excelData;
+          book[index] = wb;
+          if (parseInt(index) === files.length - 1) {
             callback && callback.apply && callback.apply(window, [data, book]);
           }
         };
@@ -39631,7 +39631,7 @@ function exportExcel(file, rangeDate, list, dateText = "", itemText = "") {
     monthMerageConfig.push([Convert26(ConvertNum(prev) + 1), end]);
   });
   monthMerageConfig = monthMerageConfig.map((item) => {
-    item = item.map((index2) => index2 + 1);
+    item = item.map((index) => index + 1);
     return item;
   });
   data = data.concat(headArr);
@@ -39645,8 +39645,8 @@ function exportExcel(file, rangeDate, list, dateText = "", itemText = "") {
   });
   const dataMergeConfig = [];
   const setStyleList = [];
-  data.forEach((item, index2) => {
-    const currentLine = index2 + 1;
+  data.forEach((item, index) => {
+    const currentLine = index + 1;
     if (item.type === "alike") {
       dataMergeConfig.push([`B${currentLine}`, `${Convert26(totalDays + 1)}${currentLine}`]);
       setStyleList.push({
@@ -39950,16 +39950,16 @@ const _sfc_main = {
       if (inWorkInfo && scheduleItem.id !== inWorkInfo.id) {
         const repeatList = _checkWorkRepeatRange(inWorkInfo, scheduleItem);
         const start = scheduleItem.days.slice(repeatList.length)[0];
-        const index2 = result.findIndex((item) => item.date === start);
-        result[index2] = __spreadValues({
+        const index = result.findIndex((item) => item.date === start);
+        result[index] = __spreadValues({
           type: "works",
           date: scheduleItem.days[0],
           width: computeWordwidth(scheduleItem.days, result),
           left: repeatList.length * props.itemWidth
         }, scheduleItem);
       } else {
-        const index2 = result.findIndex((item) => item.date === scheduleItem.days[0]);
-        result[index2] = __spreadValues({
+        const index = result.findIndex((item) => item.date === scheduleItem.days[0]);
+        result[index] = __spreadValues({
           type: "works",
           date: scheduleItem.days[0],
           width: computeWordwidth(scheduleItem.days, result),
@@ -40179,12 +40179,12 @@ const _sfc_main = {
             createElementVNode("span", _hoisted_5, toDisplayString(props.itemText), 1)
           ]),
           createElementVNode("div", _hoisted_6, [
-            (openBlock(true), createElementBlock(Fragment, null, renderList(data.value, (item, index2) => {
+            (openBlock(true), createElementBlock(Fragment, null, renderList(data.value, (item, index) => {
               return openBlock(), createElementBlock("div", {
-                key: index2,
+                key: index,
                 class: normalizeClass({
                   "guide-name": true,
-                  "last-guide-name": index2 === data.value.length - 1
+                  "last-guide-name": index === data.value.length - 1
                 }),
                 style: normalizeStyle(item.type === "alike" && computedStyle(item))
               }, toDisplayString(typeof props.alikeName === "function" && item.type === "alike" ? props.alikeName(item) : item.name), 7);
@@ -40223,9 +40223,9 @@ const _sfc_main = {
             }), 128))
           ]),
           createElementVNode("div", _hoisted_12, [
-            (openBlock(true), createElementBlock(Fragment, null, renderList(data.value, (item, index2) => {
+            (openBlock(true), createElementBlock(Fragment, null, renderList(data.value, (item, index) => {
               return openBlock(), createElementBlock("div", {
-                key: index2,
+                key: index,
                 class: normalizeClass({
                   "date-box": true,
                   "alike": item.type === "alike"
@@ -40257,5 +40257,5 @@ const _sfc_main = {
   }
 };
 var Gantt = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-61fefb04"]]);
-var index = { Gantt };
-export { index$1 as Util, index as default };
+const util = Util;
+export { Gantt as default, util };
