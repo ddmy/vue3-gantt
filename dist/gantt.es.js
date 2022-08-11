@@ -1190,7 +1190,7 @@ const fetchPrevMonthRange = (date = new Date()) => {
 const fetchTodayMonthRange = (date = new Date()) => {
   return fetchThreeDays(date).current;
 };
-var Util = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+var index$1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   computedDaysRange,
   fetchDayDetail,
@@ -40257,5 +40257,5 @@ const _sfc_main = {
   }
 };
 var Gantt = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-61fefb04"]]);
-var index = __spreadValues({ Gantt }, Util);
-export { index as default };
+var index = { Gantt };
+export { index$1 as Util, index as default };
