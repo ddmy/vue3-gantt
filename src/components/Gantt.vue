@@ -167,7 +167,12 @@ const computedGanntInnerHeight = () => {
     nextTick(() => {
       const parent = gantt.parentElement || document.body
       const ganttHead = document.querySelector('#Vue3Gantt .desc')
-      ganttInnerHeight.value = parent.clientHeight - ganttHead.clientHeight - (ganttHead.offsetTop - parent.offsetTop) - 2 + 'px'
+      const headRect = ganttHead.getBoundingClientRect()
+      const parentRect = parent.getBoundingClientRect()
+      // ganttInnerHeight.value = parent.clientHeight - ganttHead.clientHeight - (ganttHead.offsetTop - parent.offsetTop) - 2 + 'px'
+      // gannt顶部的其余内容高
+      const topHeight = headRect.top - parentRect.top
+      ganttInnerHeight.value = parentRect.height - headRect.height - topHeight + 'px'
     })
   }, 200)
 }

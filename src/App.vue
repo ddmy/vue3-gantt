@@ -10,7 +10,7 @@
       <button @click="today">今天</button>
     </div>
     <div class="box">
-      <div><a href="https://github.com/ddmy/vue-gantt">github</a></div>
+      <div class="link"><a href="https://github.com/ddmy/vue-gantt">github</a></div>
       <Gantt
         ref="gantt"
         :data="data"
@@ -67,6 +67,7 @@ const data = ref(DATA.data2)
 
 const onScheduleClick = item => {
   console.log('点击', item)
+  alert(`${item.name}----${item.desc}`)
 }
 
 const gantt = ref(null)
@@ -152,5 +153,10 @@ const exportGanttExcel = () => {
 }
 .box {
   flex: 1;
+}
+.link {
+  height: 80px;
+  line-height: 80px;
+  background-color: #eee;
 }
 </style>

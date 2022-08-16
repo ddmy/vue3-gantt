@@ -284,48 +284,204 @@ export default {
     {
       name: '白鹿原',
       type: 'normal',
-      schedule: []
+      schedule: [
+        {
+          id: 2223233,
+          name: 'SSSS',
+          desc: 'scsscscsc，收入提升30%',
+          backgroundColor: '#369',
+          textColor: '#fff',
+          days: ['2022-02-15', '2022-03-02']
+        },
+      ]
     },
     {
       name: '小兵张嘎',
       type: 'normal',
-      schedule: []
+      schedule: [
+        {
+          id: 2223233,
+          name: 'SSSS',
+          desc: 'scsscscsc，收入提升30%',
+          backgroundColor: '#268',
+          textColor: '#fff',
+          days: ['2022-02-05', '2022-02-13']
+        },
+      ]
+    },
+    /////////////////
+    {
+      name: '长线版本节点',
+      color: '#f6f6f6',
+      type: 'alike'
     },
     {
-      name: '冲冲冲',
+      name: '和平精英',
+      type: 'normal',
+      schedule: [
+        {
+          id: 1111,
+          name: '元旦玩法+S级商业化',
+          desc: '活跃提升20%，收入提升50%',
+          backgroundColor: '#ffdebc',
+          textColor: '#ff5d35',
+          // days: ['2022-01-30', '2022-01-31', '2022-02-01', '2022-02-02']
+          days: ['2022-01-30', '2022-02-07']
+        },
+        {
+          id: 1112,
+          name: 'S26新赛季，战令更新',
+          desc: '活跃提升20%，收入提升30%',
+          backgroundColor: '#ffdebc',
+          textColor: '#ff5d35',
+          days: ['2022-02-06', '2022-02-07', '2022-02-08', '2022-02-09']
+        },
+        {
+          id: 1113,
+          name: '新皮肤活动',
+          desc: '活跃提升20%，收入提升30%',
+          backgroundColor: '#ffdebc',
+          textColor: '#ff5d35',
+          days: ['2022-02-18', '2022-02-19', '2022-02-20', '2022-02-21', '2022-02-22', '2022-02-23', '2022-02-24']
+        },
+      ]
+    },
+    {
+      name: '金铲铲之战',
+      type: 'normal',
+      schedule: [
+        {
+          id: 2221,
+          name: '元旦玩法+S级商业化',
+          desc: '活跃提升20%，收入提升50%',
+          backgroundColor: '#003333',
+          textColor: '#999999',
+          days: ['2022-01-28','2022-01-29','2022-01-30', '2022-01-31', '2022-02-01']
+        },
+        {
+          id: 2222,
+          name: 'S26新赛季，战令更新',
+          desc: '活跃提升20%，收入提升30%',
+          backgroundColor: '#99AACC',
+          textColor: '#336699',
+          days: ['2022-01-30', '2022-01-31', '2022-02-01', '2022-02-02', '2022-02-03', '2022-02-04', '2022-02-05']
+        },
+        {
+          id: 2223,
+          name: '五星级活动',
+          desc: '活跃提升20%，收入提升30%',
+          backgroundColor: '#006633',
+          textColor: '#CCCC66',
+          days: ['2022-02-10', '2022-02-16']
+        },
+      ]
+    },
+    {
+      name: '西游记',
+      type: 'normal',
+      schedule: [
+        {
+          id: 2221,
+          name: '元旦玩法+S级商业化',
+          desc: '活跃提升20%，收入提升50%',
+          backgroundColor: '#003333',
+          textColor: '#999999',
+          days: ['2022-04-28','2022-05-01']
+        },
+        {
+          id: 2222,
+          name: 'S26新赛季，战令更新',
+          desc: '活跃提升20%，收入提升30%',
+          backgroundColor: '#99CCCC',
+          textColor: '#336699',
+          days: ['2022-03-20', '2022-04-05']
+        },
+        {
+          id: 2223,
+          name: 'FGDG级活动',
+          desc: '活跃提升20%，收入提升30%',
+          backgroundColor: '#CC6633',
+          textColor: '#CCCC66',
+          days: ['2022-02-26', '2022-03-11']
+        },
+      ]
+    },
+    {
+      name: '水浒传',
+      type: 'normal',
+      schedule: [
+        {
+          id: 2221,
+          name: '元旦玩法+S级商业化',
+          desc: '活跃提升20%，收入提升50%',
+          backgroundColor: '#003333',
+          textColor: '#999999',
+          days: ['2022-02-12','2022-02-21']
+        },
+        {
+          id: 2222,
+          name: 'S26新赛季，战令更新',
+          desc: '活跃提升20%，收入提升30%',
+          backgroundColor: '#99CCCC',
+          textColor: '#336699',
+          days: ['2022-02-23', '2022-03-05']
+        },
+        {
+          id: 2223,
+          name: 'RRRRR星级活动',
+          desc: '活跃提升20%，收入提升30%',
+          backgroundColor: '#006633',
+          textColor: '#CCCC66',
+          days: ['2022-02-16', '2022-02-19']
+        },
+      ]
+    },
+    {
+      name: '三国演义',
       type: 'normal',
       schedule: []
     },
     {
-      name: '冲冲冲1',
+      name: '平凡的世界',
       type: 'normal',
-      schedule: []
+      schedule: [
+        {
+          id: 2223233,
+          name: '无敌大马路',
+          desc: 'scsscscsc，收入提升30%',
+          backgroundColor: '#369',
+          textColor: '#fff',
+          days: ['2022-01-15', '2022-03-02']
+        },
+      ]
     },
     {
-      name: '冲冲冲2',
+      name: '白鹿原',
       type: 'normal',
-      schedule: []
+      schedule: [
+        {
+          id: 2223233,
+          name: 'SSSS',
+          desc: 'scsscscsc，收入提升30%',
+          backgroundColor: '#369',
+          textColor: '#fff',
+          days: ['2022-02-15', '2022-03-02']
+        },
+      ]
     },
     {
-      name: '冲冲冲3',
+      name: '小兵张嘎',
       type: 'normal',
-      schedule: []
-    },
-    {
-      name: '冲冲冲4',
-      type: 'normal',
-      schedule: []
-    },
-    {
-      name: '冲冲冲5',
-      type: 'normal',
-      schedule: []
-    },
-    {
-      name: '冲冲冲6',
-      type: 'normal',
-      schedule: []
+      schedule: [
+        {
+          id: 2223233,
+          name: 'SSSS',
+          desc: 'scsscscsc，收入提升30%',
+          backgroundColor: '#268',
+          textColor: '#fff',
+          days: ['2022-02-05', '2022-02-13']
+        },
+      ]
     },
   ],
-  data3: [{"name":"游戏","color":"#f6f6f6","type":"alike"},{"name":"ttttt","type":"normal","schedule":[{"id":"1","labelScheduleId":"34","modeId":"1","step":"0","stepIndex":"0","stepType":"2","timeAuto":"0","subProAuto":"0","subProAll":"0","name":"ver","startTime":"2022-06-08 00:00:00","endTime":"2022-06-10 00:00:00","modeJson":{"tag":["130"],"id":"1","parent":"0","name":"test0","showExport":"0","labelScheduleId":"34","defaultTag":["130"],"gameType":"0","approve":"0","acceptanceType":"0","version":"1","status":"1","updateBy":"5A68A55F7AE8F2094D58A544171C89BF","updateTime":"2022-06-02 10:38:48","createBy":"5A68A55F7AE8F2094D58A544171C89BF","createTime":"2022-06-02 10:38:48"},"version":"1","updateBy":"14A945C43E84EB3CCB770417C104FDB7","updateTime":"2022-06-02 11:16:35","createBy":"14A945C43E84EB3CCB770417C104FDB7","createTime":"2022-06-02 11:16:35","tagArr":[{"nodeId":"1","id":"130","labelScheduleId":"34","name":"端游","mutex":"0","hide":"0","index":"0","bgColor":"#FF0000","wdColor":"#fff","createTime":"2022-06-02 15:12:34"}],"json":[{"id":"700","name":"节点标题","type":"3","modeId":"1","modeTypeId":"1","modeName":"test1111","required":"1","timeShow":"1","export":"","gameType":"","defaultName":"1111","timeAccurate":"","photoSize":"","multiple":"","option":"","index":"3","extend1":"","extend2":"","extend3":"","updateTime":"2022-06-02 10:38:48","createTime":"2022-06-02 10:38:48","value":"ver"}],"desc":"","backgroundColor":"#FF0000","textColor":"#fff","days":["2022-06-08","2022-06-09","2022-06-10"]},{"id":"2","labelScheduleId":"34","modeId":"1","step":"16","stepIndex":"1","stepType":"1","timeAuto":"0","subProAuto":"0","subProAll":"0","name":"1","startTime":"2022-06-01 00:00:00","endTime":"2022-06-02 00:00:00","modeJson":{"tag":["130","131"],"id":"1","parent":"0","name":"test0","showExport":"0","labelScheduleId":"34","defaultTag":["130"],"gameType":"0","approve":"1","acceptanceType":"0","version":"2","status":"1","updateBy":"4EC1C328D063E81DF77EC29F29D76689","updateTime":"2022-06-02 11:21:25","createBy":"5A68A55F7AE8F2094D58A544171C89BF","createTime":"2022-06-02 10:38:48"},"version":"2","updateBy":"4EC1C328D063E81DF77EC29F29D76689","updateTime":"2022-06-02 11:22:17","createBy":"4EC1C328D063E81DF77EC29F29D76689","createTime":"2022-06-02 11:22:17","tagArr":[{"nodeId":"2","id":"130","labelScheduleId":"34","name":"端游","mutex":"0","hide":"0","index":"0","bgColor":"#FF0000","wdColor":"#fff","createTime":"2022-06-02 15:12:34"},{"nodeId":"2","id":"131","labelScheduleId":"34","name":"手游","mutex":"0","hide":"0","index":"1","bgColor":"#00FFF7","wdColor":"#000000","createTime":"2022-06-02 15:12:34"}],"json":[{"id":"700","name":"节点标题","type":"3","modeId":"1","modeTypeId":"1","modeName":"test1111","required":"1","timeShow":"1","export":"","gameType":"","defaultName":"1111","timeAccurate":"","photoSize":"","multiple":"","option":"","index":"3","extend1":"","extend2":"","extend3":"","updateTime":"2022-06-02 11:21:25","createTime":"2022-06-02 10:38:48","value":"1"}],"desc":"","backgroundColor":"#FF0000","textColor":"#fff","days":["2022-06-01","2022-06-02"]},{"id":"3","labelScheduleId":"34","modeId":"1","step":"16","stepIndex":"1","stepType":"1","timeAuto":"0","subProAuto":"0","subProAll":"0","name":"1111","startTime":"2022-06-06 00:00:00","endTime":"2022-06-06 00:00:00","modeJson":{"tag":["130"],"id":"1","parent":"0","name":"test0","showExport":"0","labelScheduleId":"34","defaultTag":["130"],"gameType":"0","approve":"1","acceptanceType":"0","version":"2","status":"1","updateBy":"4EC1C328D063E81DF77EC29F29D76689","updateTime":"2022-06-02 11:21:25","createBy":"5A68A55F7AE8F2094D58A544171C89BF","createTime":"2022-06-02 10:38:48"},"version":"2","updateBy":"5A68A55F7AE8F2094D58A544171C89BF","updateTime":"2022-06-02 14:19:47","createBy":"5A68A55F7AE8F2094D58A544171C89BF","createTime":"2022-06-02 14:19:47","tagArr":[{"nodeId":"3","id":"130","labelScheduleId":"34","name":"端游","mutex":"0","hide":"0","index":"0","bgColor":"#FF0000","wdColor":"#fff","createTime":"2022-06-02 15:12:34"}],"json":[{"id":"700","name":"节点标题","type":"3","modeId":"1","modeTypeId":"1","modeName":"test1111","required":"1","timeShow":"1","export":"","gameType":"","defaultName":"1111","timeAccurate":"","photoSize":"","multiple":"","option":"","index":"3","extend1":"","extend2":"","extend3":"","updateTime":"2022-06-02 11:21:25","createTime":"2022-06-02 10:38:48","value":"1111"}],"desc":"","backgroundColor":"#FF0000","textColor":"#fff","days":["2022-06-06"]}]},{"name":"服务器","color":"#f6f6f6","type":"alike"},{"name":"角色扮演1","type":"normal","schedule":[{"id":"4","labelScheduleId":"37","modeId":"2","step":"16","stepIndex":"1","stepType":"1","timeAuto":"0","subProAuto":"0","subProAll":"0","name":"2","startTime":"2022-05-03 00:00:00","endTime":"2022-07-07 00:00:00","modeJson":{"tag":["137"],"id":"2","parent":"0","name":"凄凄切切q","showExport":"0","labelScheduleId":"37","defaultTag":["136"],"gameType":"0","approve":"1","acceptanceType":"1","version":"2","status":"1","updateBy":"4EC1C328D063E81DF77EC29F29D76689","updateTime":"2022-06-02 15:48:14","createBy":"5A68A55F7AE8F2094D58A544171C89BF","createTime":"2022-06-02 15:05:29","isUpdatePower":1,"isWalkFollowPower":0,"isFollowPower":0},"version":"2","updateBy":"4EC1C328D063E81DF77EC29F29D76689","updateTime":"2022-06-02 15:59:33","createBy":"4EC1C328D063E81DF77EC29F29D76689","createTime":"2022-06-02 15:58:18","tagArr":[{"nodeId":"4","id":"137","labelScheduleId":"37","name":"怀旧服","mutex":"0","hide":"0","index":"1","bgColor":"#000","wdColor":"#fff","createTime":"2022-06-02 14:28:31"}],"json":[{"id":"706","name":"节点标题","type":"3","modeId":"2","modeTypeId":"3","modeName":"节点标题","required":"1","timeShow":"1","export":"","gameType":"","defaultName":"请选择节点","timeAccurate":"","photoSize":"","multiple":"","option":"","index":"3","extend1":"","extend2":"","extend3":"","updateTime":"2022-06-02 15:48:14","createTime":"2022-06-02 15:05:29","value":"2"}],"desc":"","backgroundColor":"#000","textColor":"#fff","days":["2022-05-03","2022-05-04","2022-05-05","2022-05-06","2022-05-07","2022-05-08","2022-05-09","2022-05-10","2022-05-11","2022-05-12","2022-05-13","2022-05-14","2022-05-15","2022-05-16","2022-05-17","2022-05-18","2022-05-19","2022-05-20","2022-05-21","2022-05-22","2022-05-23","2022-05-24","2022-05-25","2022-05-26","2022-05-27","2022-05-28","2022-05-29","2022-05-30","2022-05-31","2022-06-01","2022-06-02","2022-06-03","2022-06-04","2022-06-05","2022-06-06","2022-06-07","2022-06-08","2022-06-09","2022-06-10","2022-06-11","2022-06-12","2022-06-13","2022-06-14","2022-06-15","2022-06-16","2022-06-17","2022-06-18","2022-06-19","2022-06-20","2022-06-21","2022-06-22","2022-06-23","2022-06-24","2022-06-25","2022-06-26","2022-06-27","2022-06-28","2022-06-29","2022-06-30","2022-07-01","2022-07-02","2022-07-03","2022-07-04","2022-07-05","2022-07-06","2022-07-07"]}]}]
 }
