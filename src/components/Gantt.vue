@@ -1,5 +1,5 @@
 <template>
-  <div class="gantt" id="Vue3Gantt">
+  <div class="gantt" ref="gantt">
     <div class="guide">
       <div class="desc">
         <span class="date">{{ props.dateText }}</span>
@@ -84,7 +84,7 @@ import {
   todayInRange,
   fetchToday,
   workListSplitForRepeat
-} from '../util/index.js'
+} from '../util'
 import html2canvas from 'html2canvas'
 import { exportExcel } from './excel.js'
 
@@ -155,18 +155,19 @@ const emit = defineEmits(['scheduleClick', 'scrollXEnd', 'scrollYEnd'])
 let rangeDate = ref([])
 const ganttMaxWidth = ref('2000px')
 const ganttInnerHeight = ref('0px')
+// 甘特图 dom
+const gantt = ref()
 
 let computeTimer = null
 // 计算当前图表内容区域高度
-const computedGanntInnerHeight = () => {
+const computedGanttInnerHeight = () => {
   clearTimeout(computeTimer)
   computeTimer = setTimeout(() => {
-    const gantt = document.querySelector('#Vue3Gantt')
-    if (!gantt) return
+    if (!gantt.value) return
     ganttInnerHeight.value = 0
     nextTick(() => {
-      const parent = gantt.parentElement || document.body
-      const ganttHead = document.querySelector('#Vue3Gantt .desc')
+      const parent = gantt.value.parentElement || document.body
+      const ganttHead = gantt.value.querySelector(`.desc`)
       const headRect = ganttHead.getBoundingClientRect()
       const parentRect = parent.getBoundingClientRect()
       // ganttInnerHeight.value = parent.clientHeight - ganttHead.clientHeight - (ganttHead.offsetTop - parent.offsetTop) - 2 + 'px'
@@ -263,7 +264,7 @@ const computedStyle = (parent, item) => {
 }
 
 // 计算当前日程范围在指定日期范围应该渲染的宽度 (假设日程范围都是合法的)
-const computeWordwidth = (schedule, days) => { 
+const computeWordWidth = (schedule, days) => {
   const hasFirst = todayInRange(schedule[0], [days[0].date, days[days.length - 1].date])
   const hasLast = todayInRange(schedule[schedule.length - 1], [days[0].date, days[days.length - 1].date])
   if (hasFirst && hasLast) return schedule.length * props.itemWidth
@@ -278,7 +279,6 @@ const computeWordwidth = (schedule, days) => {
     return fethDaysRange(days[0].date, days.at(-1).date).length * props.itemWidth
   }
   throw new Error('computeWordwidth 宽度计算异常！')
-  return 0
 }
 // 检查当前日期是否是指定项目的日程
 const _checkTodayIsWork = (today, schedule) => {
@@ -330,7 +330,7 @@ const _updateScheduleItem = (scheduleItem, result) => {
     result[index] = {
       type: 'works',
       date: scheduleItem.days[0],
-      width: computeWordwidth(scheduleItem.days, result),
+      width: computeWordWidth(scheduleItem.days, result),
       left: repeatList.length * props.itemWidth,
       ...scheduleItem
     }
@@ -340,15 +340,14 @@ const _updateScheduleItem = (scheduleItem, result) => {
     result[index] = {
       type: 'works',
       date: scheduleItem.days[0],
-      width: computeWordwidth(scheduleItem.days, result),
+      width: computeWordWidth(scheduleItem.days, result),
       left: 0,
       ...scheduleItem
     }
   }
   // 新增日程，需要同步删除更新日程列表，把原本为空的部分日程删掉
   result = result.filter(item => {
-    if (item.type === 'normal' && scheduleItem.days.includes(item.date)) return false
-    return true
+    return !(item.type === 'normal' && scheduleItem.days.includes(item.date));
   })
   return result
 }
@@ -375,7 +374,7 @@ const renderWorks = (game) => {
             res.push({
               type: 'works',
               date: dayItem.date,
-              width: computeWordwidth(scheduleItem.days, dateRange),
+              width: computeWordWidth(scheduleItem.days, dateRange),
               left: 0,
               ...scheduleItem
             })
@@ -452,7 +451,7 @@ const contentScroll = event => {
   if (targetClassName === 'item-name-list') {
     flag = 'schedule-box'
   }
-  const flagBox = document.querySelector(`#Vue3Gantt .${flag}`)
+  const flagBox = gantt.value.querySelector(`.${flag}`)
   if (flagBox) {
     flagBox.scrollTop = target.scrollTop
   }
@@ -468,12 +467,12 @@ const contentScroll = event => {
 }
 
 onMounted(() => {
-  const itemBox = document.querySelector('#Vue3Gantt .item-name-list')
-  const innerBox = document.querySelector('#Vue3Gantt .schedule-box')
+  const itemBox = gantt.value.querySelector('.item-name-list')
+  const innerBox = gantt.value.querySelector('.schedule-box')
   itemBox.addEventListener('scroll', contentScroll)
   innerBox.addEventListener('scroll', contentScroll)
-  window.addEventListener('resize', computedGanntInnerHeight)
-  computedGanntInnerHeight()
+  window.addEventListener('resize', computedGanttInnerHeight)
+  computedGanttInnerHeight()
 })
 
 watchEffect(() => {
@@ -525,14 +524,12 @@ const exportImg = async (config = {}) => {
     throw new Error('exportImg传参方式已更改，请通过Object方式设置导出配置')
   }
   let { download = true, waterType = 'txt', waterValue = '' } = config
-  return new Promise((resolve, reject) => {
-    const gantt = document.querySelector('#Vue3Gantt')
-    const inner = document.querySelector('#Vue3Gantt .inner')
+  return new Promise((resolve) => {
     const guide = document.querySelector('.guide')
     ganttInnerHeight.value = 'unset'
-    gantt.style.maxWidth = 'unset'
-    inner.scrollLeft = inner.scrollWidth
-    gantt.style.width = inner.scrollWidth + guide.clientWidth + 'px'
+    gantt.value.style.maxWidth = 'unset'
+    innerRef.value.scrollLeft = innerRef.value.scrollWidth
+    gantt.value.style.width = innerRef.value.scrollWidth + guide.clientWidth + 'px'
     nextTick(() => {
       waterValue = waterValue.trim()
       let mark = null
@@ -545,18 +542,18 @@ const exportImg = async (config = {}) => {
         mark.style.top = mark.style.left = '0'
         mark.style.width = mark.style.height = '100%'
         mark.style.backgroundImage = `url(${waterImg})`
-        gantt.appendChild(mark)
+        gantt.value.appendChild(mark)
       }
-      html2canvas(gantt, {
+      html2canvas(gantt.value, {
         removeContainer: true,
       }).then(function(canvas) {
         const href = canvas.toDataURL()
         if (mark) {
           mark.parentNode.removeChild(mark)
         }
-        gantt.style.maxWidth = ganttMaxWidth.value
-        computedGanntInnerHeight()
-        gantt.style.width = '100%'
+        gantt.value.style.maxWidth = ganttMaxWidth.value
+        computedGanttInnerHeight()
+        gantt.value.style.width = '100%'
         if (download) {
           const a = document.createElement('a')
           a.href = href
@@ -675,7 +672,7 @@ defineExpose({
     .guide-name {
       width: 100%;
       height: var(--itemHeight);
-      border-bottom: var(--border); 
+      border-bottom: var(--border);
       padding: 2px 10px;
       display: flex;
       align-items: center;
@@ -688,7 +685,6 @@ defineExpose({
   .inner {
     width: 100%;
     overflow-x: auto;
-    overflow-x: overlay;
     position: relative;
     &::-webkit-scrollbar {
       /*滚动条整体样式*/
@@ -748,7 +744,7 @@ defineExpose({
                 border-left: none;
               }
               .week {
-                border-left: none;  
+                border-left: none;
               }
               border-left: none;
             }
