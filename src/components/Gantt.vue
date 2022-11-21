@@ -685,6 +685,7 @@ defineExpose({
   .inner {
     width: 100%;
     overflow-x: auto;
+    overflow-x: overlay;
     position: relative;
     &::-webkit-scrollbar {
       /*滚动条整体样式*/
