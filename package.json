@@ -1,7 +1,7 @@
 {
   "name": "vue3-gantt",
   "private": false,
-  "version": "1.0.0-3",
+  "version": "1.0.0-4",
   "description": "Vue3甘特图组件",
   "author": "Yijio",
   "license": "ISC",
