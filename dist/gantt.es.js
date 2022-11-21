@@ -25629,7 +25629,6 @@ const xH = (i, a) => {
   key: 0,
   class: "work-desc"
 }, TH = {
-  __name: "Gantt",
   props: {
     data: {
       type: Array,
@@ -25691,11 +25690,11 @@ const xH = (i, a) => {
   setup(i, { expose: a, emit: s }) {
     const o = i;
     rm((xA) => ({
-      "792af846": o.borderColor,
-      fba9c32a: o.itemWidth + "px",
-      "0dc10ba2": o.itemHeight + "px",
-      "82d0d23a": h.value,
-      "0deaf35c": g.value
+      "39c579f8": o.borderColor,
+      "0a4fda6d": o.itemWidth + "px",
+      eb986040: o.itemHeight + "px",
+      ef2e1ebe: h.value,
+      "61754e44": g.value
     }));
     let u = oa([]);
     const h = oa("2000px"), g = oa("0px"), v = oa();
@@ -25960,7 +25959,7 @@ const xH = (i, a) => {
       ], 544)
     ], 512));
   }
-}, OH = /* @__PURE__ */ xH(TH, [["__scopeId", "data-v-43ba5312"]]);
+}, OH = /* @__PURE__ */ xH(TH, [["__scopeId", "data-v-60095254"]]);
 export {
   k4 as computedDaysRange,
   OH as default,
