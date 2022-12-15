@@ -178,3 +178,6 @@ const exportGanttExcel = () => {
 import { fetchTodayMonthRange } from 'vue3-gantt'
 ```
 
+#### 参与开发
+- node 版本要求16+
+- 使用`npm run dev` 启动本地项目进行调试开发，使用`npm run build`构建代码
