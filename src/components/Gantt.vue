@@ -179,7 +179,7 @@ const computedGanttInnerHeight = () => {
 }
 
 watchEffect(() => {
-  rangeDate.value = splitDaysForMonth(computedDaysRange(...props.dateRangeList))
+  rangeDate.value = splitDaysForMonth(computedDaysRange(props.dateRangeList[0], props.dateRangeList.at(-1)))
   console.log('rangeDate.value', rangeDate.value)
   ganttMaxWidth.value = props.itemWidth * (rangeDate.value.flat(1).length) + 122 + 'px'
 })
