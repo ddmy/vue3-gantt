@@ -25,7 +25,8 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
     "less": "^4.1.2",
-    "vite": "^4.0.2"
+    "terser": "^5.16.1",
+    "vite": "^4.0.4"
   },
   "keywords": [
     "vue3",
