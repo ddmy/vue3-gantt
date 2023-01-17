@@ -178,6 +178,15 @@ const computedGanttInnerHeight = () => {
   }, 200)
 }
 
+onMounted(() => {
+  const itemBox = gantt.value.querySelector('.item-name-list')
+  const innerBox = gantt.value.querySelector('.schedule-box')
+  itemBox.addEventListener('scroll', contentScroll)
+  innerBox.addEventListener('scroll', contentScroll)
+  window.addEventListener('resize', computedGanttInnerHeight)
+  computedGanttInnerHeight()
+})
+
 watchEffect(() => {
   rangeDate.value = splitDaysForMonth(computedDaysRange(props.dateRangeList[0], props.dateRangeList.at(-1)))
   console.log('rangeDate.value', rangeDate.value)
@@ -465,15 +474,6 @@ const contentScroll = event => {
     }
   }, 200)
 }
-
-onMounted(() => {
-  const itemBox = gantt.value.querySelector('.item-name-list')
-  const innerBox = gantt.value.querySelector('.schedule-box')
-  itemBox.addEventListener('scroll', contentScroll)
-  innerBox.addEventListener('scroll', contentScroll)
-  window.addEventListener('resize', computedGanttInnerHeight)
-  computedGanttInnerHeight()
-})
 
 watchEffect(() => {
   sortFilterData()

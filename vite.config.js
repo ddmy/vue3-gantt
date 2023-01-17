@@ -8,6 +8,7 @@ export default defineConfig({
   base: './',
   plugins: [vue()],
   build: {
+    target: 'esnext',
     lib: {
       entry: path.resolve(__dirname, './index.js'),
       name: 'Gantt',
@@ -22,6 +23,8 @@ export default defineConfig({
           vue: 'Vue'
         }
       }
-    }
+    },
+    minify: 'terser',
+    sourcemap: true
   }
 })
