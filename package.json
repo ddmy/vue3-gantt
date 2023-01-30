@@ -14,7 +14,8 @@
     ".": {
       "import": "./dist/gantt.es.js",
       "require": "./dist/gantt.umd.js"
-    }
+    },
+    "./dist/*": "./dist/*"
   },
   "scripts": {
     "dev": "vite",
