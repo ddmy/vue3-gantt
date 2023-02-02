@@ -26,8 +26,7 @@
     "core-js": "^3.21.1",
     "html2canvas": "^1.4.1",
     "lay-excel": "^1.7.6",
-    "lodash": "^4.17.21",
-    "vue": "^3.2.45"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
@@ -45,5 +44,8 @@
   "homepage": "https://github.com/ddmy/vue-gantt#readme",
   "bugs": {
     "url": "https://github.com/ddmy/vue-gantt/issues"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.45"
   }
 }
