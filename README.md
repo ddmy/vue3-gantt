@@ -3,7 +3,12 @@
 ![gantt](https://blog.ddamy.com/assets/img/gantt.jpeg)
 
 ### 简介
-基于`vue3.x`开发的精简版甘特图，支持重叠日程展示，支持导出`gantt img`和`gantt Excel`文件。
+基于`vue3.x`开发的精简版甘特图
+- [x] 支持导出甘特图Excel文件
+- [x] 支持导出甘特图图片
+- [x] 支持日程重叠展示
+- [x] 支持动态配置响应更新
+- [x] 响应式布局，兼容小屏幕展示
 
 > 如果您在使用过程中遇到任何相关问题，欢迎您提 issues😊,
 
