@@ -23,6 +23,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ctrl/tinycolor": "^3.6.0",
     "core-js": "^3.21.1",
     "html2canvas": "^1.4.1",
     "lay-excel": "^1.7.6",
