@@ -1,6 +1,5 @@
-import excel from 'lay-excel'
-import cloneDeep from 'lodash/cloneDeep'
 import LAY_EXCEL from 'lay-excel'
+import { TinyColor } from '@ctrl/tinycolor';
 
   //将26进制转10进制
 var ConvertNum = function (str) {
@@ -32,13 +31,9 @@ var Convert26 = function(num){
 }
 
 // 处理16进制简写色值，返回6位
-const hexValue = val => {
-  if (val.length === 6) return val
-  if (val.length === 3) {
-    const arr = val.split('')
-    return `${arr[0]}${arr[0]}${arr[1]}${arr[1]}${arr[2]}${arr[2]}`
-  }
-  throw new Error(`转换色值格式错误:${val}`)
+const transColor = val => {
+  const color = new TinyColor(val).toHexString()
+  return color.substring(1)
 }
 
 export function exportExcel (file, rangeDate, list, dateText = '', itemText = '') {
@@ -158,8 +153,8 @@ export function exportExcel (file, rangeDate, list, dateText = '', itemText = ''
     if (item.type === 1) {
       LAY_EXCEL.setExportCellStyle(resultData, item.range, { 
         s: {
-          fill: { bgColor: { indexed: 64 }, fgColor: { rgb: hexValue(item.backgroundColor || 'FFFFFF')} },
-          font: { color: { rgb: hexValue(item.textColor || '000000') } },
+          fill: { bgColor: { indexed: 64 }, fgColor: { rgb: transColor(item.backgroundColor || 'FFFFFF')} },
+          font: { color: { rgb: transColor(item.textColor || '000000') } },
           border: {
             top: { style: 'thin', color: { rgb: 'E2E4E8' } },
             left: { style: 'thin', color: { rgb: 'E2E4E8' } },
