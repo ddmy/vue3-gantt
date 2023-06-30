@@ -64,7 +64,7 @@
             :title="dateItem.type === `works` ? dateItem.desc : ``"
             @mousemove="event => dateItemMove(dateItem.type, event)"
             @mouseout="event => dateItemMoveOut(dateItem.type, event)"
-            @click="scheduleClick(dateItem)"
+            @click="event => scheduleClick({ ...dateItem, event })"
           >
             <span v-if="dateItem.type === 'works'" class="work-desc">{{ props.scheduleTitle ? props.scheduleTitle(dateItem) : dateItem.name }}</span>
           </div>
