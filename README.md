@@ -15,7 +15,6 @@
 [Demo在线预览](https://blog.ddamy.com/assets/demo/gantt/)
 
 ### 使用方式
-> 注意： `1.0.0-2`之前的版本请查看对应版本的使用说明: [测试版本](https://github.com/ddmy/vue-gantt/tree/v0.0.30)
 ```html
   <Gantt
     :data="data"
