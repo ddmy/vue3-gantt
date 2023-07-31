@@ -2,7 +2,7 @@
 
 ![gantt](https://blog.ddamy.com/assets/img/gantt.jpeg)
 
-[简体中文](https://github.com/ddmy/vue3-gantt/blob/readme/docs/README_zh.md)
+[简体中文](https://github.com/ddmy/vue3-gantt/blob/master/docs/README_zh.md)
 
 ### Introduction
 A simplified Gantt chart component developed based on vue3.x:
