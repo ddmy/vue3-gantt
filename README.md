@@ -1,25 +1,27 @@
-### Vue3甘特图插件
+### Vue3 Gantt Chart Component
 
 ![gantt](https://blog.ddamy.com/assets/img/gantt.jpeg)
 
-### 简介
-基于`vue3.x`开发的精简版甘特图
-- [x] 支持导出甘特图Excel文件
-- [x] 支持导出甘特图图片
-- [x] 支持日程重叠展示
-- [x] 支持动态配置响应更新
-- [x] 响应式布局，兼容小屏幕展示
+[简体中文](https://github.com/ddmy/vue3-gantt/blob/readme/docs/README_zh.md)
 
-> 如果您在使用过程中遇到任何相关问题，欢迎您提 issues😊,
+### Introduction
+A simplified Gantt chart component developed based on vue3.x:
+- [x] Supports exporting the Gantt chart to an Excel file.
+- [x] Supports exporting the Gantt chart as an image.
+- [x] Supports displaying overlapping schedules.
+- [x] Supports dynamic configuration for responsive updates.
+- [x] Responsive layout, compatible with small screens.
 
-[Demo在线预览](https://blog.ddamy.com/assets/demo/gantt/)
+> If you encounter any issues during use, feel free to raise issues 😊.
 
-### 使用方式
+[Demo Online Preview](https://blog.ddamy.com/assets/demo/gantt/)
+
+### Usage
 ```html
   <Gantt
     :data="data"
-    itemText="项目"
-    dateText="日期"
+    itemText="Project"
+    dateText="Date"
     :dateRangeList="dateRangeList"
   />
 ```
@@ -32,12 +34,12 @@ const data = ref([
   {
     type: 'normal',
     color: '',
-    name: '项目1',
+    name: 'Project 1',
     schedule: [
       {
         id: 333330,
-        name: '900勇士同时在线庆祝活动',
-        desc: '这个活动很重要，6666666营收数百万，跨部门合作的一个大项目，BOSS亲自下场坐镇指挥，大家一定要团结一心!',
+        name: '900 Warriors Simultaneous Online Celebration Event',
+        desc: 'This event is very important, generating millions of revenue. It is a cross-departmental collaboration and a major project with the CEO personally present to command. Everyone must work together!',
         backgroundColor: 'rgb(253, 211, 172)',
         textColor: 'rgb(245, 36, 9)',
         days: ["2022-01-15","2022-02-05"]
@@ -45,7 +47,7 @@ const data = ref([
       {
         id: 555550,
         name: 'XXXXXX',
-        desc: '这个活动很重要，6666666营收数百万，跨部门合作的一个大项目，BOSS亲自下场坐镇指挥，大家一定要团结一心!',
+        desc: 'This event is very important, generating millions of revenue. It is a cross-departmental collaboration and a major project with the CEO personally present to command. Everyone must work together!',
         backgroundColor: '#28f',
         textColor: '#fff',
         days: ["2022-02-15","2022-02-25"]
@@ -55,12 +57,12 @@ const data = ref([
   {
     type: 'normal',
     color: '',
-    name: '流星蝴蝶剑',
+    name: 'Meteor Butterfly Sword',
     schedule: [
       {
         id: 222221,
-        name: '小年活动',
-        desc: '这个活动很重要，6666666营收数百万，跨部门合作的一个大项目，BOSS亲自下场坐镇指挥，大家一定要团结一心!',
+        name: 'Chinese New Year Event',
+        desc: 'This event is very important, generating millions of revenue. It is a cross-departmental collaboration and a major project with the CEO personally present to command. Everyone must work together!',
         backgroundColor: '#482',
         textColor: '#fff',
         days: ["2022-02-25","2022-03-10"]
@@ -72,116 +74,105 @@ const data = ref([
 
 ### 组件接收参数
 
-| 参数名 | 类型 | 默认值 | 可选值 | 说明 |
-| ------ | ------ | -------- | -- | ------------ |
-| data | Array[Object] | [] | - | 甘特图数据 |
-| dateRangeList | Array | [] | - | 当前图表内的日期区间，此数组长度为2，内容为起始时间, 格式为'YYYY-MM-DD' |
-| itemText | String | null | - | 表头描述文字 |
-| dateText | String | null | - | 表头描述文字 |
-| activeDate | String | 今天 | - | 当前时间轴高亮显示的一天，（不会覆盖日程样式），'YYYY-MM-DD'格式时间字符串 |
-| repeatMode | Object | 见下方 | - | 重叠日程展示模式配置 |
-| itemWidth | Number | 40 | - | 日期格子的宽度，最小40 |
-| itemHeight | Number | 40 | - | 日期格子的高度度，最小40 |
-| scheduleTitle | Function | null | - | 日程上面展示的文本，function接收日程信息为参数，最终使用该方法返回值渲染 |
-| borderColor | String | '#eee' | - | 表格边框颜色 |
+| 参数名 | 类型 | 默认值 | 说明 |
+| ------ | ------ | -------- | ------------ |
+| data | Array[Object] | [] | antt chart data |
+| dateRangeList | Array | [] | The date range within the current chart. This array should have a length of 2, with elements as the start and end date in the format 'YYYY-MM-DD'. |
+| itemText | String | null | The header description for the items in the Gantt chart. |
+| dateText | String | null | The header description for the dates in the Gantt chart. |
+| activeDate | String | Today | The day to be highlighted on the timeline (does not override schedule styles). Format: 'YYYY-MM-DD'. |
+| repeatMode | Object | See below | Configuration for handling overlapping schedules. |
+| itemWidth | Number | 40 | - | The width of date cells, minimum 40. |
+| itemHeight | Number | 40 | - | The height of date cells, minimum 40. |
+| scheduleTitle | Function | null | - | A function to display custom text above the schedule. It receives the schedule information as a parameter and should return the text to be rendered. |
+| borderColor | String | '#eee' | - | The color of the table borders. |
 
-> 组件内容宽度需要自行控制把握最小宽度
+> The content width of the component needs to be controlled manually to ensure the minimum width.
 
-### 组件事件
+### Component Events
 
-| 参数名 | 类型 | 默认值 | 可选值 | 说明 |
-| ------ | ------ | -------- | -- | ------------ |
-| scheduleClick | Function | null | - | 点击日程的回调事件，接收一个日程详情参数 |
-| scrollXEnd | Function | null | - | 横向滚动条滚动到底部的事件 |
-| scrollYEnd | Function | null | - | 竖向滚动条滚动到底部的事件 |
+| Event | Type | 说明 |
+| ------ | ------ | ------------ |
+| scheduleClick | Function | Callback event when clicking on a schedule. Receives the schedule details as a parameter. |
+| scrollXEnd | Function | Event triggered when the horizontal scrollbar reaches the end. |
+| scrollYEnd | Function | Event triggered when the vertical scrollbar reaches the end. |
 
-### data配置 Array[Object]
+### Data Configuration: data Array[Object]
 
 | 参数名 | 取值  |说明 |
 | ------ | ------ | ------ |
-| type | 'alike'\|\|'normal' | 项目类型(展示风格) |
-| color | css颜色格式 | 当前项目背景色, type为'alike'时生效 |
-| name | String | 当前项目名称 |
-| schedule | Array[Object] | 项目日程 |
+| type | 'alike'\|\|'normal' | The project type (display style). |
+| color | CSS color format | Background color for the current project. Applicable when the type is 'alike'. |
+| name | String | The name of the current project. |
+| schedule | Array[Object] | The project schedules. |
 
-### schedule 项目日程配置
+### Schedule Configuration: schedule Object
 
-> 为了便于业务开发，可以在以下基础上任意拓展字段
+> For easier development, you can extend additional fields based on the following.
 
-| 参数名 |说明 |
+| Key | Description |
 | ------ | -------------------- |
-| id | 日程全局唯一id |
-| name | 日程名称 |
-| desc | 日程描述 |
-| backgroundColor | 日程背景色 |
-| textColor | 日程名称展示文字颜色 |
-| days | 日程日期列表`Array`, 数组内容为合法的连续的日期，日期格式为 `YYYY-MM-DD`,也可以简写为长度为2的数组，数组内容分别为起始日期 |
+| id | A globally unique ID for the schedule. |
+| name | The name of the schedule. |
+| desc | Description of the schedule. |
+| backgroundColor | Background color for the schedule. |
+| textColor | Text color for the schedule name. |
+| days | Array of Schedule Dates | The array contains valid and consecutive dates in the format YYYY-MM-DD. Alternatively, it can be represented as an array of two elements denoting the start and end dates. |
 
-### repeatMode配置 Object
+### repeatMode Configuration: Object
 
-| 参数名 | 可选值 | 默认值 | 说明 |
+| Key | Options | Default | 说Description明 |
 | ------ | ------ | -------- | ---------- |
-| mode | 'cover'\|\|'extract' | 'cover' | 重叠日程的处理方式，正常覆盖或者单独提取重复日程再组合, cover会忽略repeatMode其余选项 |
-| backgroundColor | css颜色格式 | '#FFFFCC' | extract模式下的背景色 |
-| textColor | css颜色格式 | '#336666' | extract模式下的文字颜色 |
-| name | `String`\|\|`Function` | '重叠日程' | 重叠日程的展示文字，Function接收一个list参数，参数为重叠日程Array |
-| desc | `String`\|\|`Function` | '这是多个日程' | 重叠日程的描述文字，Function接收一个list参数，参数为重叠日程Array |
+| mode | 'cover'\|\|'extract' | 'cover' | Handling mode for overlapping schedules. 'cover' will simply overlap schedules, while 'extract' will extract and group overlapping schedules separately. |
+| backgroundColor | CSS color format | '#FFFFCC' | Background color for the extracted schedules in 'extract' mode. |
+| textColor | CSS color format | '#336666' | 	Text color for the extracted schedules in 'extract' mode. |
+| name | `String`\|\|`Function` | 'Overlapping Schedules' | Text to display for overlapping schedules. If it's a function, it receives a list of overlapping schedules as a parameter. |
+| desc | `String`\|\|`Function` | 'These are multiple schedules.' | Description to display for overlapping schedules. If it's a function, it receives a list of overlapping schedules as a parameter. |
 
 
-### 组件实例对外暴露的方法
+### Component Instance Methods
 
-#### 导出当前甘特图的完整快照图片
+#### Export Full Snapshot Image of the Current Gantt Chart
 
 ```html
 <Gantt
     ref="gantt"
     ...
 />
-<button @click="exportImg">下载图片</button>
+<button @click="exportImg">Download Image</button>
 ```
 
 ```js
 const gantt = ref(null)
 
 const exportImg = () => {
-  gantt.value.exportImg({ download: true, waterValue: 'YiJio制作' })
+  gantt.value.exportImg({ download: true, waterValue: 'Made by YiJio' })
 }
 ```
-> `exportImg` 方法接收一个`Object`, 配置图片的导出行为, `exportImg` 返回一个`Promise`, 成功状态会接收到图片的base64值
-> | 参数名 | 可选值 | 默认值 | 说明 |
+> The exportImg method accepts an Object to configure the behavior of exporting the image. It returns a Promise, and upon successful completion, it receives the base64 value of the image.
+> | Parameter | Optional Values | Default Value | Description |
 > | ------ | ------ | -------- | ---------- |
-> | download | `Boolean` | true | 是否自动下载图片 |
-> | waterValue | `String` | '' | 图片水印文字, 为空就不添加水印,暂不支持自定义文字样式 |
+> | download | `Boolean` | `true` | Whether to automatically download the image. |
+> | waterValue | `String` | `''` | Watermark text to be added to the image. If empty, no watermark will be added. Customizing the text style is not supported at the moment. |
 
 
-#### 导出当前甘特图Excel
+#### Exporting Current Gantt Chart to Excel
 
 ```html
 <Gantt
     ref="gantt"
     ...
 />
-<button @click="exportGanttExcel">导出Excel</button>
+<button @click="exportGanttExcel">Export Excel</button>
 ```
 ```js
 const gantt = ref(null)
 
 const exportGanttExcel = () => {
-  gantt.value.exportGanttExcel({ fileName: '测试列表' })
+  gantt.value.exportGanttExcel({ fileName: 'TestList' })
 }
 ```
-> `exportGanttExcel`接收一个对象`file`，配置导出文件的信息
-> | 参数名 | 可选值 | 默认值 | 说明 |
+> The exportGanttExcel method receives an Object named file to configure the export file information.
+> | Parameter | Optional Values | Default Value | Description |
 > | ------ | ------ | -------- | ---------- |
-> | fileName | `String` | '数据' | 导出文件名称 |
-
-#### 组件内部方法
-组件内部有许多处理日期的方法，如有需要，可以直接导出使用，方法介绍请查看源码[Util](https://github.com/ddmy/vue-gantt/blob/master/src/util/index.js)
-使用示例
-```js
-import { fetchTodayMonthRange } from 'vue3-gantt'
-```
-
-#### 参与开发
-- node 版本要求16+
-- 使用`npm run dev` 启动本地项目进行调试开发，使用`npm run build`构建代码
+> | fileName | `String` | '数据' | The name of the exported file. |
