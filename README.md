@@ -72,9 +72,9 @@ const data = ref([
 ])
 ```
 
-### 组件接收参数
+### Component Props
 
-| 参数名 | 类型 | 默认值 | 说明 |
+| Key | Type | Default | Description |
 | ------ | ------ | -------- | ------------ |
 | data | Array[Object] | [] | antt chart data |
 | dateRangeList | Array | [] | The date range within the current chart. This array should have a length of 2, with elements as the start and end date in the format 'YYYY-MM-DD'. |
@@ -91,7 +91,7 @@ const data = ref([
 
 ### Component Events
 
-| Event | Type | 说明 |
+| Event | Type | Description |
 | ------ | ------ | ------------ |
 | scheduleClick | Function | Callback event when clicking on a schedule. Receives the schedule details as a parameter. |
 | scrollXEnd | Function | Event triggered when the horizontal scrollbar reaches the end. |
@@ -99,7 +99,7 @@ const data = ref([
 
 ### Data Configuration: data Array[Object]
 
-| 参数名 | 取值  |说明 |
+| Key | Value  | Description |
 | ------ | ------ | ------ |
 | type | 'alike'\|\|'normal' | The project type (display style). |
 | color | CSS color format | Background color for the current project. Applicable when the type is 'alike'. |
