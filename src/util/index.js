@@ -38,8 +38,9 @@ export const fethDays = (str) => {
 export const fethDaysRange = (start, stop) => {
   const current = new Date(start.replace(/\//g, '-'))
   const end = new Date(stop)
+  current.setHours(0, 0, 0, 0)
   const result = []
-  while (end >= current) {
+  while (end.getTime() >= current.getTime()) {
     const res = fetchDayDetail(current)
     result.push(`${res.year}-${res.month}-${res.day}`)
     current.setDate(current.getDate() + 1)
