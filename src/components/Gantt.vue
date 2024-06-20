@@ -66,7 +66,12 @@
             @mouseout="event => dateItemMoveOut(dateItem.type, event)"
             @click="event => scheduleClick({ ...dateItem, event })"
           >
-            <span v-if="dateItem.type === 'works'" class="work-desc">{{ props.scheduleTitle ? props.scheduleTitle(dateItem) : dateItem.name }}</span>
+            <slot v-if="dateItem.type === 'works'" name="tdWorks" :date="dateItem">
+              <span class="work-desc">
+                {{ props.scheduleTitle ? props.scheduleTitle(dateItem) : dateItem.name }}
+              </span>
+            </slot>
+            <slot v-else name="tdDefault" :date="dateItem"></slot>
           </div>
         </div>
       </div>
@@ -781,14 +786,15 @@ defineExpose({
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 0 10px;
         .work-desc {
           width: 100%;
           height: 100%;
+          padding: 0 10px;
           line-height: calc(var(--itemHeight) / 2);
           text-align: center;
           font-size: 12px;
           overflow: hidden;
+          box-sizing: border-box;
           text-overflow: ellipsis;
           display: -webkit-box;
           -webkit-box-orient: vertical;

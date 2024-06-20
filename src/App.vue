@@ -25,7 +25,12 @@
         :alikeName="alikeName"
         @scheduleClick="onScheduleClick"
         @scrollYEnd="onScrollYEnd"
-      />
+      >
+        <!-- <template #tdWorks="data">{{ data }}</template> -->
+        <template #tdDefault="data">
+          <div :class="isSunday(data.date.date) ? 'sunday' : ''"></div>
+        </template>
+      </Gantt>
     </div>
   </div>
 </template>
@@ -117,6 +122,17 @@ const exportGanttExcel = () => {
     gantt.value.exportGanttExcel({ fileName: '测试信息' })
 }
 
+const isSunday = (dateString) => {
+    // 将日期字符串转换为日期对象
+    const date = new Date(dateString);
+    
+    // 获取星期几 (0 表示周日)
+    const dayOfWeek = date.getDay();
+    
+    // 判断是否为周日
+    return dayOfWeek === 0;
+}
+
 
 
 </script>
@@ -158,5 +174,10 @@ const exportGanttExcel = () => {
   height: 80px;
   line-height: 80px;
   background-color: #eee;
+}
+.sunday {
+  width: 100%;
+  height: 100%;
+  background-color: red;
 }
 </style>
