@@ -26,7 +26,10 @@
           :key="monthItem.year + '-' + monthItem.month"
           class="month-item"
         >
-          <div class="month">{{ monthItem[0].year + '-' + monthItem[0].month }}</div>
+          <div class="month">
+            <slot name="month" :data="{ year: monthItem[0].year, month: monthItem[0].month }">{{ monthItem[0].year + '-' + monthItem[0].month }}</slot>
+          </div>
+          
           <div class="day-box">
             <div
               v-for="(dayItem, dayIndex) in monthItem"
@@ -37,8 +40,12 @@
                 'date-active': props.activeDate === (dayItem.year + '-' + dayItem.month + '-' + dayItem.day)
               }"
             >
-              <div class="day">{{ dayItem.day }}</div>
-              <div class="week">{{ dayItem.week }}</div>
+              <div class="day">
+                <slot name="day" :data="{ ...dayItem, active: props.activeDate === (dayItem.year + '-' + dayItem.month + '-' + dayItem.day) }">{{ dayItem.day }}</slot>
+              </div>
+              <div class="week">
+                <slot name="week" :data="{ ...dayItem, active: props.activeDate === (dayItem.year + '-' + dayItem.month + '-' + dayItem.day) }">{{ dayItem.week }}</slot>
+              </div>
             </div>
           </div>
         </div>
@@ -725,6 +732,7 @@ defineExpose({
               width: var(--itemWidth);
               height: 50%;
               border-left: var(--border);
+              flex-shrink: 0;
               display: flex;
               align-items: center;
               justify-content: center;
@@ -732,6 +740,7 @@ defineExpose({
             .week {
               width: var(--itemWidth);
               height: 50%;
+              flex-shrink: 0;
               border-left: var(--border);
               border-top: var(--border);
               display: flex;

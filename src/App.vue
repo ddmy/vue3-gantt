@@ -26,6 +26,13 @@
         @scheduleClick="onScheduleClick"
         @scrollYEnd="onScrollYEnd"
       >
+        <!-- <template #month="data">{{ data }}</template> -->
+        <template #day="{ data }">
+          <div :class="data.week === '日' ? 'sunday' : ''">{{ data.day }}</div>
+        </template>
+        <template #week="{ data }">
+          <div :class="data.week === '日' ? 'sunday' : ''">{{ data.week }}</div>
+        </template>
         <!-- <template #tdWorks="data">{{ data }}</template> -->
         <template #tdDefault="data">
           <div :class="isSunday(data.date.date) ? 'sunday' : ''"></div>
