@@ -25,7 +25,13 @@
         :alikeName="alikeName"
         @scheduleClick="onScheduleClick"
         @scrollYEnd="onScrollYEnd"
-      />
+      >
+        <template #schedule="{ item }">
+          <span class="custom-schedule">
+            <a :title="item.desc" class="custom-schedule-link">{{ item.name }}</a>
+          </span>
+        </template>
+      </Gantt>
     </div>
   </div>
 </template>
@@ -38,7 +44,7 @@ import { fethDaysRange, fetchThreeDays, fetchTodayMonthRange, fetchPrevMonthRang
 import DATA from './assets/data'
 
 const dateRangeList = ref([])
-const activeDate = ref('2022-02-14')
+const activeDate = ref(['2022-02-12', '2022-02-13', '2022-02-14', '2022-02-19', '2022-02-20'])
 const currentRange = fetchThreeDays()
 // dateRangeList.value = [currentRange[0], currentRange.at(-1)]
 dateRangeList.value = ['2022-02-11', '2022-04-05']
@@ -89,7 +95,7 @@ const onScrollYEnd = e => {
 }
 
 const toggle = () => {
-  activeDate.value = '2022-04-01'
+  activeDate.value = ['2022-04-01', '2022-04-02', '2022-04-03']
   width.value = 100
   height.value = 60
   dateRangeList.value = ['2022-03-01', '2022-05-01']
@@ -154,7 +160,14 @@ const exportGanttExcel = () => {
 .box {
   flex: 1;
 }
-.link {
+.custom-schedule-link {
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
   height: 80px;
   line-height: 80px;
   background-color: #eee;
