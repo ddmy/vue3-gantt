@@ -34,7 +34,7 @@
               :class="{
                 'day-item': true,
                 'first-day-item': dayIndex === 0,
-                'date-active': props.activeDate === (dayItem.year + '-' + dayItem.month + '-' + dayItem.day)
+                'date-active': isDateActive(dayItem.year + '-' + dayItem.month + '-' + dayItem.day)
               }"
             >
               <div class="day">{{ dayItem.day }}</div>
@@ -58,7 +58,7 @@
             :class="{
               'date-item': true,
               'date-item-work': dateItem.type === 'works',
-              'date-active': dateItem.date === props.activeDate
+              'date-active': isDateActive(dateItem.date)
             }"
             :style="computedStyle(item, dateItem)"
             :title="dateItem.type === `works` ? dateItem.desc : ``"
@@ -66,7 +66,11 @@
             @mouseout="event => dateItemMoveOut(dateItem.type, event)"
             @click="event => scheduleClick({ ...dateItem, event })"
           >
-            <span v-if="dateItem.type === 'works'" class="work-desc">{{ props.scheduleTitle ? props.scheduleTitle(dateItem) : dateItem.name }}</span>
+            <template v-if="dateItem.type === 'works'">
+              <slot name="schedule" :item="dateItem">
+                <span class="work-desc">{{ props.scheduleTitle ? props.scheduleTitle(dateItem) : dateItem.name }}</span>
+              </slot>
+            </template>
           </div>
         </div>
       </div>
@@ -112,7 +116,7 @@ const props = defineProps({
     required: true
   },
   activeDate: {
-    type: String,
+    type: [String, Array],
     default: () => fetchToday()
   },
   repeatMode: {
@@ -270,6 +274,14 @@ const computedStyle = (parent, item) => {
     }
   }
   return res
+}
+
+// 检查指定日期是否在高亮日期中（支持单个日期字符串或日期数组）
+const isDateActive = (dateStr) => {
+  if (Array.isArray(props.activeDate)) {
+    return props.activeDate.includes(dateStr)
+  }
+  return props.activeDate === dateStr
 }
 
 // 计算当前日程范围在指定日期范围应该渲染的宽度 (假设日程范围都是合法的)
